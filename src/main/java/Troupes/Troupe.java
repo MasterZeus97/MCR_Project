@@ -1,8 +1,7 @@
 package Troupes;
 
-import javax.swing.*;
+import java.util.Map;
 
-public abstract class Troupe {
-    public abstract Troupe clone();
-    public abstract JPanel getStatus();
+public abstract class Troupe implements Prototypeable {
+    public abstract Map<String, Integer> getStatus();
 }
