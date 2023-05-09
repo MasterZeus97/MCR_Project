@@ -1,7 +1,4 @@
-import Troupes.Droid;
-import Troupes.Prototypeable;
-import Troupes.Stormtrooper;
-import Troupes.Troup;
+import Troupes.*;
 
 public class Main {
     public static void main(String[] args) throws CloneNotSupportedException {
@@ -26,5 +23,15 @@ public class Main {
         System.out.println(tmp);
         Troup tmp2 = (Troup) tmp.copy();
         System.out.println(tmp2);
+
+
+        Squadron s = new Squadron();
+        s.add(t1);
+        s.add(t2);
+        s.add(t3);
+        s.add(d1);
+        s.add(d2);
+
+        System.out.println(s);
     }
 }
