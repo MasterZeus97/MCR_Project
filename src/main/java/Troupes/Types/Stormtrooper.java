@@ -1,15 +1,15 @@
 package Troupes.Types;
 
 import Troupes.Attributs;
-import Troupes.Troupe;
+import Troupes.Troup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Stormtrooper extends Troupe {
-
+public class Stormtrooper{
+/*
     //private List<Tuple2<String, Integer>> statList = new ArrayList<>();
     private List<Attributs> statsList = new ArrayList<>();
     private Map<String, Integer> stats = new HashMap<>();
@@ -26,12 +26,12 @@ public class Stormtrooper extends Troupe {
     }
 
     @Override
-    public Troupe clone() {
+    public Troup clone() {
         return new Stormtrooper(this);
     }
 
     @Override
     public Map<String, Integer> getStatus() {
         return null;
-    }
+    }*/
 }

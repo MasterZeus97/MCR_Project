@@ -2,10 +2,9 @@ package Troupes;
 
 import java.util.Random;
 
-public abstract class Troup implements Cloneable {
+public abstract class Troup implements Prototypeable {
 
    private final String name;
-   static private int count = 0;
    private int id;
    private int speed, precision, armor, loyalty;
 
@@ -19,12 +18,58 @@ public abstract class Troup implements Cloneable {
     */
    protected Troup(String name) {
       this.name = name;
-      id = ++count;
 
       speed = getRandomStat(MIN_STAT, MAX_STAT);
       precision = getRandomStat(MIN_STAT, MAX_STAT);
       armor = getRandomStat(MIN_STAT, MAX_STAT);
       loyalty = getRandomStat(MIN_STAT, MAX_STAT);
+   }
+
+   public void statsSet(int speed, int precision, int armor, int loyalty){
+      this.speed = speed;
+      this.precision = precision;
+      this.armor = armor;
+      this.loyalty = loyalty;
+   }
+
+   public int getSpeed() {
+      return speed;
+   }
+
+   public int getPrecision() {
+      return precision;
+   }
+
+   public int getArmor() {
+      return armor;
+   }
+
+   public int getLoyalty() {
+      return loyalty;
+   }
+
+   public void setSpeed(int speed) {
+      this.speed = speed;
+   }
+
+   public void setPrecision(int precision) {
+      this.precision = precision;
+   }
+
+   public void setArmor(int armor) {
+      this.armor = armor;
+   }
+
+   public void setLoyalty(int loyalty) {
+      this.loyalty = loyalty;
+   }
+
+   /**
+    * Setter pour set l'id de la troupe
+    * @param id Le nouvel id de la troupe
+    */
+   protected void setId(int id){
+      this.id = id;
    }
 
    /**
@@ -33,7 +78,7 @@ public abstract class Troup implements Cloneable {
     * @param min La borne min de l'intervalle
     * @param max La borne max de l'intervalle
     */
-   private void alterStats(int min, int max) {
+   protected void alterStats(int min, int max) {
       speed = getRandomStat(speed + min, speed + max);
       precision = getRandomStat(precision + min, precision + max);
       armor = getRandomStat(armor + min, armor + max);
@@ -61,13 +106,14 @@ public abstract class Troup implements Cloneable {
     * @return La nouvelle troupe clonée
     * @throws CloneNotSupportedException Si la troupe ne peut pas être clonée
     */
-   public Troup clone() throws CloneNotSupportedException {
+   /*public Prototypeable clone() {
       Troup newTroup = (Troup) super.clone();
       newTroup.id = ++count;
       newTroup.alterStats(-5, 0);
       alterStats(0, 5);
       return newTroup;
-   }
+      return null;
+   }*/
 
    @Override
    public String toString() {

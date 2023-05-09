@@ -1,18 +1,17 @@
 package Troupes;
 
-public class Stormtrooper extends Troup {
+public class Droid extends Troup {
 
    static private int count = 0;
-   public Stormtrooper() {
-      super("Stormtrooper");
+   public Droid() {
+      super("Droid");
       setId(++count);
    }
 
    @Override
    public Prototypeable copy() {
-      Stormtrooper newTroup = new Stormtrooper();
+      Droid newTroup = new Droid();
       newTroup.statsSet(this.getSpeed(), this.getPrecision(), this.getArmor(), this.getLoyalty());
-      newTroup.alterStats(-5, 0);
       return newTroup;
    }
 }

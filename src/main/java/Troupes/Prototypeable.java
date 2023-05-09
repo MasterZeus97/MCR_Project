@@ -1,5 +1,5 @@
 package Troupes;
 
 public interface Prototypeable {
-    Prototypeable clone();
+    Prototypeable copy();
 }
