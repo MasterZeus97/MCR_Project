@@ -1,7 +1,6 @@
 package Army.Troups;
 
 import Army.Prototypeable;
-
 import java.util.Random;
 
 public abstract class Troup implements Prototypeable {
@@ -27,12 +26,15 @@ public abstract class Troup implements Prototypeable {
       loyalty = getRandomStat(MIN_STAT, MAX_STAT);
    }
 
-   public void statsSet(int speed, int precision, int armor, int loyalty){
+   protected Troup(String name, int speed, int precision, int armor, int loyalty) {
+      this.name = name;
       this.speed = speed;
       this.precision = precision;
       this.armor = armor;
       this.loyalty = loyalty;
    }
+
+   public String getName() { return name; }
 
    public int getSpeed() {
       return speed;
@@ -99,23 +101,6 @@ public abstract class Troup implements Prototypeable {
       int val = random.nextInt(max - min) + min;
       return Math.max(MIN_STAT, Math.min(val, MAX_STAT));
    }
-
-   /**
-    * Clone la troupe et la retourne.
-    * La troupe clonée peut aléatoirement faire diminuer ses stats.
-    * La troupe d'origine peut aléatoirement faire augmenter ses stats.
-    *
-    * @return La nouvelle troupe clonée
-    * @throws CloneNotSupportedException Si la troupe ne peut pas être clonée
-    */
-   /*public Prototypeable clone() {
-      Troup newTroup = (Troup) super.clone();
-      newTroup.id = ++count;
-      newTroup.alterStats(-5, 0);
-      alterStats(0, 5);
-      return newTroup;
-      return null;
-   }*/
 
    @Override
    public String toString() {

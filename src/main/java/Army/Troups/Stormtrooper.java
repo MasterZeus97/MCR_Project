@@ -1,7 +1,5 @@
 package Army.Troups;
 
-import Army.Prototypeable;
-
 public class Stormtrooper extends Troup {
 
    static private int count = 0;
@@ -10,10 +8,14 @@ public class Stormtrooper extends Troup {
       setId(++count);
    }
 
+   public Stormtrooper(Stormtrooper s) {
+      super(s.getName(), s.getSpeed(), s.getPrecision(), s.getArmor(), s.getLoyalty());
+      setId(++count);
+   }
+
    @Override
-   public Prototypeable copy() {
-      Stormtrooper newTroup = new Stormtrooper();
-      newTroup.statsSet(this.getSpeed(), this.getPrecision(), this.getArmor(), this.getLoyalty());
+   public Stormtrooper copy() {
+      Stormtrooper newTroup = new Stormtrooper(this);
       newTroup.alterStats(-5, 0);
       return newTroup;
    }

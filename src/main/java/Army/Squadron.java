@@ -19,7 +19,7 @@ public class Squadron implements Prototypeable {
     }
 
     @Override
-    public Prototypeable copy() {
+    public Squadron copy() {
         Squadron tmp = new Squadron();
         for(Troup t : troupList){
             tmp.add((Troup) t.copy());
@@ -29,9 +29,9 @@ public class Squadron implements Prototypeable {
 
     @Override
     public String toString() {
-        String returnString = "";
+        StringBuilder returnString = new StringBuilder();
         for(Troup t : troupList)
-            returnString = returnString + t + "\n";
+            returnString.append(t).append("\n");
         return "Squadron #" + squadronNumber + "\n" + returnString;
     }
 }

@@ -1,7 +1,5 @@
 package Army.Troups;
 
-import Army.Prototypeable;
-
 public class Droid extends Troup {
 
    static private int count = 0;
@@ -10,10 +8,13 @@ public class Droid extends Troup {
       setId(++count);
    }
 
+   public Droid(Droid s) {
+      super(s.getName(), s.getSpeed(), s.getPrecision(), s.getArmor(), s.getLoyalty());
+      setId(++count);
+   }
+
    @Override
-   public Prototypeable copy() {
-      Droid newTroup = new Droid();
-      newTroup.statsSet(this.getSpeed(), this.getPrecision(), this.getArmor(), this.getLoyalty());
-      return newTroup;
+   public Droid copy() {
+      return new Droid(this);
    }
 }
