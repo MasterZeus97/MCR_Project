@@ -1,9 +1,11 @@
-package Troupes;
+package Army;
+
+import Army.Troups.Troup;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Squadron implements Prototypeable{
+public class Squadron implements Prototypeable {
     static int count = 0;
     int squadronNumber;
     private final List<Troup> troupList = new ArrayList<>();

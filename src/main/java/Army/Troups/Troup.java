@@ -1,4 +1,6 @@
-package Troupes;
+package Army.Troups;
+
+import Army.Prototypeable;
 
 import java.util.Random;
 
