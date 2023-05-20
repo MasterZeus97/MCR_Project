@@ -1,4 +1,4 @@
-package Troupes;
+package Army;
 
 public class Attributs {
     private String name;
