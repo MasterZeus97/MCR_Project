@@ -1,13 +1,20 @@
 package Army.Troups;
 
+import Army.Attributs;
 import Army.Prototypeable;
-import java.util.Random;
+
+import java.util.*;
 
 public abstract class Troup implements Prototypeable {
+   static final ArrayList<String> ATTRIBUTS_NAME_LIST = new ArrayList<>(Arrays.asList(
+                                                                           "HP",
+                                                                           "Attack",
+                                                                           "Defense",
+                                                                           "Speed"));
+   //Attributs du soldat
+   HashMap<String, Attributs> attributsMap = new HashMap<>();
 
-   private final String name;
-   private int id;
-   private int speed, precision, armor, loyalty;
+   static final int MIN_HP = 0;
 
    static final int MIN_STAT = 0;
    static final int MAX_STAT = 99;
@@ -18,63 +25,41 @@ public abstract class Troup implements Prototypeable {
     * @param name Le nom de la troupe
     */
    protected Troup(String name) {
-      this.name = name;
-
-      speed = getRandomStat(MIN_STAT, MAX_STAT);
-      precision = getRandomStat(MIN_STAT, MAX_STAT);
-      armor = getRandomStat(MIN_STAT, MAX_STAT);
-      loyalty = getRandomStat(MIN_STAT, MAX_STAT);
+      for(String s : ATTRIBUTS_NAME_LIST){
+         attributsMap.put(s, new Attributs(s));
+      }
    }
 
-   protected Troup(String name, int speed, int precision, int armor, int loyalty) {
-      this.name = name;
-      this.speed = speed;
-      this.precision = precision;
-      this.armor = armor;
-      this.loyalty = loyalty;
+   /**
+    * Constructeur de copie d'une troupe
+    * @param troup La troupe à copier
+    */
+   protected Troup(Troup troup){
    }
 
-   public String getName() { return name; }
-
-   public int getSpeed() {
-      return speed;
+   /**
+    * Méthode pour ajouter un attribut à la troupe
+    * @param attributs Attributs à ajouter à la troupe
+    */
+   protected void addAttribut(Attributs attributs){
+      attributsMap.put(attributs.getName(), attributs);
    }
 
-   public int getPrecision() {
-      return precision;
-   }
-
-   public int getArmor() {
-      return armor;
-   }
-
-   public int getLoyalty() {
-      return loyalty;
-   }
-
-   public void setSpeed(int speed) {
-      this.speed = speed;
-   }
-
-   public void setPrecision(int precision) {
-      this.precision = precision;
-   }
-
-   public void setArmor(int armor) {
-      this.armor = armor;
-   }
-
-   public void setLoyalty(int loyalty) {
-      this.loyalty = loyalty;
+   /**
+    * Récupère une map contenant les attributs
+    * @return
+    */
+   public HashMap<String, Attributs> getAttributsMap() {
+      return attributsMap;
    }
 
    /**
     * Setter pour set l'id de la troupe
     * @param id Le nouvel id de la troupe
     */
-   protected void setId(int id){
+   /*protected void setId(int id){
       this.id = id;
-   }
+   }*/
 
    /**
     * Modifie aléatoirement toutes les stats de la troupe autour de l'intervalle donné.
@@ -82,12 +67,12 @@ public abstract class Troup implements Prototypeable {
     * @param min La borne min de l'intervalle
     * @param max La borne max de l'intervalle
     */
-   protected void alterStats(int min, int max) {
+   /*protected void alterStats(int min, int max) {
       speed = getRandomStat(speed + min, speed + max);
       precision = getRandomStat(precision + min, precision + max);
       armor = getRandomStat(armor + min, armor + max);
       loyalty = getRandomStat(loyalty + min, loyalty + max);
-   }
+   }*/
 
    /**
     * Retourne la valeur d'une stat aléatoire se trouvant dans l'intervalle donné ET entre MIN_STAT et MAX_STAT.
@@ -103,11 +88,15 @@ public abstract class Troup implements Prototypeable {
    }
 
    @Override
+   public abstract Troup copy();
+
+   @Override
    public String toString() {
 
-      return name + " #" + id + "\n" +
+      return "";
+      /*return name + " #" + id + "\n" +
               speed + "%, " + precision + "%, " + armor + "%, " + loyalty + "%\n";
-
+*/
       /*
       return name + " #" + id + "\n" +
               "Speed: " + speed + "%\n" +
