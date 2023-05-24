@@ -2,13 +2,11 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Fenêtre principale qui gère les différents menus du jeu.
  */
-public class MainWindow extends JFrame implements ActionListener {
+public class MainWindow extends JFrame {
 
    public CardLayout cardLayout;
    public JPanel cardPanel;
@@ -32,11 +30,8 @@ public class MainWindow extends JFrame implements ActionListener {
       add(cardPanel);
    }
 
-   @Override
-   public void actionPerformed(ActionEvent e) {
-      String command = e.getActionCommand();
-
-      cardLayout.show(cardPanel, command);
+   public void changeCard(String card) {
+      cardLayout.show(cardPanel, card);
    }
 
    /**
@@ -44,9 +39,9 @@ public class MainWindow extends JFrame implements ActionListener {
     */
    private class TitlePage extends JPanel {
       public TitlePage() {
+         add(new JLabel("NOM DU JEU"));
          JButton button = new JButton("Jouer");
-         button.setActionCommand("creationPage");
-         button.addActionListener(MainWindow.this);
+         button.addActionListener(e -> changeCard("creationPage"));
          add(button);
       }
    }
@@ -56,17 +51,41 @@ public class MainWindow extends JFrame implements ActionListener {
     */
    private class CreationPage extends JPanel {
       public CreationPage() {
-         JButton button = new JButton("Commencer bataille");
-         button.setActionCommand("battlePage");
-         button.addActionListener(MainWindow.this);
-         add(button);
 
-         JButton button2 = new JButton("Voir bataillons");
-         button2.addActionListener(e -> {
+         JPanel leftPanel = new JPanel();
+         JPanel rightPanel = new JPanel();
+
+         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
+         JButton generateBtn = new JButton("Générer troupe");
+         // TODO : Fonction
+         leftPanel.add(generateBtn);
+
+         JButton cloneBtn = new JButton("Cloner troupe");
+         // TODO : Fonction
+         leftPanel.add(cloneBtn);
+
+         JButton startBtn = new JButton("Commencer bataille");
+         startBtn.addActionListener(e -> changeCard("battlePage"));
+
+         // TODO : Créer objet Simulation
+         leftPanel.add(startBtn);
+
+         JLabel stats = new JLabel("STATS:\n x\n y\n z\n");
+         rightPanel.add(stats);
+
+         JLabel money = new JLabel("Argent: ??? crédits");
+         rightPanel.add(money);
+
+         JButton squadronBtn = new JButton("Voir bataillons");
+         squadronBtn.addActionListener(e -> {
             SquadronViewerWindow sqw = SquadronViewerWindow.getInstance();
             sqw.setVisible(true);
          });
-         add(button2);
+         rightPanel.add(squadronBtn);
+
+         add(leftPanel);
+         add(rightPanel);
       }
    }
 
@@ -76,8 +95,7 @@ public class MainWindow extends JFrame implements ActionListener {
    private class BattlePage extends JPanel {
       public BattlePage() {
          JButton button = new JButton("Terminer bataille");
-         button.setActionCommand("creationPage");
-         button.addActionListener(MainWindow.this);
+         button.addActionListener(e -> changeCard("creationPage"));
          add(button);}
    }
 }
