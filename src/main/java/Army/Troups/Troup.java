@@ -1,119 +1,82 @@
 package Army.Troups;
 
+import Army.Attributs;
 import Army.Prototypeable;
-import java.util.Random;
+
+import java.util.*;
 
 public abstract class Troup implements Prototypeable {
+   private static final ArrayList<String> ATTRIBUTS_NAME_LIST = new ArrayList<>(Arrays.asList(
+                                                                           "HP",
+                                                                           "Attack",
+                                                                           "Defense",
+                                                                           "Speed"));
 
-   private final String name;
-   private int id;
-   private int speed, precision, armor, loyalty;
+   String name;
 
-   static final int MIN_STAT = 0;
-   static final int MAX_STAT = 99;
+   //Attributs du soldat
+   Map<String, Attributs> attributsMap = new HashMap<>();
+
 
    /**
     * Crée une nouvelle troupe avec des stats aléatoires et un id unique.
     *
     * @param name Le nom de la troupe
     */
-   protected Troup(String name) {
+   protected Troup(String name, int minHp, int maxHp,
+                                int minAtt, int maxAtt,
+                                int minDef, int maxDef,
+                                int minSpd, int maxSpd) {
       this.name = name;
+      for(String s : ATTRIBUTS_NAME_LIST){
+         attributsMap.put(s, new Attributs(s));
+      }
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMaxValue(minHp);
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMinValue(maxHp);
 
-      speed = getRandomStat(MIN_STAT, MAX_STAT);
-      precision = getRandomStat(MIN_STAT, MAX_STAT);
-      armor = getRandomStat(MIN_STAT, MAX_STAT);
-      loyalty = getRandomStat(MIN_STAT, MAX_STAT);
-   }
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMaxValue(minAtt);
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMinValue(maxAtt);
 
-   protected Troup(String name, int speed, int precision, int armor, int loyalty) {
-      this.name = name;
-      this.speed = speed;
-      this.precision = precision;
-      this.armor = armor;
-      this.loyalty = loyalty;
-   }
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMaxValue(minDef);
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMinValue(maxDef);
 
-   public String getName() { return name; }
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMaxValue(minSpd);
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMinValue(maxSpd);
 
-   public int getSpeed() {
-      return speed;
-   }
-
-   public int getPrecision() {
-      return precision;
-   }
-
-   public int getArmor() {
-      return armor;
-   }
-
-   public int getLoyalty() {
-      return loyalty;
-   }
-
-   public void setSpeed(int speed) {
-      this.speed = speed;
-   }
-
-   public void setPrecision(int precision) {
-      this.precision = precision;
-   }
-
-   public void setArmor(int armor) {
-      this.armor = armor;
-   }
-
-   public void setLoyalty(int loyalty) {
-      this.loyalty = loyalty;
    }
 
    /**
-    * Setter pour set l'id de la troupe
-    * @param id Le nouvel id de la troupe
+    * Constructeur de copie d'une troupe
+    * @param troup La troupe à copier
     */
-   protected void setId(int id){
-      this.id = id;
+   protected Troup(Troup troup){
+      this.name = troup.name;
+      for(String a : troup.attributsMap.keySet()){
+         attributsMap.put(a, troup.attributsMap.get(a).copy());
+      }
    }
 
    /**
-    * Modifie aléatoirement toutes les stats de la troupe autour de l'intervalle donné.
-    *
-    * @param min La borne min de l'intervalle
-    * @param max La borne max de l'intervalle
+    * Méthode pour ajouter un attribut à la troupe
+    * @param attributs Attributs à ajouter à la troupe
     */
-   protected void alterStats(int min, int max) {
-      speed = getRandomStat(speed + min, speed + max);
-      precision = getRandomStat(precision + min, precision + max);
-      armor = getRandomStat(armor + min, armor + max);
-      loyalty = getRandomStat(loyalty + min, loyalty + max);
+   protected void addAttribut(Attributs attributs){
+      attributsMap.put(attributs.getName(), attributs);
    }
 
    /**
-    * Retourne la valeur d'une stat aléatoire se trouvant dans l'intervalle donné ET entre MIN_STAT et MAX_STAT.
-    *
-    * @param min La borne min de l'intervalle
-    * @param max La borne max de l'intervalle
-    * @return La nouvelle stat générée aléatoirement
+    * Récupère une liste contenant les attributs
+    * @return
     */
-   private int getRandomStat(int min, int max) {
-      Random random = new Random();
-      int val = random.nextInt(max - min) + min;
-      return Math.max(MIN_STAT, Math.min(val, MAX_STAT));
+   public List<Attributs> getAttributsMap() {
+      return new ArrayList<> (attributsMap.values());
    }
 
    @Override
+   public abstract Troup copy();
+
+   @Override
    public String toString() {
-
-      return name + " #" + id + "\n" +
-              speed + "%, " + precision + "%, " + armor + "%, " + loyalty + "%\n";
-
-      /*
-      return name + " #" + id + "\n" +
-              "Speed: " + speed + "%\n" +
-              "Precision: " + precision + "%\n" +
-              "Armor: " + armor + "%\n" +
-              "Loyalty: " + loyalty + "%\n";
-       */
+      return name;
    }
 }
