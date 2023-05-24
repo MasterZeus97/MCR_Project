@@ -12,7 +12,7 @@ public abstract class Troup implements Prototypeable {
                                                                            "Defense",
                                                                            "Speed"));
    //Attributs du soldat
-   HashMap<String, Attributs> attributsMap = new HashMap<>();
+   Map<String, Attributs> attributsMap = new HashMap<>();
 
    static final int MIN_HP = 0;
 
@@ -35,6 +35,9 @@ public abstract class Troup implements Prototypeable {
     * @param troup La troupe à copier
     */
    protected Troup(Troup troup){
+      for(String a : troup.attributsMap.keySet()){
+         attributsMap.put(a, troup.attributsMap.get(a).copy());
+      }
    }
 
    /**
@@ -49,30 +52,9 @@ public abstract class Troup implements Prototypeable {
     * Récupère une map contenant les attributs
     * @return
     */
-   public HashMap<String, Attributs> getAttributsMap() {
+   public Map<String, Attributs> getAttributsMap() {
       return attributsMap;
    }
-
-   /**
-    * Setter pour set l'id de la troupe
-    * @param id Le nouvel id de la troupe
-    */
-   /*protected void setId(int id){
-      this.id = id;
-   }*/
-
-   /**
-    * Modifie aléatoirement toutes les stats de la troupe autour de l'intervalle donné.
-    *
-    * @param min La borne min de l'intervalle
-    * @param max La borne max de l'intervalle
-    */
-   /*protected void alterStats(int min, int max) {
-      speed = getRandomStat(speed + min, speed + max);
-      precision = getRandomStat(precision + min, precision + max);
-      armor = getRandomStat(armor + min, armor + max);
-      loyalty = getRandomStat(loyalty + min, loyalty + max);
-   }*/
 
    /**
     * Retourne la valeur d'une stat aléatoire se trouvant dans l'intervalle donné ET entre MIN_STAT et MAX_STAT.
@@ -94,15 +76,5 @@ public abstract class Troup implements Prototypeable {
    public String toString() {
 
       return "";
-      /*return name + " #" + id + "\n" +
-              speed + "%, " + precision + "%, " + armor + "%, " + loyalty + "%\n";
-*/
-      /*
-      return name + " #" + id + "\n" +
-              "Speed: " + speed + "%\n" +
-              "Precision: " + precision + "%\n" +
-              "Armor: " + armor + "%\n" +
-              "Loyalty: " + loyalty + "%\n";
-       */
    }
 }

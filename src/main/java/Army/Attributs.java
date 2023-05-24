@@ -2,11 +2,12 @@ package Army;
 
 import java.util.Random;
 
-public class Attributs {
+public class Attributs implements Prototypeable{
     private final String name;
     private int value;
     private int minValue = 0;
     private int maxValue = 100;
+
 
     /**
      * Constructeur pour un attribut dont on veut randomiser la valeur
@@ -27,7 +28,12 @@ public class Attributs {
         this.value = value;
     }
 
-
+    private Attributs(Attributs attributs){
+        this.name = attributs.name;
+        this.value = attributs.value;
+        this.minValue = attributs.minValue;
+        this.maxValue = attributs.maxValue;
+    }
 
     /**
      * Getter pour récupérer la valeur de l'attribut
@@ -85,4 +91,8 @@ public class Attributs {
         value = random.nextInt(maxValue - minValue) + minValue;
     }
 
+    @Override
+    public Attributs copy() {
+        return new Attributs(this);
+    }
 }
