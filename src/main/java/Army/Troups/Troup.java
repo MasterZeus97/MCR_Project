@@ -6,28 +6,43 @@ import Army.Prototypeable;
 import java.util.*;
 
 public abstract class Troup implements Prototypeable {
-   static final ArrayList<String> ATTRIBUTS_NAME_LIST = new ArrayList<>(Arrays.asList(
+   private static final ArrayList<String> ATTRIBUTS_NAME_LIST = new ArrayList<>(Arrays.asList(
                                                                            "HP",
                                                                            "Attack",
                                                                            "Defense",
                                                                            "Speed"));
+
+   String name;
+
    //Attributs du soldat
    Map<String, Attributs> attributsMap = new HashMap<>();
 
-   static final int MIN_HP = 0;
-
-   static final int MIN_STAT = 0;
-   static final int MAX_STAT = 99;
 
    /**
     * Crée une nouvelle troupe avec des stats aléatoires et un id unique.
     *
     * @param name Le nom de la troupe
     */
-   protected Troup(String name) {
+   protected Troup(String name, int minHp, int maxHp,
+                                int minAtt, int maxAtt,
+                                int minDef, int maxDef,
+                                int minSpd, int maxSpd) {
+      this.name = name;
       for(String s : ATTRIBUTS_NAME_LIST){
          attributsMap.put(s, new Attributs(s));
       }
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMaxValue(minHp);
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMinValue(maxHp);
+
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMaxValue(minAtt);
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMinValue(maxAtt);
+
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMaxValue(minDef);
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMinValue(maxDef);
+
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMaxValue(minSpd);
+      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMinValue(maxSpd);
+
    }
 
    /**
@@ -35,6 +50,7 @@ public abstract class Troup implements Prototypeable {
     * @param troup La troupe à copier
     */
    protected Troup(Troup troup){
+      this.name = troup.name;
       for(String a : troup.attributsMap.keySet()){
          attributsMap.put(a, troup.attributsMap.get(a).copy());
       }
@@ -49,24 +65,11 @@ public abstract class Troup implements Prototypeable {
    }
 
    /**
-    * Récupère une map contenant les attributs
+    * Récupère une liste contenant les attributs
     * @return
     */
-   public Map<String, Attributs> getAttributsMap() {
-      return attributsMap;
-   }
-
-   /**
-    * Retourne la valeur d'une stat aléatoire se trouvant dans l'intervalle donné ET entre MIN_STAT et MAX_STAT.
-    *
-    * @param min La borne min de l'intervalle
-    * @param max La borne max de l'intervalle
-    * @return La nouvelle stat générée aléatoirement
-    */
-   private int getRandomStat(int min, int max) {
-      Random random = new Random();
-      int val = random.nextInt(max - min) + min;
-      return Math.max(MIN_STAT, Math.min(val, MAX_STAT));
+   public List<Attributs> getAttributsMap() {
+      return new ArrayList<> (attributsMap.values());
    }
 
    @Override
@@ -74,7 +77,6 @@ public abstract class Troup implements Prototypeable {
 
    @Override
    public String toString() {
-
-      return "";
+      return name;
    }
 }
