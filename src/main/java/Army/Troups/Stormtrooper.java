@@ -21,30 +21,18 @@ public class Stormtrooper extends Troup {
 
    public Stormtrooper() {
       super("Stormtrooper");
-      for(String s : ATTRIBUTS_NAME_LIST){
-         Attributs attributs = getAttributsMap().get(s);
-         if(attributs != null){
-            switch (s){
-               case "HP":
-                  attributs.setMaxValue(minHp);
-                  attributs.setMinValue(maxHp);
-                  break;
-               case "Attack":
-                  attributs.setMaxValue(minAtt);
-                  attributs.setMinValue(maxAtt);
-                  break;
-               case "Defense":
-                  attributs.setMaxValue(minDef);
-                  attributs.setMinValue(maxDef);
-                  break;
-               case "Speed":
-                  attributs.setMaxValue(minSpd);
-                  attributs.setMinValue(maxSpd);
-                  break;
-            }
-         }
-      }
-      //setId(++count);
+
+      getAttributsMap().get("HP").setMaxValue(minHp);
+      getAttributsMap().get("HP").setMinValue(maxHp);
+
+      getAttributsMap().get("Attack").setMaxValue(minAtt);
+      getAttributsMap().get("Attack").setMinValue(maxAtt);
+
+      getAttributsMap().get("Defense").setMaxValue(minDef);
+      getAttributsMap().get("Defense").setMinValue(maxDef);
+
+      getAttributsMap().get("Speed").setMaxValue(minSpd);
+      getAttributsMap().get("Speed").setMinValue(maxSpd);
    }
 
    public Stormtrooper(Stormtrooper s) {
