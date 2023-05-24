@@ -2,25 +2,42 @@ package Army.Troups;
 
 public class Droid extends Troup {
 
-   private static int minHp = 10,
-                      maxHp = 100,
-                      minAtt = 50,
-                      maxAtt = 100,
-                      minDef = 30,
-                      maxDef = 60,
-                      minSpd = 20,
-                      maxSpd = 30;
+   private static int minHp = 100,
+                      maxHp = 200,
+                      minAtt = 100,
+                      maxAtt = 200,
+                      minDef = 60,
+                      maxDef = 90,
+                      minSpd = 10,
+                      maxSpd = 15,
+                      minPrec = 10,
+                      maxPrec = 50;
 
+   int downGradeStatsChances = 70;
+
+   /**
+    * Constructeur d'un Droid
+    */
    public Droid() {
-      super("Droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd);
+      super("Droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minPrec, maxPrec);
    }
 
+   /**
+    * Constructeur de copie d'un droid
+    * @param s Droid à copier
+    */
    public Droid(Droid s) {
       super(s);
    }
 
+   /**
+    * Methode pour cloner le Droid. Clone également ses attributs
+    * @return Un nouveau Droid, clone du premier
+    */
    @Override
    public Droid copy() {
-      return new Droid(this);
+      Droid newTroup = new Droid(this);
+      newTroup.downGradeStats(downGradeStatsChances);
+      return newTroup;
    }
 }

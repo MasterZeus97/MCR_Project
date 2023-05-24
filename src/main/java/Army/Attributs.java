@@ -8,6 +8,11 @@ public class Attributs implements Prototypeable{
     private int minValue = 0;
     private int maxValue = 100;
 
+    private static double percentReduce = 0.05;
+
+    private double maxValueReduce = maxValue * percentReduce;
+
+
 
     /**
      * Constructeur pour un attribut dont on veut randomiser la valeur
@@ -28,6 +33,10 @@ public class Attributs implements Prototypeable{
         this.value = value;
     }
 
+    /**
+     * Constructeur de copie d'un attributs
+     * @param attributs
+     */
     private Attributs(Attributs attributs){
         this.name = attributs.name;
         this.value = attributs.value;
@@ -40,15 +49,20 @@ public class Attributs implements Prototypeable{
      * @return Valeur de l'attribut
      */
     public int getValue() {
-        return value;
+        return (int) value;
     }
 
     /**
      * Setteur pour modifier la valeur de l'attribut
      * @param value Nouvelle valeur de l'attribut
      */
+
     public void setValue(int value) {
-        this.value = value;
+        if(value > maxValue){
+            this.value = maxValue;
+        }else {
+            this.value = value;
+        }
     }
 
     /**
@@ -57,9 +71,6 @@ public class Attributs implements Prototypeable{
      * @param minValue
      */
     public void setMinValue(int minValue) {
-        if(value < minValue){
-            value = minValue;
-        }
         this.minValue = minValue;
     }
 
@@ -71,8 +82,9 @@ public class Attributs implements Prototypeable{
     public void setMaxValue(int maxValue) {
         if(value > maxValue){
             value = maxValue;
+        }else{
+            this.maxValue = maxValue;
         }
-        this.maxValue = maxValue;
     }
 
     /**
@@ -91,6 +103,19 @@ public class Attributs implements Prototypeable{
         value = random.nextInt(maxValue - minValue) + minValue;
     }
 
+    public void downgradeValue(int chanceToDowngrade){
+        int downChance = chanceToDowngrade % 100;
+        Random random = new Random();
+        int checkChange = random.nextInt(100 - 1) + 1;
+        if(value > 1 && checkChange < downChance){
+            value -= random.nextInt((int) Math.ceil(maxValueReduce) - 1)+1;
+        }
+    }
+
+    /**
+     * Methode pour cloner l'attribut.
+     * @return Un nouvel attribut, clone du premier
+     */
     @Override
     public Attributs copy() {
         return new Attributs(this);
