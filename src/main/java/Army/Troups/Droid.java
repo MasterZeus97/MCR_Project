@@ -9,17 +9,15 @@ public class Droid extends Troup {
                       minDef = 60,
                       maxDef = 90,
                       minSpd = 10,
-                      maxSpd = 15,
-                      minPrec = 10,
-                      maxPrec = 50;
+                      maxSpd = 15;
 
-   int downGradeStatsChances = 70;
+   int downGradeStatChances = 70;
 
    /**
     * Constructeur d'un Droid
     */
    public Droid() {
-      super("Droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minPrec, maxPrec);
+      super("Droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd);
    }
 
    /**
@@ -31,13 +29,13 @@ public class Droid extends Troup {
    }
 
    /**
-    * Methode pour cloner le Droid. Clone également ses attributs
+    * Methode pour cloner le Droid. Clone également ses Stats
     * @return Un nouveau Droid, clone du premier
     */
    @Override
    public Droid copy() {
       Droid newTroup = new Droid(this);
-      newTroup.downGradeStats(downGradeStatsChances);
+      newTroup.downGradeStat(downGradeStatChances);
       return newTroup;
    }
 }

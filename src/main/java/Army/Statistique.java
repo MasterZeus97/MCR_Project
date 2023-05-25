@@ -2,7 +2,7 @@ package Army;
 
 import java.util.Random;
 
-public class Attributs implements Prototypeable{
+public class Statistique implements Prototypeable{
     private final String name;
     private int value;
     private int minValue = 0;
@@ -10,51 +10,53 @@ public class Attributs implements Prototypeable{
 
     private static double percentReduce = 0.05;
 
+
+
     private double maxValueReduce = maxValue * percentReduce;
 
 
 
     /**
-     * Constructeur pour un attribut dont on veut randomiser la valeur
-     * @param name Nom de l'attribut
+     * Constructeur pour un Stats dont on veut randomiser la valeur
+     * @param name Nom de l'Stats
      */
-    public Attributs(String name) {
+    public Statistique(String name) {
         this.name = name;
         randomizeValue();
     }
 
     /**
-     * Constructeur pour un attribut dont on connait la valeur
-     * @param name Nom de l'attribut
-     * @param value Valeur de base de l'attribut
+     * Constructeur pour un Stats dont on connait la valeur
+     * @param name Nom de l'Stats
+     * @param value Valeur de base de l'Stats
      */
-    public Attributs(String name, int value) {
+    public Statistique(String name, int value) {
         this.name = name;
         this.value = value;
     }
 
     /**
-     * Constructeur de copie d'un attributs
-     * @param attributs
+     * Constructeur de copie d'un statistique
+     * @param statistique
      */
-    private Attributs(Attributs attributs){
-        this.name = attributs.name;
-        this.value = attributs.value;
-        this.minValue = attributs.minValue;
-        this.maxValue = attributs.maxValue;
+    private Statistique(Statistique statistique){
+        this.name = statistique.name;
+        this.value = statistique.value;
+        this.minValue = statistique.minValue;
+        this.maxValue = statistique.maxValue;
     }
 
     /**
-     * Getter pour récupérer la valeur de l'attribut
-     * @return Valeur de l'attribut
+     * Getter pour récupérer la valeur de l'Stats
+     * @return Valeur de l'Stats
      */
     public int getValue() {
         return (int) value;
     }
 
     /**
-     * Setteur pour modifier la valeur de l'attribut
-     * @param value Nouvelle valeur de l'attribut
+     * Setteur pour modifier la valeur de l'Stats
+     * @param value Nouvelle valeur de l'Stats
      */
 
     public void setValue(int value) {
@@ -88,8 +90,8 @@ public class Attributs implements Prototypeable{
     }
 
     /**
-     * Getter pour récupérer le nom de l'attribut
-     * @return Nom de l'attribut
+     * Getter pour récupérer le nom de l'Stats
+     * @return Nom de l'Stats
      */
     public String getName() {
         return name;
@@ -103,21 +105,38 @@ public class Attributs implements Prototypeable{
         value = random.nextInt(maxValue - minValue) + minValue;
     }
 
+    /**
+     * Méthode pour potentiellement dégrader la statistique
+     * @param chanceToDowngrade Chance que la stat soit baissée
+     */
     public void downgradeValue(int chanceToDowngrade){
         int downChance = chanceToDowngrade % 100;
         Random random = new Random();
         int checkChange = random.nextInt(100 - 1) + 1;
-        if(value > 1 && checkChange < downChance){
+        if(value > 1 && checkChange <= downChance){
             value -= random.nextInt((int) Math.ceil(maxValueReduce) - 1)+1;
         }
     }
 
     /**
-     * Methode pour cloner l'attribut.
-     * @return Un nouvel attribut, clone du premier
+     * Méthode pour potentiellement améliorer une stat
+     * @param chanceToUpgrade Chance que la stat soit améliorée
+     */
+    public void upgradeValue(int chanceToUpgrade){
+        int upChance = chanceToUpgrade % 100;
+        Random random = new Random();
+        int checkChange = random.nextInt(100 - 1) + 1;
+        if(value < maxValue && checkChange <= upChance){
+            value += random.nextInt((int) Math.ceil(maxValueReduce) - 1)+1;
+        }
+    }
+
+    /**
+     * Methode pour cloner l'Stats.
+     * @return Un nouvel Stats, clone du premier
      */
     @Override
-    public Attributs copy() {
-        return new Attributs(this);
+    public Statistique copy() {
+        return new Statistique(this);
     }
 }

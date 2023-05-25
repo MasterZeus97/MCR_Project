@@ -1,24 +1,23 @@
 package Army.Troups;
 
-import Army.Attributs;
+import Army.Statistique;
 import Army.Prototypeable;
 
 import java.util.*;
 
 public abstract class Troup implements Prototypeable {
-   private static final ArrayList<String> ATTRIBUTS_NAME_LIST = new ArrayList<>(Arrays.asList(
+   private static final ArrayList<String> STATS_NAME_LIST = new ArrayList<>(Arrays.asList(
                                                                            "HP",
                                                                            "Attack",
                                                                            "Defense",
-                                                                           "Speed",
-                                                                           "Precision"));
+                                                                           "Speed"));
 
    final String name;
 
    final int hpMax;
 
-   //Attributs du soldat
-   Map<String, Attributs> attributsMap = new HashMap<>();
+   //Statistique du soldat
+   private final Map<String, Statistique> statsMap = new HashMap<>();
 
 
    /**
@@ -29,29 +28,25 @@ public abstract class Troup implements Prototypeable {
    protected Troup(String name, int minHp, int maxHp,
                                 int minAtt, int maxAtt,
                                 int minDef, int maxDef,
-                                int minSpd, int maxSpd,
-                                int minPrec, int maxPrec) {
+                                int minSpd, int maxSpd) {
       this.name = name;
-      for(String s : ATTRIBUTS_NAME_LIST){
-         attributsMap.put(s, new Attributs(s));
+      for(String s : STATS_NAME_LIST){
+         statsMap.put(s, new Statistique(s));
       }
 
-      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMaxValue(minHp);
-      attributsMap.get(ATTRIBUTS_NAME_LIST.get(0)).setMinValue(maxHp);
+      statsMap.get(STATS_NAME_LIST.get(0)).setMaxValue(minHp);
+      statsMap.get(STATS_NAME_LIST.get(0)).setMinValue(maxHp);
 
-      attributsMap.get(ATTRIBUTS_NAME_LIST.get(1)).setMaxValue(minAtt);
-      attributsMap.get(ATTRIBUTS_NAME_LIST.get(1)).setMinValue(maxAtt);
+      statsMap.get(STATS_NAME_LIST.get(1)).setMaxValue(minAtt);
+      statsMap.get(STATS_NAME_LIST.get(1)).setMinValue(maxAtt);
 
-      attributsMap.get(ATTRIBUTS_NAME_LIST.get(2)).setMaxValue(minDef);
-      attributsMap.get(ATTRIBUTS_NAME_LIST.get(2)).setMinValue(maxDef);
+      statsMap.get(STATS_NAME_LIST.get(2)).setMaxValue(minDef);
+      statsMap.get(STATS_NAME_LIST.get(2)).setMinValue(maxDef);
 
-      attributsMap.get(ATTRIBUTS_NAME_LIST.get(3)).setMaxValue(minSpd);
-      attributsMap.get(ATTRIBUTS_NAME_LIST.get(3)).setMinValue(maxSpd);
+      statsMap.get(STATS_NAME_LIST.get(3)).setMaxValue(minSpd);
+      statsMap.get(STATS_NAME_LIST.get(3)).setMinValue(maxSpd);
 
-      attributsMap.get(ATTRIBUTS_NAME_LIST.get(4)).setMaxValue(minPrec);
-      attributsMap.get(ATTRIBUTS_NAME_LIST.get(4)).setMinValue(maxPrec);
-
-      hpMax = attributsMap.get("HP").getValue();
+      hpMax = statsMap.get("HP").getValue();
    }
 
    /**
@@ -61,33 +56,33 @@ public abstract class Troup implements Prototypeable {
    protected Troup(Troup troup){
       this.name = troup.name;
       this.hpMax = troup.hpMax;
-      for(String a : troup.attributsMap.keySet()){
-         attributsMap.put(a, troup.attributsMap.get(a).copy());
+      for(String a : troup.statsMap.keySet()){
+         statsMap.put(a, troup.statsMap.get(a).copy());
       }
    }
 
    /**
-    * Méthode pour ajouter un attribut à la troupe
-    * @param attributs Attributs à ajouter à la troupe
+    * Méthode pour ajouter une stat à la troupe
+    * @param statistique Statistique à ajouter à la troupe
     */
-   protected void addAttribut(Attributs attributs){
-      attributsMap.put(attributs.getName(), attributs);
+   protected void addStat(Statistique statistique){
+      statsMap.put(statistique.getName(), statistique);
    }
 
    /**
-    * Méthode pour obtenir la map contenant les attributs
-    * @return map des attributs
+    * Méthode pour obtenir la map contenant les Stats
+    * @return map des Stats
     */
-   protected Map<String, Attributs> getAttributsMap() {
-      return attributsMap;
+   protected Map<String, Statistique> getStatsMap() {
+      return statsMap;
    }
 
    /**
-    * Récupère une liste contenant les attributs
+    * Récupère une liste contenant les Stats
     * @return
     */
-   public List<Attributs> getAttributsList() {
-      return new ArrayList<> (attributsMap.values());
+   public List<Statistique> getStatsList() {
+      return new ArrayList<> (statsMap.values());
    }
 
    /**
@@ -98,8 +93,41 @@ public abstract class Troup implements Prototypeable {
       return hpMax;
    }
 
+   /**
+    * Méthode pour soigner la troupe
+    */
    public void heal(){
-      attributsMap.get("HP").setValue(hpMax);
+      statsMap.get("HP").setValue(hpMax);
+   }
+
+   /**
+    * Méthode donnant les dégats de base d'une attaque par cette troupe
+    * @return Valeur des dégats de base de l'attaque de cette troupe
+    */
+   public int attack(){
+      if(statsMap.get("HP").getValue() <= 0)
+         return 0;
+      return statsMap.get("Attack").getValue();
+   }
+
+   /**
+    * Méthode utilisée lorsque la troupe prend des dégats
+    * @param damageDealed Dégats subits par la troupe
+    */
+   public int getAttacked(int damageDealed){
+      int defense = statsMap.get("Defense").getValue();
+      int hpLeft = statsMap.get("HP").getValue();
+      int damageTaken = damageDealed > defense ? damageDealed - defense : 0;
+      statsMap.get("HP").setValue(hpLeft > damageTaken ? (hpLeft - damageTaken) : 0);
+      return damageTaken;
+   }
+
+   /**
+    * Méthode pour obtenir la vitesse de la troupe
+    * @return Vitesse de la troupe
+    */
+   public int getSpeed(){
+      return statsMap.get("Speed").getValue();
    }
 
    /**
@@ -111,12 +139,12 @@ public abstract class Troup implements Prototypeable {
    }
 
    /**
-    * Méthode pour downgrade les attributs d'une troupe
+    * Méthode pour downgrade les Statss d'une troupe
     * @param chanceToDowngrade
     */
-   public void downGradeStats(int chanceToDowngrade){
-      for (Attributs attributs : attributsMap.values()){
-         attributs.downgradeValue(chanceToDowngrade);
+   public void downGradeStat(int chanceToDowngrade){
+      for (Statistique statistique : statsMap.values()){
+         statistique.downgradeValue(chanceToDowngrade);
       }
    }
 
