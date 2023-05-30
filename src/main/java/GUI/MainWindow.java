@@ -104,7 +104,7 @@ public class MainWindow extends JFrame {
          add(squadronsList);
 
          // Bouton générer
-         JButton generateBtn = new JButton("Générer troupe");
+         JButton generateBtn = new JButton("Générer troupe (" + GENERATE_PRICE + " crédits)");
          generateBtn.addActionListener(e -> {
             actualTroup = new Stormtrooper();
             setStatsList((ArrayList<Attributs>) actualTroup.getAttributsMap());
@@ -115,7 +115,7 @@ public class MainWindow extends JFrame {
          add(generateBtn);
 
          // Bouton cloner
-         JButton cloneBtn = new JButton("Cloner troupe");
+         JButton cloneBtn = new JButton("Cloner troupe (" + CLONE_PRICE + " crédits)");
          cloneBtn.addActionListener(e -> {
             Troup copiedTroup = actualTroup.copy();
             setStatsList((ArrayList<Attributs>) copiedTroup.getAttributsMap());
