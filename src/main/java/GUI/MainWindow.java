@@ -71,6 +71,8 @@ public class MainWindow extends JFrame {
 
       private final JList<String> statsList;
 
+      private final JList<String> squadronsList;
+
       public CreationPage() {
 
          setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -86,9 +88,20 @@ public class MainWindow extends JFrame {
          add(moneyLabel);
 
          // Liste des stats de la troupe
-         DefaultListModel<String> listModel = new DefaultListModel<>();
-         statsList = new JList<>(listModel);
+         DefaultListModel<String> statsListModel = new DefaultListModel<>();
+         statsList = new JList<>(statsListModel);
          add(statsList);
+
+         // TODO : Remplacer les placeholders par les vraies valeurs
+         // List des escadrilles
+         DefaultListModel<String> squadronsListModel = new DefaultListModel<>();
+         squadronsListModel.addElement("Squadron 1 (5/10)");
+         squadronsListModel.addElement("Squadron 2 (2/10)");
+         squadronsListModel.addElement("Squadron 3 (0/10)");
+         squadronsListModel.addElement("Squadron 4 (0/10)");
+         squadronsListModel.addElement("Squadron 5 (0/10)");
+         squadronsList = new JList<>(squadronsListModel);
+         add(squadronsList);
 
          // Bouton générer
          JButton generateBtn = new JButton("Générer troupe");
