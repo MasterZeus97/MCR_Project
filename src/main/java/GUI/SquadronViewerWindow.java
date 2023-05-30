@@ -16,6 +16,13 @@ public class SquadronViewerWindow extends JFrame {
       setTitle("Squadron Viewer");
       setSize(400, 300);
       setLocationRelativeTo(null);
+
+      JPanel panel = new JPanel();
+      for (int i = 0; i < 5; i++) {
+         SqudronJList SList = new SqudronJList();
+         panel.add(SList.getList());
+      }
+      add(panel);
    }
 
    /**
@@ -28,5 +35,29 @@ public class SquadronViewerWindow extends JFrame {
          instance = new SquadronViewerWindow();
       }
       return instance;
+   }
+}
+
+class SqudronJList {
+
+   private final JList list;
+
+   public SqudronJList() {
+      DefaultListModel<String> squadronsListModel = new DefaultListModel<>();
+      squadronsListModel.addElement("Stormtrooper: 6 / 53 / 23 / 62");
+      squadronsListModel.addElement("Stormtrooper: 6 / 53 / 23 / 62");
+      squadronsListModel.addElement("Stormtrooper: 6 / 53 / 23 / 62");
+      squadronsListModel.addElement("");
+      squadronsListModel.addElement("");
+      squadronsListModel.addElement("");
+      squadronsListModel.addElement("");
+      squadronsListModel.addElement("");
+      squadronsListModel.addElement("");
+      squadronsListModel.addElement("");
+      list = new JList<>(squadronsListModel);
+   }
+
+   public JList getList() {
+      return list;
    }
 }
