@@ -24,10 +24,7 @@ public class Stormtrooper extends Troup {
     */
    public Stormtrooper() {
       super("Stormtrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd);
-      Statistique stat = new Statistique("Precision");
-      getStatsMap().put("Precision", new Statistique("Precision"));
-      getStatsMap().get("Precision").setMaxValue(minPrec);
-      getStatsMap().get("Precision").setMinValue(maxPrec);
+      getStatsMap().put("Precision", new Statistique("Precision", minPrec, maxPrec));
    }
 
    /**

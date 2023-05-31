@@ -30,21 +30,11 @@ public abstract class Troup implements Prototypeable {
                                 int minDef, int maxDef,
                                 int minSpd, int maxSpd) {
       this.name = name;
-      for(String s : STATS_NAME_LIST){
-         statsMap.put(s, new Statistique(s));
-      }
 
-      statsMap.get(STATS_NAME_LIST.get(0)).setMaxValue(minHp);
-      statsMap.get(STATS_NAME_LIST.get(0)).setMinValue(maxHp);
-
-      statsMap.get(STATS_NAME_LIST.get(1)).setMaxValue(minAtt);
-      statsMap.get(STATS_NAME_LIST.get(1)).setMinValue(maxAtt);
-
-      statsMap.get(STATS_NAME_LIST.get(2)).setMaxValue(minDef);
-      statsMap.get(STATS_NAME_LIST.get(2)).setMinValue(maxDef);
-
-      statsMap.get(STATS_NAME_LIST.get(3)).setMaxValue(minSpd);
-      statsMap.get(STATS_NAME_LIST.get(3)).setMinValue(maxSpd);
+      statsMap.put(STATS_NAME_LIST.get(0), new Statistique(STATS_NAME_LIST.get(0), minHp, maxHp));
+      statsMap.put(STATS_NAME_LIST.get(1), new Statistique(STATS_NAME_LIST.get(1), minAtt, maxAtt));
+      statsMap.put(STATS_NAME_LIST.get(2), new Statistique(STATS_NAME_LIST.get(2), minDef, maxDef));
+      statsMap.put(STATS_NAME_LIST.get(3), new Statistique(STATS_NAME_LIST.get(3), minSpd, maxSpd));
 
       hpMax = statsMap.get("HP").getValue();
    }
