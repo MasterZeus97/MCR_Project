@@ -44,7 +44,7 @@ public class Army {
     public int getMaxSize(){
         return maxSizeArmy;
     }
-    
+
 
     /**
      * Méthode pour savoir si l'armée est pleine
