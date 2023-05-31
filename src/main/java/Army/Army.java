@@ -26,7 +26,9 @@ public class Army {
      * @return Le squadron à l'index squadronIndex
      */
     public Squadron getSquadron(int squadronIndex){
-        return squadronsList.get(squadronIndex);
+        if(squadronIndex > 0 && squadronIndex < 5)
+            return squadronsList.get(squadronIndex);
+        return null;
     }
 
     /**
@@ -62,7 +64,7 @@ public class Army {
      * Méthode pour obtenir la liste des squadrons
      * @return Liste des squadrons dans le squadron
      */
-    List<Squadron> getSquadronsList(){
+    public List<Squadron> getSquadronsList(){
         return squadronsList;
     }
 }
