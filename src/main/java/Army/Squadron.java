@@ -60,6 +60,11 @@ public class Squadron implements Prototypeable {
         return troupList;
     }
 
+
+    public int getTroupNumber(){
+        return troupList.size();
+    }
+
     /**
      * Methode pour cloner le squadron. Clone les troupes dans le squadron
      * @return Un nouveau squadron, clone du premier

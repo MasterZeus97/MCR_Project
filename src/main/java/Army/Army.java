@@ -7,28 +7,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Army {
-    private final static int maxSizeArmy = 10;
+    private final static int maxSizeArmy = 5;
 
     private final List<Squadron> squadronsList = new ArrayList<>();
 
     /**
-     * Méthode pour ajouter un squadron à l'armée
-     * @param squadron Squadron à ajouter
-     * @throws SizeLimitExceededException Exception lancée si l'armée est plein déjà plein
+     * Constructeur de l'armée. Crée un nombre de squadron égal à la taille de l'armée
      */
-    public void add(Squadron squadron) throws SizeLimitExceededException {
-        if(isFull()){
-            throw new SizeLimitExceededException("Army is already full" + squadron.toString());
-        }else{
-            squadronsList.add(squadron);
+    public Army(){
+        for(int i = 0; i < maxSizeArmy; i++){
+            squadronsList.add(new Squadron());
         }
+    }
+
+    /**
+     * Permet de récupérer un squadron spécifique avec un index
+     * @param squadronIndex Index du squadron qu'on veut récupérer
+     * @return Le squadron à l'index squadronIndex
+     */
+    public Squadron getSquadron(int squadronIndex){
+        return squadronsList.get(squadronIndex);
     }
 
     /**
      * Vide l'armée
      */
     public void clearArmy(){
-        squadronsList.clear();
+        for(Squadron s : squadronsList)
+            s.clearSquadron();
     }
 
     /**
@@ -38,6 +44,7 @@ public class Army {
     public int getMaxSize(){
         return maxSizeArmy;
     }
+    
 
     /**
      * Méthode pour savoir si l'armée est pleine
