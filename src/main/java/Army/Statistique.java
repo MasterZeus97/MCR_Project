@@ -14,13 +14,15 @@ public class Statistique implements Prototypeable{
 
     private double maxValueReduce = maxValue * percentReduce;
 
-
-
     /**
-     * Constructeur pour un Stats dont on veut randomiser la valeur
-     * @param name Nom de l'Stats
+     * Constructeur pour une statistique dont on veut set les min et max
+     * @param name nom de la statistique
+     * @param minValue valeur minimum
+     * @param maxValue
      */
-    public Statistique(String name) {
+    public Statistique(String name, int minValue, int maxValue) {
+        this.minValue = minValue;
+        this.maxValue = maxValue;
         this.name = name;
         randomizeValue();
     }
@@ -64,28 +66,6 @@ public class Statistique implements Prototypeable{
             this.value = maxValue;
         }else {
             this.value = value;
-        }
-    }
-
-    /**
-     * Méthode pour modifier la valeur minimum de la stat. Si la stat est plus basse que minValue, monte la stat
-     * au niveau de minValue
-     * @param minValue
-     */
-    public void setMinValue(int minValue) {
-        this.minValue = minValue;
-    }
-
-    /**
-     * Méthode pour modifier la valeur maximum de la stat. Si la stat est plus haute que maxValue, descend la stat
-     * au niveau de maxValue
-     * @param maxValue Valeur maximal que peut prendre la stat
-     */
-    public void setMaxValue(int maxValue) {
-        if(value > maxValue){
-            value = maxValue;
-        }else{
-            this.maxValue = maxValue;
         }
     }
 
