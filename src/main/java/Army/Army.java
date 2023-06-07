@@ -44,7 +44,6 @@ public class Army {
     public int getMaxSize(){
         return maxSizeArmy;
     }
-    
 
     /**
      * Méthode pour savoir si l'armée est pleine
@@ -62,7 +61,7 @@ public class Army {
      * Méthode pour obtenir la liste des squadrons
      * @return Liste des squadrons dans le squadron
      */
-    List<Squadron> getSquadronsList(){
+    public List<Squadron> getSquadronsList(){
         return squadronsList;
     }
 }

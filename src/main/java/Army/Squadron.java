@@ -56,7 +56,7 @@ public class Squadron implements Prototypeable {
      * Méthode pour obtenir la liste des troupes
      * @return Liste des troupes dans le squadron
      */
-    List<Troup> getTroupList(){
+    public List<Troup> getTroupList(){
         return troupList;
     }
 

@@ -1,6 +1,6 @@
 package Army.Troups;
 
-import Army.Statistique;
+import Army.Stat;
 import Army.Prototypeable;
 
 import java.util.*;
@@ -17,7 +17,7 @@ public abstract class Troup implements Prototypeable {
    final int hpMax;
 
    //Statistique du soldat
-   private final Map<String, Statistique> statsMap = new HashMap<>();
+   private final Map<String, Stat> statsMap = new HashMap<>();
 
 
    /**
@@ -31,7 +31,7 @@ public abstract class Troup implements Prototypeable {
                                 int minSpd, int maxSpd) {
       this.name = name;
       for(String s : STATS_NAME_LIST){
-         statsMap.put(s, new Statistique(s));
+         statsMap.put(s, new Stat(s));
       }
 
       statsMap.get(STATS_NAME_LIST.get(0)).setMaxValue(minHp);
@@ -65,7 +65,7 @@ public abstract class Troup implements Prototypeable {
     * Méthode pour ajouter une stat à la troupe
     * @param statistique Statistique à ajouter à la troupe
     */
-   protected void addStat(Statistique statistique){
+   protected void addStat(Stat statistique){
       statsMap.put(statistique.getName(), statistique);
    }
 
@@ -73,7 +73,7 @@ public abstract class Troup implements Prototypeable {
     * Méthode pour obtenir la map contenant les Stats
     * @return map des Stats
     */
-   protected Map<String, Statistique> getStatsMap() {
+   protected Map<String, Stat> getStatsMap() {
       return statsMap;
    }
 
@@ -81,7 +81,7 @@ public abstract class Troup implements Prototypeable {
     * Récupère une liste contenant les Stats
     * @return
     */
-   public List<Statistique> getStatsList() {
+   public List<Stat> getStatsList() {
       return new ArrayList<> (statsMap.values());
    }
 
@@ -143,7 +143,7 @@ public abstract class Troup implements Prototypeable {
     * @param chanceToDowngrade
     */
    public void downGradeStat(int chanceToDowngrade){
-      for (Statistique statistique : statsMap.values()){
+      for (Stat statistique : statsMap.values()){
          statistique.downgradeValue(chanceToDowngrade);
       }
    }

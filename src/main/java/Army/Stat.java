@@ -2,7 +2,7 @@ package Army;
 
 import java.util.Random;
 
-public class Statistique implements Prototypeable{
+public class Stat implements Prototypeable{
     private final String name;
     private int value;
     private int minValue = 0;
@@ -20,7 +20,7 @@ public class Statistique implements Prototypeable{
      * Constructeur pour un Stats dont on veut randomiser la valeur
      * @param name Nom de l'Stats
      */
-    public Statistique(String name) {
+    public Stat(String name) {
         this.name = name;
         randomizeValue();
     }
@@ -30,7 +30,7 @@ public class Statistique implements Prototypeable{
      * @param name Nom de l'Stats
      * @param value Valeur de base de l'Stats
      */
-    public Statistique(String name, int value) {
+    public Stat(String name, int value) {
         this.name = name;
         this.value = value;
     }
@@ -39,7 +39,7 @@ public class Statistique implements Prototypeable{
      * Constructeur de copie d'un statistique
      * @param statistique
      */
-    private Statistique(Statistique statistique){
+    private Stat(Stat statistique){
         this.name = statistique.name;
         this.value = statistique.value;
         this.minValue = statistique.minValue;
@@ -136,7 +136,7 @@ public class Statistique implements Prototypeable{
      * @return Un nouvel Stats, clone du premier
      */
     @Override
-    public Statistique copy() {
-        return new Statistique(this);
+    public Stat copy() {
+        return new Stat(this);
     }
 }
