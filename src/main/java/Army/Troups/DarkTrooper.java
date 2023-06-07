@@ -18,7 +18,7 @@ public class DarkTrooper extends Troup {
     * Constructeur d'un DarkTrooper
     */
    public DarkTrooper() {
-      super("DarkTrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
+      super("Dark Trooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
    }
 
    /**

@@ -18,7 +18,7 @@ public class ScootTrooper extends Troup {
     * Constructeur d'un ScootTrooper
     */
    public ScootTrooper() {
-      super("ScootTrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
+      super("Scoot Trooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
    }
 
    /**

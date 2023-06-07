@@ -18,7 +18,7 @@ public class DarkVador extends Troup {
     * Constructeur d'un DarkVador
     */
    public DarkVador() {
-      super("DarkVador", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
+      super("Dark Vador", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
    }
 
    /**

@@ -69,8 +69,8 @@ public class MainWindow extends JFrame {
       private final static int GENERATE_PRICE = 100;
       private final static int CLONE_PRICE = 50;
 
-      private final static int IMAGE_MAX_WIDTH = 100;
-      private final static int IMAGE_MAX_HEIGHT = 100;
+      private final static int IMAGE_MAX_WIDTH = 200;
+      private final static int IMAGE_MAX_HEIGHT = 200;
 
       private int moneyCount;
       private final JLabel moneyLabel;

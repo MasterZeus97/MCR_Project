@@ -18,7 +18,7 @@ public class DeathTrooper extends Troup {
     * Constructeur d'un DeathTrooper
     */
    public DeathTrooper() {
-      super("DeathTrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
+      super("Death Trooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
    }
 
    /**
