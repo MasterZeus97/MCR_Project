@@ -9,9 +9,6 @@ public class Stat implements Prototypeable{
     private int maxValue = 100;
 
     private double percentReduce;
-
-
-
     private double maxValueReduce = maxValue * percentReduce;
 
     /**
@@ -92,10 +89,12 @@ public class Stat implements Prototypeable{
      */
     public void downgradeValue(int chanceToDowngrade){
         int downChance = chanceToDowngrade % 101;
+
         Random random = new Random();
         int checkChange = random.nextInt(100 - 1) + 1;
         if(value > 1 && checkChange <= downChance){
             value -= random.nextInt((int) Math.ceil(maxValueReduce) - 1)+1;
+          
             if(value < 1)
                 value = 1;
         }

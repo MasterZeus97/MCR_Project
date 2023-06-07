@@ -47,7 +47,6 @@ public class Army {
         return maxSizeArmy;
     }
 
-
     /**
      * Méthode pour savoir si l'armée est pleine
      * @return True : L'armée est pleine - False : L'armée n'est pas pleine

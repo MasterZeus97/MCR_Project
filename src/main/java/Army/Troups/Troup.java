@@ -15,7 +15,6 @@ public abstract class Troup implements Prototypeable {
    private static final int dropChance = 90;
 
    private final String name;
-
    private final int hpMax;
 
    //Stat du soldat
