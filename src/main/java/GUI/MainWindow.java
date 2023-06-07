@@ -3,8 +3,10 @@ package GUI;
 import Army.Troups.*;
 import Army.*;
 
+import javax.naming.SizeLimitExceededException;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -17,6 +19,8 @@ public class MainWindow extends JFrame {
 
    private Troup actualTroup;
 
+   private final Army army;
+
    /**
     * Crée une nouvelle fenêtre.
     */
@@ -25,6 +29,8 @@ public class MainWindow extends JFrame {
       setSize(800, 600);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setLocationRelativeTo(null);
+
+      army = new Army();
 
       cardLayout = new CardLayout();
 
@@ -47,7 +53,9 @@ public class MainWindow extends JFrame {
       public TitlePage() {
          add(new JLabel("NOM DU JEU"));
          JButton button = new JButton("Jouer");
-         button.addActionListener(e -> changeCard("creationPage"));
+         button.addActionListener(e -> {
+            changeCard("creationPage");
+         });
          add(button);
       }
    }
@@ -78,7 +86,7 @@ public class MainWindow extends JFrame {
          setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
          // Image
-         imageLabel = new JLabel("---");
+         imageLabel = new JLabel("NO IMAGE");
          add(imageLabel);
 
          // Compteur de crédits
@@ -92,36 +100,41 @@ public class MainWindow extends JFrame {
          statsList = new JList<>(statsListModel);
          add(statsList);
 
-         // TODO : Remplacer les placeholders par les vraies valeurs
          // List des escadrilles
          DefaultListModel<String> squadronsListModel = new DefaultListModel<>();
-         squadronsListModel.addElement("Squadron 1 (5/10)");
-         squadronsListModel.addElement("Squadron 2 (2/10)");
-         squadronsListModel.addElement("Squadron 3 (0/10)");
-         squadronsListModel.addElement("Squadron 4 (0/10)");
-         squadronsListModel.addElement("Squadron 5 (0/10)");
+         List<Squadron> squadrons = army.getSquadronsList();
          squadronsList = new JList<>(squadronsListModel);
+         updateSquadronsList();
          add(squadronsList);
 
          // Bouton générer
          JButton generateBtn = new JButton("Générer troupe (" + GENERATE_PRICE + " crédits)");
          generateBtn.addActionListener(e -> {
-            actualTroup = new Stormtrooper();
-            setStatsList((ArrayList<Attributs>) actualTroup.getAttributsMap());
+            actualTroup = TroupGenerator.getRandomTroup();
+            setStatsList((ArrayList<Stat>) actualTroup.getStatsList());
 
             setMoney(moneyCount - GENERATE_PRICE);
-            setImage("Darth Vader");
+            setImage(actualTroup.getName());
          });
          add(generateBtn);
 
          // Bouton cloner
          JButton cloneBtn = new JButton("Cloner troupe (" + CLONE_PRICE + " crédits)");
+         //cloneBtn.setEnabled(false);
          cloneBtn.addActionListener(e -> {
+            try {
+               army.getSquadron(0).add(actualTroup);
+
+               updateSquadronsList();
+            } catch (SizeLimitExceededException ex) {
+               ex.printStackTrace();
+            }
+
             Troup copiedTroup = actualTroup.copy();
-            setStatsList((ArrayList<Attributs>) copiedTroup.getAttributsMap());
+            // TODO : Drop stats
+            setStatsList((ArrayList<Stat>) copiedTroup.getStatsList());
 
             setMoney(moneyCount - CLONE_PRICE);
-            setImage("Stormtrooper");
          });
          add(cloneBtn);
 
@@ -136,8 +149,9 @@ public class MainWindow extends JFrame {
          // Bouton voir bataillons
          JButton squadronBtn = new JButton("Voir bataillons");
          squadronBtn.addActionListener(e -> {
-            SquadronViewerWindow sqw = SquadronViewerWindow.getInstance();
+            SquadronViewerWindow sqw = SquadronViewerWindow.getInstance(army);
             sqw.setVisible(true);
+            sqw.update(0);
          });
          add(squadronBtn);
       }
@@ -147,10 +161,10 @@ public class MainWindow extends JFrame {
        *
        * @param newStats La liste des stats à afficher.
        */
-      private void setStatsList(ArrayList<Attributs> newStats) {
+      private void setStatsList(ArrayList<Stat> newStats) {
          DefaultListModel<String> oldListModel = (DefaultListModel<String>) statsList.getModel();
          oldListModel.clear();
-         for (Attributs a : newStats) {
+         for (Stat a : newStats) {
             oldListModel.addElement(a.getName() + ": " + a.getValue());
          }
       }
@@ -200,6 +214,16 @@ public class MainWindow extends JFrame {
          imageLabel.setText(troupName);
          imageLabel.setIcon(imageIcon);
       }
+
+      public void updateSquadronsList() {
+         DefaultListModel<String> squadronsListModel = (DefaultListModel<String>) squadronsList.getModel();
+         squadronsListModel.clear();
+
+         for (int i = 0; i < army.getMaxSize(); i++) {
+            Squadron s = army.getSquadron(i);
+            squadronsListModel.addElement("Squadron " + i + ": (" + s.getTroupNumber() + "/" + s.getMaxSize() + ")");
+         }
+      }
    }
 
    /**
@@ -209,6 +233,7 @@ public class MainWindow extends JFrame {
       public BattlePage() {
          JButton button = new JButton("Terminer bataille");
          button.addActionListener(e -> changeCard("creationPage"));
-         add(button);}
+         add(button);
+      }
    }
 }
