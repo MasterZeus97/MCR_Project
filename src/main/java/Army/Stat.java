@@ -8,8 +8,7 @@ public class Stat implements Prototypeable{
     private int minValue = 0;
     private int maxValue = 100;
 
-    private double percentReduce;
-    private double maxValueReduce = maxValue * percentReduce;
+    private double maxValueReduce;
 
     /**
      * Constructeur pour une statistique dont on veut set les min et max
@@ -17,18 +16,18 @@ public class Stat implements Prototypeable{
      * @param minValue valeur minimum
      * @param maxValue
      */
-    public Stat(String name, int minValue, int maxValue, int percentReduce) {
+    public Stat(String name, int minValue, int maxValue, double percentReduce) {
         this.minValue = minValue;
         this.maxValue = maxValue;
-        this.percentReduce = (percentReduce % 101) / 100.0;
+        percentReduce = (percentReduce % 101) / 100.0;
+        this.maxValueReduce = maxValue * percentReduce;
         this.name = name;
         randomizeValue();
     }
-
     /**
-     * Constructeur pour un Stats dont on connait la valeur
-     * @param name Nom de l'Stats
-     * @param value Valeur de base de l'Stats
+     * Constructeur pour une stat dont on connait la valeur
+     * @param name Nom de la stat
+     * @param value Valeur de base de la stat
      */
     public Stat(String name, int value) {
         this.name = name;
@@ -36,7 +35,7 @@ public class Stat implements Prototypeable{
     }
 
     /**
-     * Constructeur de copie d'un stat
+     * Constructeur de copie d'une stat
      * @param stat
      */
     private Stat(Stat stat){
@@ -44,19 +43,20 @@ public class Stat implements Prototypeable{
         this.value = stat.value;
         this.minValue = stat.minValue;
         this.maxValue = stat.maxValue;
+        this.maxValueReduce = stat.maxValueReduce;
     }
 
     /**
-     * Getter pour récupérer la valeur de l'Stats
-     * @return Valeur de l'Stats
+     * Getter pour récupérer la valeur de la stats
+     * @return Valeur de la stats
      */
     public int getValue() {
         return (int) value;
     }
 
     /**
-     * Setteur pour modifier la valeur de l'Stats
-     * @param value Nouvelle valeur de l'Stats
+     * Setteur pour modifier la valeur de la stats
+     * @param value Nouvelle valeur de la stats
      */
 
     public void setValue(int value) {
@@ -68,7 +68,7 @@ public class Stat implements Prototypeable{
     }
 
     /**
-     * Getter pour récupérer le nom de l'Stats
+     * Getter pour récupérer le nom de la stats
      * @return Nom de l'Stats
      */
     public String getName() {
@@ -105,7 +105,7 @@ public class Stat implements Prototypeable{
      * @param chanceToUpgrade Chance que la stat soit améliorée
      */
     public void upgradeValue(int chanceToUpgrade){
-        int upChance = chanceToUpgrade % 100;
+        int upChance = chanceToUpgrade % 101;
         Random random = new Random();
         int checkChange = random.nextInt(100 - 1) + 1;
         if(value < maxValue && checkChange <= upChance){
@@ -114,7 +114,7 @@ public class Stat implements Prototypeable{
     }
 
     /**
-     * Methode pour cloner l'Stats.
+     * Methode pour cloner la stat.
      * @return Un nouvel Stats, clone du premier
      */
     @Override
