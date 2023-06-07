@@ -2,13 +2,13 @@ package Army;
 
 import java.util.Random;
 
-public class Statistique implements Prototypeable{
+public class Stat implements Prototypeable{
     private final String name;
     private int value;
     private int minValue = 0;
     private int maxValue = 100;
 
-    private static double percentReduce = 0.05;
+    private double percentReduce;
 
 
 
@@ -20,9 +20,10 @@ public class Statistique implements Prototypeable{
      * @param minValue valeur minimum
      * @param maxValue
      */
-    public Statistique(String name, int minValue, int maxValue) {
+    public Stat(String name, int minValue, int maxValue, int percentReduce) {
         this.minValue = minValue;
         this.maxValue = maxValue;
+        this.percentReduce = (percentReduce % 101) / 100.0;
         this.name = name;
         randomizeValue();
     }
@@ -32,20 +33,20 @@ public class Statistique implements Prototypeable{
      * @param name Nom de l'Stats
      * @param value Valeur de base de l'Stats
      */
-    public Statistique(String name, int value) {
+    public Stat(String name, int value) {
         this.name = name;
         this.value = value;
     }
 
     /**
-     * Constructeur de copie d'un statistique
-     * @param statistique
+     * Constructeur de copie d'un stat
+     * @param stat
      */
-    private Statistique(Statistique statistique){
-        this.name = statistique.name;
-        this.value = statistique.value;
-        this.minValue = statistique.minValue;
-        this.maxValue = statistique.maxValue;
+    private Stat(Stat stat){
+        this.name = stat.name;
+        this.value = stat.value;
+        this.minValue = stat.minValue;
+        this.maxValue = stat.maxValue;
     }
 
     /**
@@ -90,11 +91,13 @@ public class Statistique implements Prototypeable{
      * @param chanceToDowngrade Chance que la stat soit baissée
      */
     public void downgradeValue(int chanceToDowngrade){
-        int downChance = chanceToDowngrade % 100;
+        int downChance = chanceToDowngrade % 101;
         Random random = new Random();
         int checkChange = random.nextInt(100 - 1) + 1;
         if(value > 1 && checkChange <= downChance){
             value -= random.nextInt((int) Math.ceil(maxValueReduce) - 1)+1;
+            if(value < 1)
+                value = 1;
         }
     }
 
@@ -116,7 +119,7 @@ public class Statistique implements Prototypeable{
      * @return Un nouvel Stats, clone du premier
      */
     @Override
-    public Statistique copy() {
-        return new Statistique(this);
+    public Stat copy() {
+        return new Stat(this);
     }
 }
