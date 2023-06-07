@@ -82,6 +82,14 @@ public class Squadron implements Prototypeable {
         return tmp;
     }
 
+    /**
+     * Methode pour soigner toutes les troupes du squadron
+     */
+    public void heal(){
+        for(Troup t : troupList)
+            t.heal();
+    }
+
     @Override
     public String toString() {
         return "Squadron{" +

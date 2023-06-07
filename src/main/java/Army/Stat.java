@@ -8,19 +8,19 @@ public class Stat implements Prototypeable{
     private int minValue = 0;
     private int maxValue = 100;
 
-    private static double percentReduce = 0.05;
-
-
-
+    private double percentReduce;
     private double maxValueReduce = maxValue * percentReduce;
 
-
-
     /**
-     * Constructeur pour un Stats dont on veut randomiser la valeur
-     * @param name Nom de l'Stats
+     * Constructeur pour une statistique dont on veut set les min et max
+     * @param name nom de la statistique
+     * @param minValue valeur minimum
+     * @param maxValue
      */
-    public Stat(String name) {
+    public Stat(String name, int minValue, int maxValue, int percentReduce) {
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.percentReduce = (percentReduce % 101) / 100.0;
         this.name = name;
         randomizeValue();
     }
@@ -36,14 +36,14 @@ public class Stat implements Prototypeable{
     }
 
     /**
-     * Constructeur de copie d'un statistique
-     * @param statistique
+     * Constructeur de copie d'un stat
+     * @param stat
      */
-    private Stat(Stat statistique){
-        this.name = statistique.name;
-        this.value = statistique.value;
-        this.minValue = statistique.minValue;
-        this.maxValue = statistique.maxValue;
+    private Stat(Stat stat){
+        this.name = stat.name;
+        this.value = stat.value;
+        this.minValue = stat.minValue;
+        this.maxValue = stat.maxValue;
     }
 
     /**
@@ -68,28 +68,6 @@ public class Stat implements Prototypeable{
     }
 
     /**
-     * Méthode pour modifier la valeur minimum de la stat. Si la stat est plus basse que minValue, monte la stat
-     * au niveau de minValue
-     * @param minValue
-     */
-    public void setMinValue(int minValue) {
-        this.minValue = minValue;
-    }
-
-    /**
-     * Méthode pour modifier la valeur maximum de la stat. Si la stat est plus haute que maxValue, descend la stat
-     * au niveau de maxValue
-     * @param maxValue Valeur maximal que peut prendre la stat
-     */
-    public void setMaxValue(int maxValue) {
-        if(value > maxValue){
-            value = maxValue;
-        }else{
-            this.maxValue = maxValue;
-        }
-    }
-
-    /**
      * Getter pour récupérer le nom de l'Stats
      * @return Nom de l'Stats
      */
@@ -110,11 +88,15 @@ public class Stat implements Prototypeable{
      * @param chanceToDowngrade Chance que la stat soit baissée
      */
     public void downgradeValue(int chanceToDowngrade){
-        int downChance = chanceToDowngrade % 100;
+        int downChance = chanceToDowngrade % 101;
+
         Random random = new Random();
         int checkChange = random.nextInt(100 - 1) + 1;
         if(value > 1 && checkChange <= downChance){
             value -= random.nextInt((int) Math.ceil(maxValueReduce) - 1)+1;
+          
+            if(value < 1)
+                value = 1;
         }
     }
 
