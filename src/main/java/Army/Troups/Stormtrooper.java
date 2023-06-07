@@ -1,19 +1,20 @@
 package Army.Troups;
 
-import Army.Statistique;
+import Army.Stat;
 
 import java.util.Random;
 
 public class Stormtrooper extends Troup {
 
-   private static int minHp = 10,
+   private static int percentReduce = 10,
+                      minHp = 10,
                       maxHp = 100,
                       minAtt = 50,
                       maxAtt = 100,
                       minDef = 30,
                       maxDef = 60,
-                      minSpd = 20,
-                      maxSpd = 30,
+                      minSpd = 30,
+                      maxSpd = 40,
                       minPrec = 10,
                       maxPrec = 50;
 
@@ -23,8 +24,8 @@ public class Stormtrooper extends Troup {
     * Constructeur d'un stormtrooper
     */
    public Stormtrooper() {
-      super("Stormtrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd);
-      getStatsMap().put("Precision", new Statistique("Precision", minPrec, maxPrec));
+      super("Stormtrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
+      getStatsMap().put("Precision", new Stat("Precision", minPrec, maxPrec, percentReduce));
    }
 
    /**

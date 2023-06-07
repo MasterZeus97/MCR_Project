@@ -1,6 +1,6 @@
 package Army.Troups;
 
-import Army.Statistique;
+import Army.Stat;
 import Army.Prototypeable;
 
 import java.util.*;
@@ -12,12 +12,14 @@ public abstract class Troup implements Prototypeable {
                                                                            "Defense",
                                                                            "Speed"));
 
-   final String name;
+   private static final int dropChance = 90;
 
-   final int hpMax;
+   private final String name;
 
-   //Statistique du soldat
-   private final Map<String, Statistique> statsMap = new HashMap<>();
+   private final int hpMax;
+
+   //Stat du soldat
+   private final Map<String, Stat> statsMap = new HashMap<>();
 
 
    /**
@@ -28,13 +30,14 @@ public abstract class Troup implements Prototypeable {
    protected Troup(String name, int minHp, int maxHp,
                                 int minAtt, int maxAtt,
                                 int minDef, int maxDef,
-                                int minSpd, int maxSpd) {
+                                int minSpd, int maxSpd,
+                                int percentReduce) {
       this.name = name;
 
-      statsMap.put(STATS_NAME_LIST.get(0), new Statistique(STATS_NAME_LIST.get(0), minHp, maxHp));
-      statsMap.put(STATS_NAME_LIST.get(1), new Statistique(STATS_NAME_LIST.get(1), minAtt, maxAtt));
-      statsMap.put(STATS_NAME_LIST.get(2), new Statistique(STATS_NAME_LIST.get(2), minDef, maxDef));
-      statsMap.put(STATS_NAME_LIST.get(3), new Statistique(STATS_NAME_LIST.get(3), minSpd, maxSpd));
+      statsMap.put(STATS_NAME_LIST.get(0), new Stat(STATS_NAME_LIST.get(0), minHp, maxHp, percentReduce));
+      statsMap.put(STATS_NAME_LIST.get(1), new Stat(STATS_NAME_LIST.get(1), minAtt, maxAtt, percentReduce));
+      statsMap.put(STATS_NAME_LIST.get(2), new Stat(STATS_NAME_LIST.get(2), minDef, maxDef, percentReduce));
+      statsMap.put(STATS_NAME_LIST.get(3), new Stat(STATS_NAME_LIST.get(3), minSpd, maxSpd, percentReduce));
 
       hpMax = statsMap.get("HP").getValue();
    }
@@ -53,17 +56,17 @@ public abstract class Troup implements Prototypeable {
 
    /**
     * Méthode pour ajouter une stat à la troupe
-    * @param statistique Statistique à ajouter à la troupe
+    * @param stat Stat à ajouter à la troupe
     */
-   protected void addStat(Statistique statistique){
-      statsMap.put(statistique.getName(), statistique);
+   protected void addStat(Stat stat){
+      statsMap.put(stat.getName(), stat);
    }
 
    /**
     * Méthode pour obtenir la map contenant les Stats
     * @return map des Stats
     */
-   protected Map<String, Statistique> getStatsMap() {
+   protected Map<String, Stat> getStatsMap() {
       return statsMap;
    }
 
@@ -71,7 +74,7 @@ public abstract class Troup implements Prototypeable {
     * Récupère une liste contenant les Stats
     * @return
     */
-   public List<Statistique> getStatsList() {
+   public List<Stat> getStatsList() {
       return new ArrayList<> (statsMap.values());
    }
 
@@ -132,10 +135,25 @@ public abstract class Troup implements Prototypeable {
     * Méthode pour downgrade les Statss d'une troupe
     * @param chanceToDowngrade
     */
-   public void downGradeStat(int chanceToDowngrade){
-      for (Statistique statistique : statsMap.values()){
-         statistique.downgradeValue(chanceToDowngrade);
+   protected void downGradeStat(int chanceToDowngrade){
+      for (Stat stat : statsMap.values()){
+         stat.downgradeValue(chanceToDowngrade);
       }
+   }
+
+   /**
+    * Permet de savoir si la troupe est en vie
+    * @return True si la troupe a encore 1HP ou plus - False si elle a moins de 1HP
+    */
+   public boolean isAlive(){
+      return statsMap.get("HP").getValue() <= 0;
+   }
+
+   /**
+    * Méthode pour diminuer les stats de cette troupe
+    */
+   public void drop(){
+      downGradeStat(dropChance);
    }
 
    @Override
