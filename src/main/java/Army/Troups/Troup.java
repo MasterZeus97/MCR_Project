@@ -43,7 +43,7 @@ public abstract class Troup implements Prototypeable {
    }
 
    /**
-    * Constructeur de copie d'une troupe
+    * Constructeur de copie d'une troupe.
     * @param troup La troupe à copier
     */
    protected Troup(Troup troup){
@@ -72,21 +72,18 @@ public abstract class Troup implements Prototypeable {
 
    /**
     * Récupère une liste contenant les Stats
-    * @return
+    * @return Liste des stats de la troupe
     */
    public List<Stat> getStatsList() {
       if(sortedStats.isEmpty()){
          sortedStats = new ArrayList<> (statsMap.values());
-         Collections.sort(sortedStats, new Comparator<Stat>() {
-            @Override
-            public int compare(Stat o1, Stat o2) {
-               if(!isStatBelow(o1, o2)){
-                  return 1;
-               }else if(isStatBelow(o1, o2)){
-                  return -1;
-               }else{
-                  return 0;
-               }
+         sortedStats.sort((o1, o2) -> {
+            if (!isStatBelow(o1, o2)) {
+               return 1;
+            } else if (isStatBelow(o1, o2)) {
+               return -1;
+            } else {
+               return 0;
             }
          });
       }
@@ -148,7 +145,8 @@ public abstract class Troup implements Prototypeable {
 
    /**
     * Méthode pour downgrade les Statss d'une troupe
-    * @param chanceToDowngrade
+    * @param chanceToDowngrade Entier représentant le poucentage de chance que la stat se dégrade. La valeur est réduite
+    *                          à une valeur entre 0 et 100.
     */
    protected void downGradeStat(int chanceToDowngrade){
       for (Stat stat : statsMap.values()){

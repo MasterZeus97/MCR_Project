@@ -6,17 +6,17 @@ import java.util.Random;
 
 public class Stormtrooper extends Troup {
 
-   private static int percentReduce = 10,
-                      minHp = 10,
-                      maxHp = 100,
-                      minAtt = 50,
-                      maxAtt = 100,
-                      minDef = 30,
-                      maxDef = 60,
-                      minSpd = 30,
-                      maxSpd = 40,
-                      minPrec = 10,
-                      maxPrec = 50;
+   private static final int percentReduce = 10,
+                            minHp = 10,
+                            maxHp = 100,
+                            minAtt = 50,
+                            maxAtt = 100,
+                            minDef = 30,
+                            maxDef = 60,
+                            minSpd = 30,
+                            maxSpd = 40,
+                            minPrec = 10,
+                            maxPrec = 50;
 
    int downGradeStatChances = 70;
 

@@ -2,15 +2,15 @@ package Army.Troups;
 
 public class KXSeries extends Troup {
 
-   private static int percentReduce = 10,
-                      minHp = 100,
-                      maxHp = 200,
-                      minAtt = 100,
-                      maxAtt = 200,
-                      minDef = 60,
-                      maxDef = 90,
-                      minSpd = 10,
-                      maxSpd = 15;
+   private static final int percentReduce = 10,
+                            minHp = 100,
+                            maxHp = 200,
+                            minAtt = 100,
+                            maxAtt = 200,
+                            minDef = 60,
+                            maxDef = 90,
+                            minSpd = 10,
+                            maxSpd = 15;
 
    int downGradeStatChances = 70;
 

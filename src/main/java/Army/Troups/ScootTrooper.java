@@ -2,15 +2,15 @@ package Army.Troups;
 
 public class ScootTrooper extends Troup {
 
-   private static int percentReduce = 20,
-                      minHp = 50,
-                      maxHp = 100,
-                      minAtt = 25,
-                      maxAtt = 30,
-                      minDef = 10,
-                      maxDef = 20,
-                      minSpd = 80,
-                      maxSpd = 100;
+   private static final int percentReduce = 20,
+                            minHp = 50,
+                            maxHp = 100,
+                            minAtt = 25,
+                            maxAtt = 30,
+                            minDef = 10,
+                            maxDef = 20,
+                            minSpd = 80,
+                            maxSpd = 100;
 
    int downGradeStatChances = 50;
 

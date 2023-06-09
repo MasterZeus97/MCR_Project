@@ -2,15 +2,15 @@ package Army.Troups;
 
 public class DarkVador extends Troup {
 
-   private static int percentReduce = 10,
-                      minHp = 1000,
-                      maxHp = 1000,
-                      minAtt = 500,
-                      maxAtt = 500,
-                      minDef = 150,
-                      maxDef = 150,
-                      minSpd = 100,
-                      maxSpd = 100;
+   private static final int percentReduce = 10,
+                            minHp = 1000,
+                            maxHp = 1000,
+                            minAtt = 500,
+                            maxAtt = 500,
+                            minDef = 150,
+                            maxDef = 150,
+                            minSpd = 100,
+                            maxSpd = 100;
 
    int downGradeStatChances = 70;
 
