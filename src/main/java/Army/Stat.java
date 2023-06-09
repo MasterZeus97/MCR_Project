@@ -80,7 +80,11 @@ public class Stat implements Prototypeable{
      */
     public void randomizeValue(){
         Random random = new Random();
-        value = random.nextInt(maxValue - minValue) + minValue;
+        if(maxValue != minValue) {
+            value = random.nextInt(maxValue - minValue) + minValue;
+        }else{
+            value = maxValue;
+        }
     }
 
     /**
@@ -114,11 +118,26 @@ public class Stat implements Prototypeable{
     }
 
     /**
+     * Permet de maximiser la valeur de la stat
+     */
+    public void maximizeVal(){
+        this.value = this.maxValue;
+    }
+
+    /**
      * Methode pour cloner la stat.
      * @return Un nouvel Stats, clone du premier
      */
     @Override
     public Stat copy() {
         return new Stat(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Stat{" +
+                "name='" + name +
+                ", value=" + value +
+                '}';
     }
 }

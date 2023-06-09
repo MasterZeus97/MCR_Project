@@ -19,6 +19,7 @@ public abstract class Troup implements Prototypeable {
 
    //Stat du soldat
    private final Map<String, Stat> statsMap = new HashMap<>();
+   private List<Stat> sortedStats = new ArrayList<>();
 
 
    /**
@@ -74,7 +75,22 @@ public abstract class Troup implements Prototypeable {
     * @return
     */
    public List<Stat> getStatsList() {
-      return new ArrayList<> (statsMap.values());
+      if(sortedStats.isEmpty()){
+         sortedStats = new ArrayList<> (statsMap.values());
+         Collections.sort(sortedStats, new Comparator<Stat>() {
+            @Override
+            public int compare(Stat o1, Stat o2) {
+               if(!isStatBelow(o1, o2)){
+                  return 1;
+               }else if(isStatBelow(o1, o2)){
+                  return -1;
+               }else{
+                  return 0;
+               }
+            }
+         });
+      }
+      return sortedStats;
    }
 
    /**
@@ -155,11 +171,47 @@ public abstract class Troup implements Prototypeable {
       downGradeStat(dropChance);
    }
 
+   public void maximizeStats(){
+      for(Stat s : statsMap.values())
+         s.maximizeVal();
+   }
+
    @Override
    public abstract Troup copy();
 
    @Override
    public String toString() {
       return name;
+   }
+
+   /**
+    * Méthode permettant de trier la liste de statistiques.
+    * @param stat1 Statistique comparée
+    * @param stat2 statistique à laquelle stat1 est comparée
+    * @return True si stat1 doit être positionnée en dessous de stat2 -
+    *         False si stat1 doit être au dessus de stat2 ou si stat1 == stat2
+    */
+   private boolean isStatBelow(Stat stat1, Stat stat2){
+      if(STATS_NAME_LIST.contains(stat1.getName())){
+         if(stat1.getName().equals(STATS_NAME_LIST.get(0))){
+            return true;
+         }else if(stat1.getName().equals(STATS_NAME_LIST.get(1)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
+                                                                      stat1.getName().equals(STATS_NAME_LIST.get(1)))){
+            return true;
+         }else if(stat1.getName().equals(STATS_NAME_LIST.get(2)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(2)))){
+            return true;
+         }else if(stat1.getName().equals(STATS_NAME_LIST.get(3)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(2)) ||
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(3)))){
+            return true;
+         }else{
+            return false;
+         }
+      }else{
+         return false;
+      }
    }
 }
