@@ -2,15 +2,15 @@ package Army.Troups;
 
 public class Droid extends Troup {
 
-   private static int percentReduce = 10,
-                      minHp = 100,
-                      maxHp = 200,
-                      minAtt = 100,
-                      maxAtt = 200,
-                      minDef = 60,
-                      maxDef = 90,
-                      minSpd = 25,
-                      maxSpd = 30;
+   private static final int percentReduce = 10,
+                            minHp = 100,
+                            maxHp = 200,
+                            minAtt = 100,
+                            maxAtt = 200,
+                            minDef = 60,
+                            maxDef = 90,
+                            minSpd = 25,
+                            maxSpd = 30;
 
    int downGradeStatChances = 70;
 

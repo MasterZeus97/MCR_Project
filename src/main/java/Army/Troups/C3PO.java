@@ -2,17 +2,15 @@ package Army.Troups;
 
 public class C3PO extends Troup {
 
-   private static int percentReduce = 0,
-                      minHp = 2000,
-                      maxHp = 2000,
-                      minAtt = 1,
-                      maxAtt = 1,
-                      minDef = 1,
-                      maxDef = 1,
-                      minSpd = 1,
-                      maxSpd = 1;
-
-   int downGradeStatChances = 0;
+   private static final int percentReduce = 0,
+                            minHp = 2000,
+                            maxHp = 2000,
+                            minAtt = 1,
+                            maxAtt = 1,
+                            minDef = 1,
+                            maxDef = 1,
+                            minSpd = 1,
+                            maxSpd = 1;
 
    /**
     * Constructeur d'un C3PO
@@ -35,9 +33,8 @@ public class C3PO extends Troup {
     */
    @Override
    public C3PO copy() {
-      C3PO newTroup = new C3PO(this);
       //newTroup.downGradeStat(downGradeStatChances);
-      return newTroup;
+      return new C3PO(this);
    }
 
    /**

@@ -5,16 +5,18 @@ import java.util.Random;
 public class Stat implements Prototypeable{
     private final String name;
     private int value;
-    private int minValue = 0;
-    private int maxValue = 100;
+    private final int minValue;
+    private final int maxValue;
 
-    private double maxValueReduce;
+    private final double maxValueReduce;
 
     /**
      * Constructeur pour une statistique dont on veut set les min et max
      * @param name nom de la statistique
-     * @param minValue valeur minimum
-     * @param maxValue
+     * @param minValue valeur minimum possible pour cette stat à son initialisation
+     * @param maxValue valeur maximum possible pour cette stat à son initialisation
+     * @param percentReduce pourcent dont la valeur de la stat va diminuer. Ce pourcentage est calculé en fonction de la
+     *                      valeur maximum de la stat
      */
     public Stat(String name, int minValue, int maxValue, double percentReduce) {
         this.minValue = minValue;
@@ -24,19 +26,10 @@ public class Stat implements Prototypeable{
         this.name = name;
         randomizeValue();
     }
-    /**
-     * Constructeur pour une stat dont on connait la valeur
-     * @param name Nom de la stat
-     * @param value Valeur de base de la stat
-     */
-    public Stat(String name, int value) {
-        this.name = name;
-        this.value = value;
-    }
 
     /**
      * Constructeur de copie d'une stat
-     * @param stat
+     * @param stat stat qu'on souhaite copier
      */
     private Stat(Stat stat){
         this.name = stat.name;
@@ -51,7 +44,7 @@ public class Stat implements Prototypeable{
      * @return Valeur de la stats
      */
     public int getValue() {
-        return (int) value;
+        return value;
     }
 
     /**
@@ -60,11 +53,7 @@ public class Stat implements Prototypeable{
      */
 
     public void setValue(int value) {
-        if(value > maxValue){
-            this.value = maxValue;
-        }else {
-            this.value = value;
-        }
+        this.value = Math.min(value, maxValue);
     }
 
     /**

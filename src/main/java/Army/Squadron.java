@@ -45,11 +45,7 @@ public class Squadron implements Prototypeable {
      * @return True : Le squadron est plein - False : Le squadron n'est pas plein
      */
     public boolean isFull(){
-        if(troupList.size() < 10){
-            return false;
-        }else{
-            return true;
-        }
+        return troupList.size() >= 10;
     }
 
     /**
@@ -74,7 +70,7 @@ public class Squadron implements Prototypeable {
         Squadron tmp = new Squadron();
         for(Troup t : troupList){
             try {
-                tmp.add((Troup) t.copy());
+                tmp.add(t.copy());
             }catch (SizeLimitExceededException e){
                 System.out.println(e.getMessage());
             }

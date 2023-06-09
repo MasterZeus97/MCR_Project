@@ -2,15 +2,15 @@ package Army.Troups;
 
 public class DeathTrooper extends Troup {
 
-   private static int percentReduce = 10,
-                      minHp = 500,
-                      maxHp = 600,
-                      minAtt = 15,
-                      maxAtt = 20,
-                      minDef = 200,
-                      maxDef = 300,
-                      minSpd = 5,
-                      maxSpd = 10;
+   private static final int percentReduce = 10,
+                            minHp = 500,
+                            maxHp = 600,
+                            minAtt = 15,
+                            maxAtt = 20,
+                            minDef = 200,
+                            maxDef = 300,
+                            minSpd = 5,
+                            maxSpd = 10;
 
    int downGradeStatChances = 70;
 

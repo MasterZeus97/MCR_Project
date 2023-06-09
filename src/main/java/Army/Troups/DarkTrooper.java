@@ -2,15 +2,15 @@ package Army.Troups;
 
 public class DarkTrooper extends Troup {
 
-   private static int percentReduce = 10,
-                      minHp = 50,
-                      maxHp = 100,
-                      minAtt = 300,
-                      maxAtt = 400,
-                      minDef = 20,
-                      maxDef = 30,
-                      minSpd = 30,
-                      maxSpd = 50;
+   private static final int percentReduce = 10,
+                            minHp = 50,
+                            maxHp = 100,
+                            minAtt = 300,
+                            maxAtt = 400,
+                            minDef = 20,
+                            maxDef = 30,
+                            minSpd = 30,
+                            maxSpd = 50;
 
    int downGradeStatChances = 70;
 

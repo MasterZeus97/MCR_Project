@@ -1,8 +1,5 @@
 package Army;
 
-import Army.Troups.Troup;
-
-import javax.naming.SizeLimitExceededException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,11 +49,7 @@ public class Army {
      * @return True : L'armée est pleine - False : L'armée n'est pas pleine
      */
     public boolean isFull(){
-        if(squadronsList.size() < 10){
-            return false;
-        }else{
-            return true;
-        }
+        return squadronsList.size() >= 10;
     }
 
     /**
