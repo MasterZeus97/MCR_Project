@@ -174,6 +174,14 @@ public abstract class Troup implements Prototypeable {
          s.maximizeVal();
    }
 
+   /**
+    * Permet de randomiser les stats de la troupe
+    */
+   public void randomizeStats(){
+      for(Stat s : statsMap.values())
+         s.randomizeValue();
+   }
+
    @Override
    public abstract Troup copy();
 
