@@ -8,7 +8,7 @@ public class Stat implements Prototypeable{
     private final int minValue;
     private final int maxValue;
 
-    private final double maxValueReduce;
+    private final int maxValueReduce;
 
     /**
      * Constructeur pour une statistique dont on veut set les min et max
@@ -22,7 +22,7 @@ public class Stat implements Prototypeable{
         this.minValue = minValue;
         this.maxValue = maxValue;
         percentReduce = (percentReduce % 101) / 100.0;
-        this.maxValueReduce = maxValue * percentReduce;
+        this.maxValueReduce = (int) Math.ceil(maxValue * percentReduce);
         this.name = name;
         randomizeValue();
     }
@@ -86,7 +86,7 @@ public class Stat implements Prototypeable{
         Random random = new Random();
         int checkChange = random.nextInt(100 - 1) + 1;
         if(value > 1 && checkChange <= downChance){
-            value -= random.nextInt((int) Math.ceil(maxValueReduce) - 1)+1;
+            value -= maxValueReduce > 1 ? random.nextInt( maxValueReduce - 1)+1 : 1;
           
             if(value < 1)
                 value = 1;
@@ -102,7 +102,7 @@ public class Stat implements Prototypeable{
         Random random = new Random();
         int checkChange = random.nextInt(100 - 1) + 1;
         if(value < maxValue && checkChange <= upChance){
-            value += random.nextInt((int) Math.ceil(maxValueReduce) - 1)+1;
+            value += maxValueReduce > 1 ? random.nextInt( maxValueReduce - 1)+1 : 1;
         }
     }
 
