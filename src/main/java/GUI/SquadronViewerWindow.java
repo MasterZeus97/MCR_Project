@@ -1,119 +1,85 @@
 package GUI;
 
-import Army.Army;
 import Army.Squadron;
 import Army.Troups.Troup;
 import Army.Stat;
 
 import javax.swing.*;
-import java.util.ArrayList;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-/**
- * Fenêtre secondaire permettant de visualiser les bataillons et leur contenu.
- */
 public class SquadronViewerWindow extends JFrame {
-   private static SquadronViewerWindow instance = null;
 
-   private final Army army;
-   private ArrayList<SqudronJList> sLists;
+   private final ArmyJList armyJList;
+   private final int id;
 
-   /**
-    * Crée une nouvelle fenêtre.
-    * Le constructeur est privé, car cette classe est un Singleton.
-    *
-    * @param army L'armée à afficher.
-    */
-   private SquadronViewerWindow(Army army) {
+   private final DefaultListModel<String> model;
+
+   public SquadronViewerWindow(ArmyJList armyJList, int id) {
       setTitle("Squadron Viewer");
-      setSize(400, 300);
+      setResizable(false);
       setLocationRelativeTo(null);
 
-      this.army = army;
+      this.armyJList = armyJList;
+      this.id = id;
 
-      sLists = new ArrayList<>();
       JPanel panel = new JPanel();
-      for (int i = 0; i < army.getMaxSize(); i++) {
-         panel.add(new JLabel("Squadron " + (i+1)));
 
-         SqudronJList list = new SqudronJList(i);
-         sLists.add(list);
-         sLists.get(i).update();
-         panel.add(list.getList());
+      add(new JLabel("Squadron " + id));
+
+      model = new DefaultListModel<>();
+      panel.add(new JList(model));
+      update();
+
+      if (armyJList.isAlly()) {
+
+         JButton clearButton = new JButton("Vider escadrille");
+         clearButton.addActionListener(e -> {
+            armyJList.getArmy().getSquadron(id).clearSquadron();
+            armyJList.update(-1);
+            update();
+         });
+         panel.add(clearButton);
+
+         // TODO
+         JButton cloneButton = new JButton("Cloner escadrille");
+         panel.add(cloneButton);
+
       }
+
       add(panel);
+      pack();
+
+      addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowClosing(WindowEvent e) {
+            dispose();
+            armyJList.clearSVW(id);
+         }
+      });
    }
 
-   /**
-    * Met à jour une liste de squadrons.
-    *
-    * @param i L'id de la liste.
-    */
-   public void update(int i) {
-      if (sLists != null) {
-         sLists.get(i).update();
-      }
-   }
+   public void update() {
+      model.clear();
 
-   /**
-    * Modèle singleton.
-    * Retourne une nouvelle fenêtre si aucune n'existe déjà ou l'instance de cette classe si elle a déjà été créée.
-    *
-    * @return L'unique instance de cette classe.
-    */
-   public static SquadronViewerWindow getInstance(Army army) {
-      if (instance == null) {
-         instance = new SquadronViewerWindow(army);
-      }
-      return instance;
-   }
+      Squadron squadron = armyJList.getArmy().getSquadron(id);
 
-   /**
-    * Classe représentant une liste de squadrons.
-    */
-   class SqudronJList {
+      for (Troup t : squadron.getTroupList()) {
 
-      private final int id;
-      private final JList list;
-
-      public SqudronJList(int id) {
-         this.id = id;
-         list = new JList<>(new DefaultListModel());
-      }
-
-      /**
-       * Met à jour toutes les listes de squadrons.
-       */
-      public void update() {
-
-         Squadron s = army.getSquadron(id);
-
-         DefaultListModel sqListModel = (DefaultListModel) list.getModel();
-         sqListModel.clear();
-
-         for (Troup t : s.getTroupList()) {
-
-            StringBuilder stats = new StringBuilder();
-            for (Stat stat : t.getStatsList()) {
-               stats.append(stat.getName()).append(" = ").append(stat.getValue()).append(" | ");
-            }
-
-            sqListModel.addElement(t.getName() + ": " + stats);
+         StringBuilder stats = new StringBuilder();
+         for (Stat stat : t.getStatsList()) {
+            stats.append(stat.getName()).append(" = ").append(stat.getValue()).append(" | ");
          }
 
-         int emptySize = s.getMaxSize() - s.getTroupNumber();
-         for (int i = 0; i < emptySize; i++) {
-            sqListModel.addElement("- - -");
-         }
-
+         model.addElement(t.getName() + ": " + stats);
       }
 
-      /**
-       * Retourne la JList avec les squadrons.
-       *
-       * @return La liste de squadrons.
-       */
-      public JList getList() {
-         return list;
+      int emptySize = squadron.getMaxSize() - squadron.getTroupNumber();
+      for (int i = 0; i < emptySize; i++) {
+         model.addElement("[ VIDE ]");
       }
+
+      pack();
    }
 }
