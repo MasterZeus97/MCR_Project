@@ -1,12 +1,11 @@
 package GUI.MainWindowPages;
 
 import Army.Army;
-import Army.Combat;
+import Combat.Combat;
 import GUI.ArmyJList;
 import GUI.MainWindow;
 import Player.Player;
 
-import javax.naming.SizeLimitExceededException;
 import javax.swing.*;
 
 /**
@@ -23,8 +22,6 @@ public class BattlePage extends MainWindowPage {
 
    private final ArmyJList alliedArmyList;
    private final ArmyJList enemyArmyList;
-
-   private boolean fighting;
 
    private final JButton quitButton;
    private final JButton fightButton;
@@ -54,17 +51,8 @@ public class BattlePage extends MainWindowPage {
       enemy = new Player();
 
       alliedArmy = mw.getArmy();
-      try {
-
-         // Debug only
-         // player.generateArmy();
-         // alliedArmy = player.getArmy();
-
-         enemy.generateArmy();
-         enemyArmy = enemy.getArmy();
-      } catch (SizeLimitExceededException e) {
-         e.printStackTrace();
-      }
+      enemy.generateArmy();
+      enemyArmy = enemy.getArmy();
 
       alliedArmyList = new ArmyJList(alliedArmy, true);
       enemyArmyList = new ArmyJList(enemyArmy, false);
@@ -79,15 +67,12 @@ public class BattlePage extends MainWindowPage {
       alliedArmyList.update(-1);
       enemyArmyList.update(-1);
 
-      fighting = false;
-
       combat = new Combat(alliedArmy, enemyArmy);
    }
 
    public void startFight() {
       if (combat == null) return;
 
-      fighting = true;
       boolean playerWinned = true;
 
       quitButton.setEnabled(false);
@@ -101,18 +86,14 @@ public class BattlePage extends MainWindowPage {
                  + " attaque " + combat.getTroupAttacked().getName());
       }
 
-      if (isArmyEmpty(alliedArmy)) {
+      if (alliedArmy.isEmpty()) {
          playerWinned = false;
       }
 
       fightLabel.setText(playerWinned ? "GAGNÉ!" : "PERDU!");
 
       if (playerWinned) {
-         try {
-            enemy.generateArmy();
-         } catch (SizeLimitExceededException e) {
-            e.printStackTrace();
-         }
+         enemy.generateArmy();
          enemyArmy = enemy.getArmy();
       }
 
@@ -120,13 +101,5 @@ public class BattlePage extends MainWindowPage {
       enemyArmyList.update(-1);
 
       quitButton.setEnabled(true);
-   }
-
-   private boolean isArmyEmpty(Army army) {
-      for (int i = 0; i < army.getSquadronsList().size(); i++) {
-         if (army.getSquadronsList().get(i).getTroupNumber() != 0)
-            return false;
-      }
-      return true;
    }
 }

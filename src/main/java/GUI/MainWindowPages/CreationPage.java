@@ -18,8 +18,7 @@ import java.util.ArrayList;
  */
 public class CreationPage extends MainWindowPage {
 
-   private final static int GENERATE_PRICE = 100;
-   private final static int CLONE_PRICE = 50;
+   private final static int GENERATE_PRICE = 10;
 
    private final static int IMAGE_MAX_WIDTH = 200;
    private final static int IMAGE_MAX_HEIGHT = 200;
@@ -32,6 +31,7 @@ public class CreationPage extends MainWindowPage {
    private boolean payGenerate;
    private final JButton generateBtn;
    private final JButton cloneBtn;
+   private final JButton startBtn;
 
    private Troup actualTroup;
    private int actualSquadronIndex;
@@ -73,7 +73,7 @@ public class CreationPage extends MainWindowPage {
       generateBtn = new JButton("Générer troupe (" + GENERATE_PRICE + " crédits)");
       generateBtn.addActionListener(e -> {
          actualTroup = TroupGenerator.getRandomTroup();
-         setStatsList((ArrayList<Stat>) actualTroup.getStatsList());
+         updateStatsList();
          setImage(actualTroup.getName());
 
          updateMoney(payGenerate ? GENERATE_PRICE : 0);
@@ -82,24 +82,20 @@ public class CreationPage extends MainWindowPage {
       add(generateBtn);
 
       // Bouton cloner
-      cloneBtn = new JButton("Cloner troupe (" + CLONE_PRICE + " crédits)");
+      cloneBtn = new JButton("Cloner troupe");
       cloneBtn.addActionListener(e -> {
          Squadron squadron = mw.getArmy().getSquadron(actualSquadronIndex);
 
          if (!squadron.isFull()) {
-            try {
-               // Clone la troupe et l'ajoute à l'escadrille choisie
-               squadron.add(actualTroup.copy());
-               armyJList.update(actualSquadronIndex);
+            // Clone la troupe et l'ajoute à l'escadrille choisie
+            squadron.add(actualTroup.copy());
+            armyJList.update(actualSquadronIndex);
 
-               // Baisse les stats de la troupe prototype
-               actualTroup.drop();
+            // Baisse les stats de la troupe prototype
+            actualTroup.drop();
 
-               updateMoney(CLONE_PRICE);
-               updateButtons();
-            } catch (SizeLimitExceededException ignored) {
-               // Exception ignorée, car ce cas est impossible → vérification avec isFull() avant d'appeler add().
-            }
+            updateStatsList();
+            updateButtons();
          }
 
          // TODO : plus propre avec modèle observer ?
@@ -108,7 +104,7 @@ public class CreationPage extends MainWindowPage {
       add(cloneBtn);
 
       // Bouton commencer
-      JButton startBtn = new JButton("Commencer guerre");
+      startBtn = new JButton("Commencer guerre");
       startBtn.addActionListener(e -> {
          mw.changeCard(MainWindow.BATTLE_PAGE);
       });
@@ -129,11 +125,12 @@ public class CreationPage extends MainWindowPage {
       if (generateBtn == null || cloneBtn == null) return;
 
       int money = mw.getPlayer().getMoney();
-      generateBtn.setEnabled(money >= GENERATE_PRICE);
-      cloneBtn.setEnabled(money >= CLONE_PRICE && actualTroup != null &&
-              !(mw.getArmy().getSquadron(actualSquadronIndex).isFull()));
 
-      // TODO : désactiver bouton start si armée vide
+      generateBtn.setEnabled(money >= GENERATE_PRICE);
+
+      cloneBtn.setEnabled(actualTroup != null && !mw.getArmy().getSquadron(actualSquadronIndex).isFull());
+
+      startBtn.setEnabled(!mw.getArmy().isEmpty());
    }
 
    /**
@@ -148,18 +145,17 @@ public class CreationPage extends MainWindowPage {
    }
 
    /**
-    * Définit la liste avec les statistiques de la troupe actuellement affichée.
-    *
-    * @param newStats La liste des stats à afficher.
+    * Met à jour la liste de statistiques de la troupe actuellement affichée.
     */
-   private void setStatsList(ArrayList<Stat> newStats) {
+   private void updateStatsList() {
       DefaultListModel<String> oldListModel = (DefaultListModel<String>) statsList.getModel();
       oldListModel.clear();
-      for (Stat a : newStats) {
+      for (Stat a : actualTroup.getStatsList()) {
          oldListModel.addElement(a.getName() + ": " + a.getValue());
       }
    }
 
+   // TODO : Uniformiser les images pour pas devoir les redimensionner
    /**
     * Définit l'image à afficher.
     *
