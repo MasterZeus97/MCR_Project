@@ -122,13 +122,10 @@ public class MainWindow extends JFrame {
          JButton cloneBtn = new JButton("Cloner troupe (" + CLONE_PRICE + " crédits)");
          //cloneBtn.setEnabled(false);
          cloneBtn.addActionListener(e -> {
-            try {
-               army.getSquadron(0).add(actualTroup);
 
-               updateSquadronsList();
-            } catch (SizeLimitExceededException ex) {
-               ex.printStackTrace();
-            }
+            army.getSquadron(0).add(actualTroup);
+
+            updateSquadronsList();
 
             Troup copiedTroup = actualTroup.copy();
             // TODO : Drop stats
