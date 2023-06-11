@@ -34,12 +34,12 @@ public class Combat {
 
         for(int i = (100*round) + 1; i <= 100*(round+1); i++){
             for(Troup t : squadronActive1.getTroupList()){
-                if (i % (100 - t.getSpeed()) == 0)
+                if (i % (101 - t.getSpeed()) == 0)
                     timeline.add(t);
             }
 
             for(Troup t : squadronActive2.getTroupList()){
-                if (i % (100 - t.getSpeed()) == 0)
+                if (i % (101 - t.getSpeed()) == 0)
                     timeline.add(t);
             }
         }
