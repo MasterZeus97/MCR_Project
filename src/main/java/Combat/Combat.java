@@ -133,5 +133,9 @@ public class Combat {
         return activeAttacker;
     }
 
+    public boolean isPlayerAttacking(){
+        return army1.getSquadronsList().contains(activeAttacker);
+    }
+
 
 }
