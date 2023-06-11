@@ -12,10 +12,11 @@ public class Combat {
     Army army1, army2;
     Squadron squadronActive1, squadronActive2;
     int round;
+    Troup activeAttacked;
 
     List<Troup> timeline;
 
-    Combat(Army army1, Army army2) {
+    public Combat(Army army1, Army army2) {
         this.army1 = army1;
         this.army2 = army2;
 
@@ -43,7 +44,7 @@ public class Combat {
         }
     }
 
-    void nextTurn(){
+    public void nextTurn(){
         if(timeline.isEmpty() && !isCombatFinished()){
             round++;
             setTimeline();
@@ -58,13 +59,17 @@ public class Combat {
             squadronToAttack = squadronActive1;
 
         Random random = new Random();
-        Troup attacked = squadronToAttack.getTroupList().get(random.nextInt(0, squadronToAttack.getTroupNumber()-1));
 
-        attacked.getAttacked(attacker.attack());
-        if(attacked.getStatsList().get(0).getValue() <= 0){
-            squadronToAttack.getTroupList().remove(attacked);
+        if(squadronToAttack.getTroupNumber() != 1)
+            activeAttacked = squadronToAttack.getTroupList().get(random.nextInt(0, squadronToAttack.getTroupNumber()-1));
+        else
+            activeAttacked = squadronToAttack.getTroupList().get(0);
 
-            timeline.remove(attacked);
+        activeAttacked.getAttacked(attacker.attack());
+        if(activeAttacked.getStatsList().get(0).getValue() <= 0){
+            squadronToAttack.getTroupList().remove(activeAttacked);
+
+            timeline.remove(activeAttacked);
 
             if(squadronToAttack.getTroupList().isEmpty()){
                 if(army1.getSquadronsList().contains(squadronToAttack)){
@@ -86,8 +91,16 @@ public class Combat {
         }
     }
 
-    boolean isCombatFinished(){
+    public boolean isCombatFinished(){
         return army1.getSquadronsList().isEmpty() && army2.getSquadronsList().isEmpty();
+    }
+
+    public Troup getTroupAttacked(){
+        return activeAttacked;
+    }
+
+    public Troup getTroupAttacker(){
+        return timeline.get(0);
     }
 
 
