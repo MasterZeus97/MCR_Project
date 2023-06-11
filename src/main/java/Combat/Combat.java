@@ -60,7 +60,7 @@ public class Combat {
 
         Random random = new Random();
 
-        if(squadronToAttack.getTroupNumber() != 1)
+        if(squadronToAttack.getTroupNumber() > 1)
             activeAttacked = squadronToAttack.getTroupList().get(random.nextInt(0, squadronToAttack.getTroupNumber()-1));
         else
             activeAttacked = squadronToAttack.getTroupList().get(0);
