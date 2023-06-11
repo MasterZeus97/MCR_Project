@@ -92,7 +92,7 @@ public class Combat {
     }
 
     public boolean isCombatFinished(){
-        return army1.getSquadronsList().isEmpty() && army2.getSquadronsList().isEmpty();
+        return army1.getSquadronsList().isEmpty() || army2.getSquadronsList().isEmpty();
     }
 
     public Troup getTroupAttacked(){
