@@ -22,8 +22,15 @@ public class Combat {
 
         round = 0;
 
-        squadronActive1 = army1.getSquadron(0);
-        squadronActive2 = army2.getSquadron(0);
+        for(int i = 0; i < army1.getSquadronsList().size(); i++){
+            if(army1.getSquadronsList().get(i).getTroupNumber() != 0)
+                squadronActive1 = army1.getSquadronsList().get(i);
+        }
+
+        for(int i = 0; i < army2.getSquadronsList().size(); i++){
+            if(army2.getSquadronsList().get(i).getTroupNumber() != 0)
+                squadronActive2 = army2.getSquadronsList().get(i);
+        }
 
         setTimeline();
     }
