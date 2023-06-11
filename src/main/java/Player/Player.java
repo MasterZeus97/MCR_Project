@@ -32,7 +32,7 @@ public class Player {
         return money;
     }
 
-    public Army generateArmy() throws SizeLimitExceededException {
+    public Army generateArmy(){
         for(Squadron s : army.getSquadronsList()){
             for(int i = 0; i < s.getMaxSize(); i++) {
                 s.add(TroupGenerator.getRandomTroup());
