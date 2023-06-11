@@ -45,7 +45,15 @@ public class Squadron implements Prototypeable {
      * @return True : Le squadron est plein - False : Le squadron n'est pas plein
      */
     public boolean isFull(){
-        return troupList.size() >= 10;
+        return troupList.size() >= maxSizeSquadron;
+    }
+
+    /**
+     * Méthode pour savoir si le squadron est vide
+     * @return True : Le squadron ne contient aucune troupe - False : Le squadron contient au moins une troupe
+     */
+    public boolean isEmpty(){
+        return troupList.isEmpty();
     }
 
     /**

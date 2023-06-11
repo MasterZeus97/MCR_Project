@@ -49,7 +49,25 @@ public class Army {
      * @return True : L'armée est pleine - False : L'armée n'est pas pleine
      */
     public boolean isFull(){
-        return squadronsList.size() >= 10;
+        for(Squadron s : squadronsList){
+            if(!s.isFull()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Méthode pour savoir si l'armée est vide
+     * @return True : L'armée est complètement vide - False : Il y a au moins une troupe dans un bataillon de l'armée
+     */
+    public boolean isEmpty(){
+        for(Squadron s : squadronsList){
+            if(!s.getTroupList().isEmpty()){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
