@@ -1,8 +1,5 @@
 package Army;
 
-import Army.Troups.Troup;
-
-import javax.naming.SizeLimitExceededException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class Army {
      * @return Le squadron à l'index squadronIndex
      */
     public Squadron getSquadron(int squadronIndex){
-        if(squadronIndex > 0 && squadronIndex < 5)
+        if(squadronIndex >= 0 && squadronIndex < 5)
             return squadronsList.get(squadronIndex);
         return null;
     }
@@ -47,17 +44,30 @@ public class Army {
         return maxSizeArmy;
     }
 
-
     /**
      * Méthode pour savoir si l'armée est pleine
      * @return True : L'armée est pleine - False : L'armée n'est pas pleine
      */
     public boolean isFull(){
-        if(squadronsList.size() < 10){
-            return false;
-        }else{
-            return true;
+        for(Squadron s : squadronsList){
+            if(!s.isFull()){
+                return false;
+            }
         }
+        return true;
+    }
+
+    /**
+     * Méthode pour savoir si l'armée est vide
+     * @return True : L'armée est complètement vide - False : Il y a au moins une troupe dans un bataillon de l'armée
+     */
+    public boolean isEmpty(){
+        for(Squadron s : squadronsList){
+            if(!s.getTroupList().isEmpty()){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

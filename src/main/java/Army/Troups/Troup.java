@@ -1,6 +1,6 @@
 package Army.Troups;
 
-import Army.Statistique;
+import Army.Stat;
 import Army.Prototypeable;
 
 import java.util.*;
@@ -12,12 +12,15 @@ public abstract class Troup implements Prototypeable {
                                                                            "Defense",
                                                                            "Speed"));
 
-   final String name;
+   private static final int dropChance = 90;
 
-   final int hpMax;
+   private final String name;
+   private final int hpMax;
+   private final int minReward, maxReward;
 
-   //Statistique du soldat
-   private final Map<String, Statistique> statsMap = new HashMap<>();
+   //Stat du soldat
+   private final Map<String, Stat> statsMap = new HashMap<>();
+   private List<Stat> sortedStats = new ArrayList<>();
 
 
    /**
@@ -28,24 +31,29 @@ public abstract class Troup implements Prototypeable {
    protected Troup(String name, int minHp, int maxHp,
                                 int minAtt, int maxAtt,
                                 int minDef, int maxDef,
-                                int minSpd, int maxSpd) {
+                                int minSpd, int maxSpd,
+                                int minReward, int maxReward,
+                                int percentReduce) {
       this.name = name;
-
-      statsMap.put(STATS_NAME_LIST.get(0), new Statistique(STATS_NAME_LIST.get(0), minHp, maxHp));
-      statsMap.put(STATS_NAME_LIST.get(1), new Statistique(STATS_NAME_LIST.get(1), minAtt, maxAtt));
-      statsMap.put(STATS_NAME_LIST.get(2), new Statistique(STATS_NAME_LIST.get(2), minDef, maxDef));
-      statsMap.put(STATS_NAME_LIST.get(3), new Statistique(STATS_NAME_LIST.get(3), minSpd, maxSpd));
+      this.minReward = minReward;
+      this.maxReward = maxReward;
+      statsMap.put(STATS_NAME_LIST.get(0), new Stat(STATS_NAME_LIST.get(0), minHp, maxHp, percentReduce));
+      statsMap.put(STATS_NAME_LIST.get(1), new Stat(STATS_NAME_LIST.get(1), minAtt, maxAtt, percentReduce));
+      statsMap.put(STATS_NAME_LIST.get(2), new Stat(STATS_NAME_LIST.get(2), minDef, maxDef, percentReduce));
+      statsMap.put(STATS_NAME_LIST.get(3), new Stat(STATS_NAME_LIST.get(3), minSpd, maxSpd, percentReduce));
 
       hpMax = statsMap.get("HP").getValue();
    }
 
    /**
-    * Constructeur de copie d'une troupe
+    * Constructeur de copie d'une troupe.
     * @param troup La troupe à copier
     */
    protected Troup(Troup troup){
       this.name = troup.name;
       this.hpMax = troup.hpMax;
+      this.minReward = troup.minReward;
+      this.maxReward = troup.maxReward;
       for(String a : troup.statsMap.keySet()){
          statsMap.put(a, troup.statsMap.get(a).copy());
       }
@@ -53,26 +61,38 @@ public abstract class Troup implements Prototypeable {
 
    /**
     * Méthode pour ajouter une stat à la troupe
-    * @param statistique Statistique à ajouter à la troupe
+    * @param stat Stat à ajouter à la troupe
     */
-   protected void addStat(Statistique statistique){
-      statsMap.put(statistique.getName(), statistique);
+   protected void addStat(Stat stat){
+      statsMap.put(stat.getName(), stat);
    }
 
    /**
     * Méthode pour obtenir la map contenant les Stats
     * @return map des Stats
     */
-   protected Map<String, Statistique> getStatsMap() {
+   protected Map<String, Stat> getStatsMap() {
       return statsMap;
    }
 
    /**
     * Récupère une liste contenant les Stats
-    * @return
+    * @return Liste des stats de la troupe
     */
-   public List<Statistique> getStatsList() {
-      return new ArrayList<> (statsMap.values());
+   public List<Stat> getStatsList() {
+      if(sortedStats.isEmpty()){
+         sortedStats = new ArrayList<> (statsMap.values());
+         sortedStats.sort((o1, o2) -> {
+            if (!isStatBelow(o1, o2)) {
+               return 1;
+            } else if (isStatBelow(o1, o2)) {
+               return -1;
+            } else {
+               return 0;
+            }
+         });
+      }
+      return sortedStats;
    }
 
    /**
@@ -130,11 +150,46 @@ public abstract class Troup implements Prototypeable {
 
    /**
     * Méthode pour downgrade les Statss d'une troupe
-    * @param chanceToDowngrade
+    * @param chanceToDowngrade Entier représentant le poucentage de chance que la stat se dégrade. La valeur est réduite
+    *                          à une valeur entre 0 et 100.
     */
-   public void downGradeStat(int chanceToDowngrade){
-      for (Statistique statistique : statsMap.values()){
-         statistique.downgradeValue(chanceToDowngrade);
+   protected void downGradeStat(int chanceToDowngrade){
+      for (Stat stat : statsMap.values()){
+         stat.downgradeValue(chanceToDowngrade);
+      }
+   }
+
+   /**
+    * Permet de savoir si la troupe est en vie
+    * @return True si la troupe a encore 1HP ou plus - False si elle a moins de 1HP
+    */
+   public boolean isAlive(){
+      return statsMap.get("HP").getValue() <= 0;
+   }
+
+   /**
+    * Méthode pour diminuer les stats de cette troupe
+    */
+   public void drop(){
+      downGradeStat(dropChance);
+   }
+
+   public void maximizeStats(){
+      for(Stat s : statsMap.values())
+         s.maximizeVal();
+   }
+
+   /**
+    * Permet de savoir l'argent que cette troupe donne lorsque vaincue
+    * @return montant gagné par l'adversaire
+    */
+   int defeatedMoney(){
+      Random random = new Random();
+
+      if(maxReward != minReward) {
+         return random.nextInt(maxReward - minReward) + minReward;
+      }else{
+         return minReward;
       }
    }
 
@@ -144,5 +199,36 @@ public abstract class Troup implements Prototypeable {
    @Override
    public String toString() {
       return name;
+   }
+
+   /**
+    * Méthode permettant de trier la liste de statistiques.
+    * @param stat1 Statistique comparée
+    * @param stat2 statistique à laquelle stat1 est comparée
+    * @return True si stat1 doit être positionnée en dessous de stat2 -
+    *         False si stat1 doit être au dessus de stat2 ou si stat1 == stat2
+    */
+   private boolean isStatBelow(Stat stat1, Stat stat2){
+      if(STATS_NAME_LIST.contains(stat1.getName())){
+         if(stat1.getName().equals(STATS_NAME_LIST.get(0))){
+            return true;
+         }else if(stat1.getName().equals(STATS_NAME_LIST.get(1)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
+                                                                      stat1.getName().equals(STATS_NAME_LIST.get(1)))){
+            return true;
+         }else if(stat1.getName().equals(STATS_NAME_LIST.get(2)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(2)))){
+            return true;
+         }else if(stat1.getName().equals(STATS_NAME_LIST.get(3)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(2)) ||
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(3)))){
+            return true;
+         }else{
+            return false;
+         }
+      }else{
+         return false;
+      }
    }
 }

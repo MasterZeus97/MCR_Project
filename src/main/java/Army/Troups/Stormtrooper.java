@@ -1,21 +1,26 @@
 package Army.Troups;
 
-import Army.Statistique;
+import   Army.Stat;
 
 import java.util.Random;
 
 public class Stormtrooper extends Troup {
 
-   private static int minHp = 10,
-                      maxHp = 100,
-                      minAtt = 50,
-                      maxAtt = 100,
-                      minDef = 30,
-                      maxDef = 60,
-                      minSpd = 20,
-                      maxSpd = 30,
-                      minPrec = 10,
-                      maxPrec = 50;
+
+
+   private static final int percentReduce = 10,
+                            minHp = 10,
+                            maxHp = 200,
+                            minAtt = 100,
+                            maxAtt = 150,
+                            minDef = 30,
+                            maxDef = 60,
+                            minSpd = 30,
+                            maxSpd = 40,
+                            minReward = 100,
+                            maxReward = 200,
+                            minPrec = 10,
+                            maxPrec = 50;
 
    int downGradeStatChances = 70;
 
@@ -23,8 +28,8 @@ public class Stormtrooper extends Troup {
     * Constructeur d'un stormtrooper
     */
    public Stormtrooper() {
-      super("Stormtrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd);
-      getStatsMap().put("Precision", new Statistique("Precision", minPrec, maxPrec));
+      super("Stormtrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce, minReward, maxReward);
+      getStatsMap().put("Precision", new Stat("Precision", minPrec, maxPrec, percentReduce));
    }
 
    /**

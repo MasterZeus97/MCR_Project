@@ -2,14 +2,17 @@ package Army.Troups;
 
 public class Droid extends Troup {
 
-   private static int minHp = 100,
-                      maxHp = 200,
-                      minAtt = 100,
-                      maxAtt = 200,
-                      minDef = 60,
-                      maxDef = 90,
-                      minSpd = 10,
-                      maxSpd = 15;
+   private static final int percentReduce = 10,
+                            minHp = 100,
+                            maxHp = 200,
+                            minAtt = 100,
+                            maxAtt = 200,
+                            minDef = 60,
+                            maxDef = 90,
+                            minSpd = 25,
+                            maxSpd = 30,
+                           minReward = 200,
+                           maxReward = 300;
 
    int downGradeStatChances = 70;
 
@@ -17,7 +20,7 @@ public class Droid extends Troup {
     * Constructeur d'un Droid
     */
    public Droid() {
-      super("Droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd);
+      super("Droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce, minReward, maxReward);
    }
 
    /**

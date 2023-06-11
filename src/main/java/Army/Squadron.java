@@ -15,13 +15,14 @@ public class Squadron implements Prototypeable {
     /**
      * Méthode pour ajouter une troupe au squadron
      * @param troup Troupe à ajouter
-     * @throws SizeLimitExceededException Exception lancée si le squadron est plein déjà plein
+     * @return True : La troupe a bien été ajoutée au squadron - False : Le squadron est plein et la troupe n'a pas été ajoutée
      */
-    public void add(Troup troup) throws SizeLimitExceededException {
-        if(isFull()){
-            throw new SizeLimitExceededException("Squadron is already full" + troup.toString());
-        }else{
+    public boolean add(Troup troup) {
+        if(!isFull()){
             troupList.add(troup);
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -45,11 +46,15 @@ public class Squadron implements Prototypeable {
      * @return True : Le squadron est plein - False : Le squadron n'est pas plein
      */
     public boolean isFull(){
-        if(troupList.size() < 10){
-            return false;
-        }else{
-            return true;
-        }
+        return troupList.size() >= maxSizeSquadron;
+    }
+
+    /**
+     * Méthode pour savoir si le squadron est vide
+     * @return True : Le squadron ne contient aucune troupe - False : Le squadron contient au moins une troupe
+     */
+    public boolean isEmpty(){
+        return troupList.isEmpty();
     }
 
     /**
@@ -73,11 +78,7 @@ public class Squadron implements Prototypeable {
     public Squadron copy() {
         Squadron tmp = new Squadron();
         for(Troup t : troupList){
-            try {
-                tmp.add((Troup) t.copy());
-            }catch (SizeLimitExceededException e){
-                System.out.println(e.getMessage());
-            }
+            tmp.add(t.copy());
         }
         return tmp;
     }

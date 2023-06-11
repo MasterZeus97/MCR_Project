@@ -1,14 +1,12 @@
 package Player;
 
 import Army.*;
-import Army.Troups.Stormtrooper;
-import Army.Troups.Troup;
+import GUI.TroupGenerator;
 
 import javax.naming.SizeLimitExceededException;
-import javax.swing.*;
 
 public class Player {
-    private Army army;
+    private final Army army;
     private int money;
     static final int startMoney = 500;
     static final int maxMoney = 100000;
@@ -34,15 +32,13 @@ public class Player {
         return money;
     }
 
-    public void generateArmy() throws SizeLimitExceededException {
-        // TODO
-        // Utiliser la méthode de Loris pour générer une troupe aléatoire
-
+    public Army generateArmy(){
         for(Squadron s : army.getSquadronsList()){
             for(int i = 0; i < s.getMaxSize(); i++) {
-                s.add(new Stormtrooper());
+                s.add(TroupGenerator.getRandomTroup());
             }
         }
+        return this.army;
     }
 
     /**
