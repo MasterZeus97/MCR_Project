@@ -36,7 +36,6 @@ public class Combat {
     }
 
     private void setTimeline() {
-        System.out.println("timeline set");
         timeline = new LinkedList<>();
 
         for(int i = (100*round) + 1; i <= 100*(round+1); i++){
@@ -53,7 +52,6 @@ public class Combat {
     }
 
     public void nextTurn(){
-        System.out.println("turn");
         if(timeline.isEmpty() && !isCombatFinished()){
             round++;
             setTimeline();
@@ -134,8 +132,10 @@ public class Combat {
     }
 
     public boolean isPlayerAttacking(){
-        return army1.getSquadronsList().contains(activeAttacker);
+        for(int i = 0; i < army1.getSquadronsList().size(); i++){
+            if(army1.getSquadronsList().get(i).getTroupList().contains(activeAttacker))
+                return true;
+        }
+        return false;
     }
-
-
 }
