@@ -29,22 +29,24 @@ public class Combat {
     }
 
     private void setTimeline() {
+        System.out.println("timeline set");
         timeline = new LinkedList<>();
 
         for(int i = (100*round) + 1; i <= 100*(round+1); i++){
             for(Troup t : squadronActive1.getTroupList()){
-                if ((100 - t.getSpeed()) % i == 0)
+                if (i % (100 - t.getSpeed()) == 0)
                     timeline.add(t);
             }
 
             for(Troup t : squadronActive2.getTroupList()){
-                if ((100 - t.getSpeed()) % i == 0)
+                if (i % (100 - t.getSpeed()) == 0)
                     timeline.add(t);
             }
         }
     }
 
     public void nextTurn(){
+        System.out.println("turn");
         if(timeline.isEmpty() && !isCombatFinished()){
             round++;
             setTimeline();
@@ -73,16 +75,24 @@ public class Combat {
 
             if(squadronToAttack.getTroupList().isEmpty()){
                 if(army1.getSquadronsList().contains(squadronToAttack)){
-                    army1.getSquadronsList().remove(squadronToAttack);
+                    if(!isCombatFinished()){
+                        squadronActive1 = null;
 
-                    if(!isCombatFinished())
-                        squadronActive1 = army1.getSquadron(0);
+                        for(int i = 0; i < army1.getSquadronsList().size(); i++){
+                            if(army1.getSquadronsList().get(i).getTroupNumber() != 0)
+                                squadronActive1 = army1.getSquadronsList().get(i);
+                        }
+                    }
                 }
                 else{
-                    army2.getSquadronsList().remove(squadronToAttack);
+                    if(!isCombatFinished()){
+                        squadronActive2 = null;
 
-                    if(!isCombatFinished())
-                        squadronActive2 = army2.getSquadron(0);
+                        for(int i = 0; i < army2.getSquadronsList().size(); i++){
+                            if(army2.getSquadronsList().get(i).getTroupNumber() != 0)
+                                squadronActive2 = army2.getSquadronsList().get(i);
+                        }
+                    }
                 }
 
                 round = 0;
@@ -92,7 +102,20 @@ public class Combat {
     }
 
     public boolean isCombatFinished(){
-        return army1.getSquadronsList().isEmpty() || army2.getSquadronsList().isEmpty();
+        boolean squadronsState1 = false,
+                squadronsState2 = false;
+
+        for(int i = 0; i < army2.getSquadronsList().size(); i++){
+            if(army2.getSquadronsList().get(i).getTroupNumber() != 0)
+                squadronsState2 = true;
+        }
+
+        for(int i = 0; i < army1.getSquadronsList().size(); i++){
+            if(army1.getSquadronsList().get(i).getTroupNumber() != 0)
+                squadronsState1 = true;
+        }
+
+        return squadronsState1 || squadronsState2;
     }
 
     public Troup getTroupAttacked(){

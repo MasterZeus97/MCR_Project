@@ -1,11 +1,13 @@
 import Army.*;
 import Army.Troups.Droid;
 import Army.Troups.Stormtrooper;
+import Combat.Combat;
+import Player.Player;
 
 import javax.naming.SizeLimitExceededException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SizeLimitExceededException {
 
         Stormtrooper t1 = new Stormtrooper();
         Stormtrooper t2 = (Stormtrooper) t1.copy();
@@ -25,6 +27,18 @@ public class Main {
         }
 
         Squadron s2 = (Squadron) s.copy();
+
+        Player p1 = new Player();
+        p1.generateArmy();
+        Player p2 = new Player();
+        p2.generateArmy();
+
+        System.out.println(p1.getArmy().getSquadron(0).getTroupList().size());
+
+        Combat combat = new Combat(p1.getArmy(), p2.getArmy());
+
+        while (!combat.isCombatFinished())
+            combat.nextTurn();
 
         System.out.println(s);
         System.out.println(s2);
