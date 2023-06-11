@@ -2,15 +2,18 @@ package Army.Troups;
 
 public class KXDroid extends Troup {
 
+
    private static final int percentReduce = 10,
-                            minHp = 100,
-                            maxHp = 200,
-                            minAtt = 100,
-                            maxAtt = 200,
-                            minDef = 60,
-                            maxDef = 90,
-                            minSpd = 10,
-                            maxSpd = 15;
+                            minHp = 200,
+                            maxHp = 300,
+                            minAtt = 150,
+                            maxAtt = 250,
+                            minDef = 90,
+                            maxDef = 120,
+                            minSpd = 15,
+                            maxSpd = 20,
+                            minReward = 300,
+                            maxReward = 400;
 
    int downGradeStatChances = 70;
 
@@ -18,7 +21,7 @@ public class KXDroid extends Troup {
     * Constructeur d'un KXSeries
     */
    public KXDroid() {
-      super("KX droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
+      super("KX droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce, minReward, maxReward);
    }
 
    /**

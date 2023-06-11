@@ -16,6 +16,7 @@ public abstract class Troup implements Prototypeable {
 
    private final String name;
    private final int hpMax;
+   private final int minReward, maxReward;
 
    //Stat du soldat
    private final Map<String, Stat> statsMap = new HashMap<>();
@@ -31,9 +32,11 @@ public abstract class Troup implements Prototypeable {
                                 int minAtt, int maxAtt,
                                 int minDef, int maxDef,
                                 int minSpd, int maxSpd,
+                                int minReward, int maxReward,
                                 int percentReduce) {
       this.name = name;
-
+      this.minReward = minReward;
+      this.maxReward = maxReward;
       statsMap.put(STATS_NAME_LIST.get(0), new Stat(STATS_NAME_LIST.get(0), minHp, maxHp, percentReduce));
       statsMap.put(STATS_NAME_LIST.get(1), new Stat(STATS_NAME_LIST.get(1), minAtt, maxAtt, percentReduce));
       statsMap.put(STATS_NAME_LIST.get(2), new Stat(STATS_NAME_LIST.get(2), minDef, maxDef, percentReduce));
@@ -49,6 +52,8 @@ public abstract class Troup implements Prototypeable {
    protected Troup(Troup troup){
       this.name = troup.name;
       this.hpMax = troup.hpMax;
+      this.minReward = troup.minReward;
+      this.maxReward = troup.maxReward;
       for(String a : troup.statsMap.keySet()){
          statsMap.put(a, troup.statsMap.get(a).copy());
       }
@@ -172,6 +177,20 @@ public abstract class Troup implements Prototypeable {
    public void maximizeStats(){
       for(Stat s : statsMap.values())
          s.maximizeVal();
+   }
+
+   /**
+    * Permet de savoir l'argent que cette troupe donne lorsque vaincue
+    * @return montant gagné par l'adversaire
+    */
+   int defeatedMoney(){
+      Random random = new Random();
+
+      if(maxReward != minReward) {
+         return random.nextInt(maxReward - minReward) + minReward;
+      }else{
+         return minReward;
+      }
    }
 
    @Override
