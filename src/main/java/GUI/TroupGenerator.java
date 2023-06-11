@@ -9,7 +9,7 @@ import java.util.Random;
  */
 abstract public class TroupGenerator {
 
-   private static final int TROUP_NUMBER = 8;
+   private static final int TROUP_NUMBER = 6;
 
    /**
     * Retourne une troupe choisie aléatoirement.
@@ -26,7 +26,7 @@ abstract public class TroupGenerator {
          case 3 -> new DarkTrooper();
          case 4 -> new DeathTrooper();
          case 5 -> new Droid();
-         case 6 -> new KXSeries();
+         case 6 -> new KXDroid();
          case 7 -> new C3PO();
          case 8 -> new DarkVador();
          default -> null;
