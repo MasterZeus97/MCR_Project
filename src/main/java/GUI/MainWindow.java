@@ -19,6 +19,10 @@ public class MainWindow extends JFrame {
    private final CardLayout cardLayout;
    private final JPanel cardPanel;
 
+   private final TitlePage titlePage;
+   private final CreationPage creationPage;
+   private final BattlePage battlePage;
+
    public final static String TITLE_PAGE = "titlePage";
    public final static String CREATION_PAGE = "creationPage";
    public final static String BATTLE_PAGE = "battlePage";
@@ -38,14 +42,25 @@ public class MainWindow extends JFrame {
       // Différentes pages
       cardLayout = new CardLayout();
       cardPanel = new JPanel(cardLayout);
-      cardPanel.add(new TitlePage(this), TITLE_PAGE);
-      cardPanel.add(new CreationPage(this), CREATION_PAGE);
-      cardPanel.add(new BattlePage(this), BATTLE_PAGE);
+
+      titlePage = new TitlePage(this);
+      cardPanel.add(titlePage, TITLE_PAGE);
+
+      creationPage = new CreationPage(this);
+      cardPanel.add(creationPage, CREATION_PAGE);
+
+      battlePage = new BattlePage(this);
+      cardPanel.add(battlePage, BATTLE_PAGE);
+
       add(cardPanel);
    }
 
    public void changeCard(String card) {
       cardLayout.show(cardPanel, card);
+
+      if (card.equals(BATTLE_PAGE)) {
+         battlePage.openBattlePage();
+      }
    }
 
    public Player getPlayer() {

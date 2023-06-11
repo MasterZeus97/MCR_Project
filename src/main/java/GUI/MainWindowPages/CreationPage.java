@@ -1,9 +1,9 @@
 package GUI.MainWindowPages;
 
-import Army.Army;
 import Army.Squadron;
 import Army.Stat;
 import Army.Troups.Troup;
+import GUI.ArmyJList;
 import GUI.MainWindow;
 import GUI.SquadronViewerWindow;
 import GUI.TroupGenerator;
@@ -12,7 +12,6 @@ import javax.naming.SizeLimitExceededException;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * JPanel représentant le menu de création d'unités.
@@ -28,13 +27,14 @@ public class CreationPage extends MainWindowPage {
    private final JLabel moneyLabel;
    private final JLabel imageLabel;
    private final JList<String> statsList;
-   private final JList<String> squadronsList;
+   private final ArmyJList armyJList;
 
    private boolean payGenerate;
    private final JButton generateBtn;
    private final JButton cloneBtn;
 
    private Troup actualTroup;
+   private int actualSquadronIndex;
 
    public CreationPage(MainWindow mw) {
       super(mw);
@@ -55,10 +55,19 @@ public class CreationPage extends MainWindowPage {
       add(statsList);
 
       // List des escadrilles
-      DefaultListModel<String> squadronsListModel = new DefaultListModel<>();
-      squadronsList = new JList<>(squadronsListModel);
-      updateSquadronsList();
-      add(squadronsList);
+      armyJList = new ArmyJList(mw.getArmy(), true);
+      armyJList.addListSelectionListener(e -> {
+         if (!e.getValueIsAdjusting()) {
+
+            if (armyJList.getSelectedIndex() >= 0) {
+               actualSquadronIndex = armyJList.getSelectedIndex();
+            }
+            updateButtons();
+         }
+      });
+      actualSquadronIndex = 0;
+      armyJList.update(0);
+      add(armyJList);
 
       // Bouton générer
       generateBtn = new JButton("Générer troupe (" + GENERATE_PRICE + " crédits)");
@@ -75,36 +84,35 @@ public class CreationPage extends MainWindowPage {
       // Bouton cloner
       cloneBtn = new JButton("Cloner troupe (" + CLONE_PRICE + " crédits)");
       cloneBtn.addActionListener(e -> {
-         try {
-            mw.getArmy().getSquadron(0).add(actualTroup.copy());
-            updateSquadronsList();
-         } catch (SizeLimitExceededException ex) {
-            ex.printStackTrace();
+         Squadron squadron = mw.getArmy().getSquadron(actualSquadronIndex);
+
+         if (!squadron.isFull()) {
+            try {
+               // Clone la troupe et l'ajoute à l'escadrille choisie
+               squadron.add(actualTroup.copy());
+               armyJList.update(actualSquadronIndex);
+
+               // Baisse les stats de la troupe prototype
+               actualTroup.drop();
+
+               updateMoney(CLONE_PRICE);
+               updateButtons();
+            } catch (SizeLimitExceededException ignored) {
+               // Exception ignorée, car ce cas est impossible → vérification avec isFull() avant d'appeler add().
+            }
          }
 
-         actualTroup.drop();
-
-         updateMoney(CLONE_PRICE);
-         updateButtons();
+         // TODO : plus propre avec modèle observer ?
+         //SquadronViewerWindow.update();
       });
       add(cloneBtn);
 
       // Bouton commencer
-      JButton startBtn = new JButton("Commencer bataille");
+      JButton startBtn = new JButton("Commencer guerre");
       startBtn.addActionListener(e -> {
          mw.changeCard(MainWindow.BATTLE_PAGE);
-         // TODO : Créer objet Simulation
       });
       add(startBtn);
-
-      // Bouton voir bataillons
-      JButton squadronBtn = new JButton("Voir bataillons");
-      squadronBtn.addActionListener(e -> {
-         SquadronViewerWindow sqw = SquadronViewerWindow.getInstance(mw.getArmy());
-         sqw.setVisible(true);
-         sqw.update(0);
-      });
-      add(squadronBtn);
 
       // Simule un clic sur le bouton générer sans déduire l'argent du joueur
       payGenerate = false;
@@ -118,9 +126,14 @@ public class CreationPage extends MainWindowPage {
     * Met à jour les boutons en les bloquant/débloquant.
     */
    private void updateButtons() {
+      if (generateBtn == null || cloneBtn == null) return;
+
       int money = mw.getPlayer().getMoney();
       generateBtn.setEnabled(money >= GENERATE_PRICE);
-      cloneBtn.setEnabled(money >= CLONE_PRICE && actualTroup != null);
+      cloneBtn.setEnabled(money >= CLONE_PRICE && actualTroup != null &&
+              !(mw.getArmy().getSquadron(actualSquadronIndex).isFull()));
+
+      // TODO : désactiver bouton start si armée vide
    }
 
    /**
@@ -181,16 +194,5 @@ public class CreationPage extends MainWindowPage {
 
       imageLabel.setText(troupName);
       imageLabel.setIcon(imageIcon);
-   }
-
-   public void updateSquadronsList() {
-      DefaultListModel<String> squadronsListModel = (DefaultListModel<String>) squadronsList.getModel();
-      squadronsListModel.clear();
-
-      Army army = mw.getArmy();
-      for (int i = 0; i < army.getMaxSize(); i++) {
-         Squadron s = army.getSquadron(i);
-         squadronsListModel.addElement("Squadron " + i + ": (" + s.getTroupNumber() + "/" + s.getMaxSize() + ")");
-      }
    }
 }
