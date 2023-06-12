@@ -29,6 +29,7 @@ public class MainWindow extends JFrame {
 
    /**
     * Crée une nouvelle fenêtre.
+    * @param player Le profil du joueur
     */
    public MainWindow(Player player) {
       this.player = player;
@@ -55,18 +56,32 @@ public class MainWindow extends JFrame {
       add(cardPanel);
    }
 
+   /**
+    * Change la page affichée sur la fenêtre
+    * @param card Le nom de la page à afficher
+    */
    public void changeCard(String card) {
       cardLayout.show(cardPanel, card);
 
-      if (card.equals(BATTLE_PAGE)) {
-         battlePage.openBattlePage();
+      switch (card) {
+         case TITLE_PAGE -> titlePage.setupPage();
+         case CREATION_PAGE -> creationPage.setupPage();
+         case BATTLE_PAGE -> battlePage.setupPage();
       }
    }
 
+   /**
+    * Retourne le joueur actuel.
+    * @return Le joueur actuel.
+    */
    public Player getPlayer() {
       return player;
    }
 
+   /**
+    * Retourne l'armée du joueur actuel.
+    * @return L'armée du joueur actuel.
+    */
    public Army getArmy() {
       return getPlayer().getArmy();
    }
