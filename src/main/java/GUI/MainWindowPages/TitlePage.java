@@ -6,9 +6,13 @@ import com.sun.tools.javac.Main;
 import javax.swing.*;
 
 /**
- * JPanel représentant l'écran titre du jeu.
+ * Page représentant l'écran titre du jeu.
  */
 public class TitlePage extends MainWindowPage {
+   /**
+    * Construit la page.
+    * @param mw La fenêtre principale où la page est assignée.
+    */
    public TitlePage (MainWindow mw) {
       super(mw);
       add(new JLabel("NOM DU JEU"));
