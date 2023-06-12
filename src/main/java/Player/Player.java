@@ -8,8 +8,8 @@ import javax.naming.SizeLimitExceededException;
 public class Player {
     private final Army army;
     private int money;
-    static final int startMoney = 500;
-    static final int maxMoney = 100000;
+    static final int startMoney = 5000;
+    static final int maxMoney = 200000;
     static final int minMoney = 0;
 
     /**
