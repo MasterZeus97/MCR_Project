@@ -3,12 +3,15 @@ package GUI;
 import Army.Squadron;
 import Army.Troups.Troup;
 import Army.Stat;
+import Army.Army;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Fenêtre affichant une escadrille avec la liste de ses troupes.
+ */
 public class SquadronViewerWindow extends JFrame {
 
    private final ArmyJList armyJList;
@@ -16,6 +19,14 @@ public class SquadronViewerWindow extends JFrame {
 
    private final DefaultListModel<String> model;
 
+   private final JButton clearButton;
+   private final JButton cloneButton;
+
+   /**
+    * Construit une fenêtre.
+    * @param armyJList La liste d'escadrilles utilisée pour créer cette fenêtre.
+    * @param id L'id de l'escadrille dans cette liste.
+    */
    public SquadronViewerWindow(ArmyJList armyJList, int id) {
       setTitle("Squadron Viewer");
       setResizable(false);
@@ -30,22 +41,25 @@ public class SquadronViewerWindow extends JFrame {
 
       model = new DefaultListModel<>();
       panel.add(new JList(model));
-      update();
+
+      clearButton = new JButton("Vider escadrille");
+      clearButton.addActionListener(e -> {
+         armyJList.getArmy().getSquadron(id).clearSquadron();
+         armyJList.update(-1);
+      });
+
+      cloneButton = new JButton("Cloner escadrille");
+      cloneButton.addActionListener(e -> {
+         int emptySquadronIndex = getEmptySquadron();
+         if (emptySquadronIndex >= 0) {
+            armyJList.getArmy().setSquadron(emptySquadronIndex, getMySquadron().copy());
+            armyJList.update(-1);
+         }
+      });
 
       if (armyJList.isAlly()) {
-
-         JButton clearButton = new JButton("Vider escadrille");
-         clearButton.addActionListener(e -> {
-            armyJList.getArmy().getSquadron(id).clearSquadron();
-            armyJList.update(-1);
-            update();
-         });
          panel.add(clearButton);
-
-         // TODO
-         JButton cloneButton = new JButton("Cloner escadrille");
          panel.add(cloneButton);
-
       }
 
       add(panel);
@@ -58,12 +72,17 @@ public class SquadronViewerWindow extends JFrame {
             armyJList.clearSVW(id);
          }
       });
+
+      update();
    }
 
+   /**
+    * Met à jour l'affichage des composants de la fenêtre.
+    */
    public void update() {
       model.clear();
 
-      Squadron squadron = armyJList.getArmy().getSquadron(id);
+      Squadron squadron = getMySquadron();
 
       for (Troup t : squadron.getTroupList()) {
 
@@ -80,6 +99,35 @@ public class SquadronViewerWindow extends JFrame {
          model.addElement("[ VIDE ]");
       }
 
+      clearButton.setEnabled(armyJList.isAlly() && !getMySquadron().isEmpty());
+      cloneButton.setEnabled(clearButton.isEnabled() && getEmptySquadron() >= 0);
+
       pack();
+   }
+
+   /**
+    * Retourne l'escadrille affichée.
+    * @return L'escadrille affichée.
+    */
+   public Squadron getMySquadron() {
+      return armyJList.getArmy().getSquadron(id);
+   }
+
+   /**
+    * Permet de savoir s'il existe une escadrille vide dans l'armée utilisée.
+    * @return L'index de la première escadrille vide de l'armée, -1 s'il n'en existe pas.
+    */
+   public int getEmptySquadron() {
+      Army army = armyJList.getArmy();
+
+      int i = 0;
+      for (Squadron s : army.getSquadronsList()) {
+         if (s.isEmpty()) {
+            return i;
+         }
+         i++;
+      }
+
+      return -1;
    }
 }

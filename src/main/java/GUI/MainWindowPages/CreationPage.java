@@ -5,16 +5,13 @@ import Army.Stat;
 import Army.Troups.Troup;
 import GUI.ArmyJList;
 import GUI.MainWindow;
-import GUI.SquadronViewerWindow;
 import GUI.TroupGenerator;
 
-import javax.naming.SizeLimitExceededException;
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
- * JPanel représentant le menu de création d'unités.
+ * Page représentant le menu de création d'unités.
  */
 public class CreationPage extends MainWindowPage {
 
@@ -32,10 +29,15 @@ public class CreationPage extends MainWindowPage {
    private final JButton generateBtn;
    private final JButton cloneBtn;
    private final JButton startBtn;
+   private final JButton debugBtn;
 
    private Troup actualTroup;
    private int actualSquadronIndex;
 
+   /**
+    * Construit la page.
+    * @param mw La fenêtre principale où la page est assignée.
+    */
    public CreationPage(MainWindow mw) {
       super(mw);
 
@@ -59,6 +61,7 @@ public class CreationPage extends MainWindowPage {
       armyJList.addListSelectionListener(e -> {
          if (!e.getValueIsAdjusting()) {
 
+            // Sélectionne une escadrille dans la liste
             if (armyJList.getSelectedIndex() >= 0) {
                actualSquadronIndex = armyJList.getSelectedIndex();
             }
@@ -72,12 +75,9 @@ public class CreationPage extends MainWindowPage {
       // Bouton générer
       generateBtn = new JButton("Générer troupe (" + GENERATE_PRICE + " crédits)");
       generateBtn.addActionListener(e -> {
-         actualTroup = TroupGenerator.getRandomTroup();
-         updateStatsList();
-         setImage(actualTroup.getName());
-
-         updateMoney(payGenerate ? GENERATE_PRICE : 0);
+         generateTroup();
          updateButtons();
+         updateMoney(payGenerate ? GENERATE_PRICE : 0);
       });
       add(generateBtn);
 
@@ -97,25 +97,40 @@ public class CreationPage extends MainWindowPage {
             updateStatsList();
             updateButtons();
          }
-
-         // TODO : plus propre avec modèle observer ?
-         //SquadronViewerWindow.update();
       });
       add(cloneBtn);
 
+      // Bouton debug (crée une armée complète)
+      debugBtn = new JButton("Générer armée (debug)");
+      debugBtn.addActionListener(e -> {
+         mw.getPlayer().generateArmy();
+         armyJList.update(actualSquadronIndex);
+      });
+      add(debugBtn);
+
       // Bouton commencer
       startBtn = new JButton("Commencer guerre");
-      startBtn.addActionListener(e -> {
-         mw.changeCard(MainWindow.BATTLE_PAGE);
-      });
+      startBtn.addActionListener(e -> mw.changeCard(MainWindow.BATTLE_PAGE));
       add(startBtn);
 
-      // Simule un clic sur le bouton générer sans déduire l'argent du joueur
-      payGenerate = false;
-      generateBtn.doClick();
-      payGenerate = true;
-
+      generateTroup();
       updateButtons();
+   }
+
+   @Override
+   public void setupPage() {
+      updateMoney(0);
+      updateButtons();
+      armyJList.update(0);
+   }
+
+   /**
+    * Génère une nouvelle troupe et affiche ses stats et son image.
+    */
+   public void generateTroup() {
+      actualTroup = TroupGenerator.getRandomTroup();
+      updateStatsList();
+      setImage(actualTroup.getName());
    }
 
    /**
@@ -135,7 +150,6 @@ public class CreationPage extends MainWindowPage {
 
    /**
     * Débite un montant au joueur et met à jour l'affichage.
-    *
     * @param price Le montant à débiter.
     */
    private void updateMoney(int price) {
@@ -145,7 +159,7 @@ public class CreationPage extends MainWindowPage {
    }
 
    /**
-    * Met à jour la liste de statistiques de la troupe actuellement affichée.
+    * Met à jour la liste de stats de la troupe actuellement affichée.
     */
    private void updateStatsList() {
       DefaultListModel<String> oldListModel = (DefaultListModel<String>) statsList.getModel();
@@ -158,7 +172,6 @@ public class CreationPage extends MainWindowPage {
    // TODO : Uniformiser les images pour pas devoir les redimensionner
    /**
     * Définit l'image à afficher.
-    *
     * @param troupName Le nom de la troupe.
     */
    private void setImage(String troupName) {
