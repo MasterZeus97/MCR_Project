@@ -23,9 +23,19 @@ public class Army {
      * @return Le squadron à l'index squadronIndex
      */
     public Squadron getSquadron(int squadronIndex){
-        if(squadronIndex >= 0 && squadronIndex < 5)
+        if(squadronIndex >= 0 && squadronIndex < maxSizeArmy)
             return squadronsList.get(squadronIndex);
         return null;
+    }
+
+    /**
+     * Permet de redéfinir un squadron spécifique avec un index
+     * @param squadronIndex Index du squadron qu'on veut remplacer
+     * @param newSquadron Le nouveau squadron
+     */
+    public void setSquadron(int squadronIndex, Squadron newSquadron) {
+        if(squadronIndex >= 0 && squadronIndex < maxSizeArmy)
+            squadronsList.set(squadronIndex, newSquadron);
     }
 
     /**
