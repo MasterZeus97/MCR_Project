@@ -213,7 +213,7 @@ public abstract class Troup implements Prototypeable {
          if(stat1.getName().equals(STATS_NAME_LIST.get(0))){
             return true;
          }else if(stat1.getName().equals(STATS_NAME_LIST.get(1)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
-                                                                      stat1.getName().equals(STATS_NAME_LIST.get(1)))){
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(1)))){
             return true;
          }else if(stat1.getName().equals(STATS_NAME_LIST.get(2)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
                                                                       stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
