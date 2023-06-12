@@ -15,7 +15,7 @@ import java.awt.*;
  */
 public class CreationPage extends MainWindowPage {
 
-   private final static int GENERATE_PRICE = 10;
+   private final static int GENERATE_PRICE = 100;
 
    private final static int IMAGE_MAX_WIDTH = 200;
    private final static int IMAGE_MAX_HEIGHT = 200;
