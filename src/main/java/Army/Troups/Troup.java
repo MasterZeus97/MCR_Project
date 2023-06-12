@@ -104,6 +104,14 @@ public abstract class Troup implements Prototypeable {
    }
 
    /**
+    * Méthode pour obtenir les hp actuels de la troupe
+    * @return nombre de hp actuels de la troupe
+    */
+   public int getHp() {
+      return statsMap.get("HP").getValue();
+   }
+
+   /**
     * Méthode pour soigner la troupe
     */
    public void heal(){
@@ -127,7 +135,7 @@ public abstract class Troup implements Prototypeable {
    public int getAttacked(int damageDealed){
       int defense = statsMap.get("Defense").getValue();
       int hpLeft = statsMap.get("HP").getValue();
-      int damageTaken = damageDealed > defense ? damageDealed - defense : 0;
+      int damageTaken = damageDealed > defense ? damageDealed - defense : 1;
       statsMap.get("HP").setValue(hpLeft > damageTaken ? (hpLeft - damageTaken) : 0);
       return damageTaken;
    }
@@ -183,7 +191,7 @@ public abstract class Troup implements Prototypeable {
     * Permet de savoir l'argent que cette troupe donne lorsque vaincue
     * @return montant gagné par l'adversaire
     */
-   int defeatedMoney(){
+   public int defeatedMoney(){
       Random random = new Random();
 
       if(maxReward != minReward) {

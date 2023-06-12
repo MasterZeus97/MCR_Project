@@ -1,6 +1,6 @@
 package Army.Troups;
 
-public class KXSeries extends Troup {
+public class KXDroid extends Troup {
 
 
    private static final int percentReduce = 10,
@@ -20,15 +20,15 @@ public class KXSeries extends Troup {
    /**
     * Constructeur d'un KXSeries
     */
-   public KXSeries() {
-      super("KX-series security droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce, minReward, maxReward);
+   public KXDroid() {
+      super("KX droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce, minReward, maxReward);
    }
 
    /**
     * Constructeur de copie d'un KXSeries
     * @param s KXSeries à copier
     */
-   public KXSeries(KXSeries s) {
+   public KXDroid(KXDroid s) {
       super(s);
    }
 
@@ -37,8 +37,8 @@ public class KXSeries extends Troup {
     * @return Un nouveau KXSeries, clone du premier
     */
    @Override
-   public KXSeries copy() {
-      KXSeries newTroup = new KXSeries(this);
+   public KXDroid copy() {
+      KXDroid newTroup = new KXDroid(this);
       newTroup.downGradeStat(downGradeStatChances);
       return newTroup;
    }

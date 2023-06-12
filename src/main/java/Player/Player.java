@@ -60,7 +60,7 @@ public class Player {
      * @return True - L'argent a bien été débiter / False - Le solde restant n'est pas suffisant, rien n'a été débité
      */
     public boolean pay(int moneyToPay){
-        if(money + moneyToPay < minMoney){
+        if(money - moneyToPay >= minMoney){
             money -= moneyToPay;
             return true;
         }else{
