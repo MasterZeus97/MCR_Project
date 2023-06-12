@@ -18,7 +18,7 @@ public class C3PO extends Troup {
     * Constructeur d'un C3PO
     */
    public C3PO() {
-      super("C3PO", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce, minReward, maxReward);
+      super("C3PO", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minReward, maxReward, percentReduce);
    }
 
    /**

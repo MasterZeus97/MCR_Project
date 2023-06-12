@@ -21,7 +21,7 @@ public class KXDroid extends Troup {
     * Constructeur d'un KXSeries
     */
    public KXDroid() {
-      super("KX droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce, minReward, maxReward);
+      super("KX droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minReward, maxReward, percentReduce);
    }
 
    /**
