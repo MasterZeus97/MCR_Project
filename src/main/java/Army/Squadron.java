@@ -2,7 +2,6 @@ package Army;
 
 import Army.Troups.Troup;
 
-import javax.naming.SizeLimitExceededException;
 import java.util.ArrayList;
 import java.util.List;
 
