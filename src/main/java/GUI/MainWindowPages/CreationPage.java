@@ -25,7 +25,6 @@ public class CreationPage extends MainWindowPage {
    private final JList<String> statsList;
    private final ArmyJList armyJList;
 
-   private boolean payGenerate;
    private final JButton generateBtn;
    private final JButton cloneBtn;
    private final JButton startBtn;
@@ -77,7 +76,7 @@ public class CreationPage extends MainWindowPage {
       generateBtn.addActionListener(e -> {
          generateTroup();
          updateButtons();
-         updateMoney(payGenerate ? GENERATE_PRICE : 0);
+         updateMoney(GENERATE_PRICE);
       });
       add(generateBtn);
 
