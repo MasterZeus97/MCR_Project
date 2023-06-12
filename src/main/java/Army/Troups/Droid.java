@@ -20,7 +20,7 @@ public class Droid extends Troup {
     * Constructeur d'un Droid
     */
    public Droid() {
-      super("Droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce, minReward, maxReward);
+      super("Droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minReward, maxReward, percentReduce);
    }
 
    /**

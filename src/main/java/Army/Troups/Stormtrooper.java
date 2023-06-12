@@ -28,7 +28,7 @@ public class Stormtrooper extends Troup {
     * Constructeur d'un stormtrooper
     */
    public Stormtrooper() {
-      super("Stormtrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce, minReward, maxReward);
+      super("Stormtrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minReward, maxReward, percentReduce);
       getStatsMap().put("Precision", new Stat("Precision", minPrec, maxPrec, percentReduce));
    }
 
