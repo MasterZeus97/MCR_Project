@@ -29,11 +29,11 @@ public abstract class Troup implements Prototypeable {
     * @param name Le nom de la troupe
     */
    protected Troup(String name, int minHp, int maxHp,
-                   int minAtt, int maxAtt,
-                   int minDef, int maxDef,
-                   int minSpd, int maxSpd,
-                   int minReward, int maxReward,
-                   int percentReduce) {
+                                int minAtt, int maxAtt,
+                                int minDef, int maxDef,
+                                int minSpd, int maxSpd,
+                                int minReward, int maxReward,
+                                int percentReduce) {
       this.name = name;
       this.minReward = minReward;
       this.maxReward = maxReward;
@@ -208,7 +208,7 @@ public abstract class Troup implements Prototypeable {
       for(Stat s : statsMap.values())
          s.randomizeValue();
    }
-
+  
    @Override
    public abstract Troup copy();
 
@@ -229,7 +229,7 @@ public abstract class Troup implements Prototypeable {
          if(stat1.getName().equals(STATS_NAME_LIST.get(0))){
             return true;
          }else if(stat1.getName().equals(STATS_NAME_LIST.get(1)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
-                 stat2.getName().equals(STATS_NAME_LIST.get(1)))){
+                                                                      stat2.getName().equals(STATS_NAME_LIST.get(1)))){
             return true;
          }else if(stat1.getName().equals(STATS_NAME_LIST.get(2)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
                  stat2.getName().equals(STATS_NAME_LIST.get(1)) ||

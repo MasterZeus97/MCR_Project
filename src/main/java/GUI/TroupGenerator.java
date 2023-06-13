@@ -26,7 +26,6 @@ abstract public class TroupGenerator {
    }
    static EnumeratedDistribution<Troup> possibleTroups = new EnumeratedDistribution<>(weightedTroup);
 
-
    /**
     * Retourne une troupe choisie aléatoirement.
     *
@@ -37,7 +36,5 @@ abstract public class TroupGenerator {
       troup.randomizeStats();
       return troup;
    }
-
-
 
 }

@@ -1,7 +1,6 @@
 
 import Army.Troups.Troup;
 import GUI.MainWindow;
-import GUI.TroupGenerator;
 import Player.Player;
 
 public class Main {
