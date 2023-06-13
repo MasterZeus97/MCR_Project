@@ -17,11 +17,12 @@ public class CreationPage extends MainWindowPage {
 
    private final static int GENERATE_PRICE = 100;
 
-   private final static int IMAGE_MAX_WIDTH = 200;
-   private final static int IMAGE_MAX_HEIGHT = 200;
+   private final static int IMAGE_MAX_WIDTH = 500;
+   private final static int IMAGE_MAX_HEIGHT = 500;
 
    private final JLabel moneyLabel;
    private final JLabel imageLabel;
+   private final JLabel nameLabel;
    private final JList<String> statsList;
    private final ArmyJList armyJList;
 
@@ -40,27 +41,39 @@ public class CreationPage extends MainWindowPage {
    public CreationPage(MainWindow mw) {
       super(mw);
 
-      setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+      // PANNEAU DE GAUCHE //
 
-      imageLabel = new JLabel();
-      add(imageLabel);
+      JPanel buttonsPanel = new JPanel();
+      buttonsPanel.setLayout(new GridBagLayout());
+      GridBagConstraints gbc = new GridBagConstraints();
+      gbc.gridx = 0;
+      gbc.gridy = 0;
+      gbc.anchor = GridBagConstraints.CENTER;
+      gbc.insets = new Insets(5, 5, 5, 5);
 
-      // Compteur de crédits
-      moneyLabel = new JLabel();
-      updateMoney(0);
-      add(moneyLabel);
+      // Nom de la troupe
+      nameLabel = new JLabel();
+      gbc.gridx++;
+      buttonsPanel.add(nameLabel, gbc);
 
       // Liste des stats de la troupe
       DefaultListModel<String> statsListModel = new DefaultListModel<>();
       statsList = new JList<>(statsListModel);
-      add(statsList);
+      gbc.gridy++;
+      buttonsPanel.add(statsList, gbc);
 
-      // List des escadrilles
+      // Compteur de crédits
+      moneyLabel = new JLabel();
+      updateMoney(0);
+      gbc.gridy++;
+      buttonsPanel.add(moneyLabel, gbc);
+
+      // List des escadrons
       armyJList = new ArmyJList(mw.getArmy(), true);
       armyJList.addListSelectionListener(e -> {
          if (!e.getValueIsAdjusting()) {
 
-            // Sélectionne une escadrille dans la liste
+            // Sélectionne un escadron dans la liste
             if (armyJList.getSelectedIndex() >= 0) {
                actualSquadronIndex = armyJList.getSelectedIndex();
             }
@@ -69,16 +82,19 @@ public class CreationPage extends MainWindowPage {
       });
       actualSquadronIndex = 0;
       armyJList.update(0);
-      add(armyJList);
+      gbc.gridy++;
+      buttonsPanel.add(armyJList, gbc);
 
       // Bouton générer
-      generateBtn = new JButton("Générer troupe (" + GENERATE_PRICE + " crédits)");
+      generateBtn = new JButton("<html><center>Générer troupe<p>(" + GENERATE_PRICE + " crédits)</html>");
+      generateBtn.setHorizontalAlignment(SwingConstants.CENTER);
       generateBtn.addActionListener(e -> {
          generateTroup();
          updateButtons();
          updateMoney(GENERATE_PRICE);
       });
-      add(generateBtn);
+      gbc.gridy++;
+      buttonsPanel.add(generateBtn, gbc);
 
       // Bouton cloner
       cloneBtn = new JButton("Cloner troupe");
@@ -86,7 +102,7 @@ public class CreationPage extends MainWindowPage {
          Squadron squadron = mw.getArmy().getSquadron(actualSquadronIndex);
 
          if (!squadron.isFull()) {
-            // Clone la troupe et l'ajoute à l'escadrille choisie
+            // Clone la troupe et l'ajoute à l'escadron choisi
             squadron.add(actualTroup.copy());
             armyJList.update(actualSquadronIndex);
 
@@ -97,20 +113,37 @@ public class CreationPage extends MainWindowPage {
             updateButtons();
          }
       });
-      add(cloneBtn);
+      gbc.gridy++;
+      buttonsPanel.add(cloneBtn, gbc);
 
       // Bouton debug (crée une armée complète)
-      debugBtn = new JButton("Générer armée (debug)");
+      debugBtn = new JButton("<html><center>Générer armée<p>(debug)</html>");
+      debugBtn.setHorizontalAlignment(SwingConstants.CENTER);
       debugBtn.addActionListener(e -> {
          mw.getPlayer().generateArmy();
          armyJList.update(actualSquadronIndex);
       });
-      add(debugBtn);
+      gbc.gridy++;
+      buttonsPanel.add(debugBtn, gbc);
 
       // Bouton commencer
       startBtn = new JButton("Commencer guerre");
       startBtn.addActionListener(e -> mw.changeCard(MainWindow.BATTLE_PAGE));
-      add(startBtn);
+      gbc.gridy++;
+      buttonsPanel.add(startBtn, gbc);
+
+      // PANNEAU DE DROITE //
+
+      JPanel imagePanel = new JPanel();
+
+      // Image de la troupe
+      imageLabel = new JLabel();
+      imagePanel.add(imageLabel);
+
+      JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buttonsPanel, imagePanel);
+      splitPane.setResizeWeight(0.3);
+      setLayout(new BorderLayout());
+      add(splitPane, BorderLayout.CENTER);
 
       generateTroup();
       updateButtons();
@@ -121,6 +154,8 @@ public class CreationPage extends MainWindowPage {
       updateMoney(0);
       updateButtons();
       armyJList.update(0);
+
+      mw.pack();
    }
 
    /**
@@ -200,7 +235,7 @@ public class CreationPage extends MainWindowPage {
       Image resizedImage = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
       ImageIcon imageIcon = new ImageIcon(resizedImage);
 
-      imageLabel.setText(troupName);
+      nameLabel.setText(troupName);
       imageLabel.setIcon(imageIcon);
    }
 }

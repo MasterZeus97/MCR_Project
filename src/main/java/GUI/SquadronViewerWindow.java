@@ -6,11 +6,12 @@ import Army.Stat;
 import Army.Army;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Fenêtre affichant une escadrille avec la liste de ses troupes.
+ * Fenêtre affichant un escadron avec la liste de ses troupes.
  */
 public class SquadronViewerWindow extends JFrame {
 
@@ -24,31 +25,30 @@ public class SquadronViewerWindow extends JFrame {
 
    /**
     * Construit une fenêtre.
-    * @param armyJList La liste d'escadrilles utilisée pour créer cette fenêtre.
-    * @param id L'id de l'escadrille dans cette liste.
+    * @param armyJList La liste des escadrons utilisée pour créer cette fenêtre.
+    * @param id L'id de l'escadron dans cette liste.
     */
    public SquadronViewerWindow(ArmyJList armyJList, int id) {
-      setTitle("Squadron Viewer");
-      setResizable(false);
-      setLocationRelativeTo(null);
-
       this.armyJList = armyJList;
       this.id = id;
 
-      JPanel panel = new JPanel();
+      setTitle("Escadron " + (armyJList.isAlly() ? "allié " : "ennemi ") + (id + 1));
+      setMinimumSize(new Dimension(300, 0));
+      setResizable(false);
+      setLocationRelativeTo(null);
 
-      add(new JLabel("Squadron " + id));
+      JPanel panel = new JPanel();
 
       model = new DefaultListModel<>();
       panel.add(new JList(model));
 
-      clearButton = new JButton("Vider escadrille");
+      clearButton = new JButton("Vider escadron");
       clearButton.addActionListener(e -> {
          armyJList.getArmy().getSquadron(id).clearSquadron();
          armyJList.update(-1);
       });
 
-      cloneButton = new JButton("Cloner escadrille");
+      cloneButton = new JButton("Cloner escadron");
       cloneButton.addActionListener(e -> {
          int emptySquadronIndex = getEmptySquadron();
          if (emptySquadronIndex >= 0) {
@@ -106,16 +106,16 @@ public class SquadronViewerWindow extends JFrame {
    }
 
    /**
-    * Retourne l'escadrille affichée.
-    * @return L'escadrille affichée.
+    * Retourne l'escadron affichée.
+    * @return L'escadron affichée.
     */
    public Squadron getMySquadron() {
       return armyJList.getArmy().getSquadron(id);
    }
 
    /**
-    * Permet de savoir s'il existe une escadrille vide dans l'armée utilisée.
-    * @return L'index de la première escadrille vide de l'armée, -1 s'il n'en existe pas.
+    * Permet de savoir s'il existe une escadron vide dans l'armée utilisée.
+    * @return L'index de la première escadron vide de l'armée, -1 s'il n'en existe pas.
     */
    public int getEmptySquadron() {
       Army army = armyJList.getArmy();
