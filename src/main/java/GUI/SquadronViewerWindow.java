@@ -6,6 +6,7 @@ import Army.Stat;
 import Army.Army;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -28,16 +29,15 @@ public class SquadronViewerWindow extends JFrame {
     * @param id L'id de l'escadron dans cette liste.
     */
    public SquadronViewerWindow(ArmyJList armyJList, int id) {
-      setTitle("Squadron Viewer");
-      setResizable(false);
-      setLocationRelativeTo(null);
-
       this.armyJList = armyJList;
       this.id = id;
 
-      JPanel panel = new JPanel();
+      setTitle("Escadron " + (armyJList.isAlly() ? "allié " : "ennemi ") + (id + 1));
+      setMinimumSize(new Dimension(300, 0));
+      setResizable(false);
+      setLocationRelativeTo(null);
 
-      add(new JLabel("Squadron " + id));
+      JPanel panel = new JPanel();
 
       model = new DefaultListModel<>();
       panel.add(new JList(model));
