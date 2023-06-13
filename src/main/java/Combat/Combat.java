@@ -11,7 +11,7 @@ import java.util.Random;
 public class Combat {
     Army army1, army2;
     Squadron squadronActive1, squadronActive2;
-    int round;
+    int round, activeDamageDealed;
     Troup activeAttacked, activeAttacker;
 
     List<Troup> timeline;
@@ -72,7 +72,7 @@ public class Combat {
         else
             activeAttacked = squadronToAttack.getTroupList().get(0);
 
-        activeAttacked.getAttacked(activeAttacker.attack());
+        activeDamageDealed = activeAttacked.getAttacked(activeAttacker.attack());
         if(activeAttacked.getStatsList().get(0).getValue() <= 0){
             squadronToAttack.getTroupList().remove(activeAttacked);
 
@@ -137,5 +137,9 @@ public class Combat {
                 return true;
         }
         return false;
+    }
+
+    public int getActiveDamageDealed() {
+        return activeDamageDealed;
     }
 }
