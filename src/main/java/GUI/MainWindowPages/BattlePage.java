@@ -129,18 +129,19 @@ public class BattlePage extends MainWindowPage {
 
          Troup a = attacker;
          Troup b = attacked;
-         String action = " attaque ";
+         String action[] = {"Inflige ", " dmg à"};
          if (!combat.isPlayerAttacking()) {
             Troup c = a;
             a = b;
             b = c;
-            action = " est attaqué par ";
+            action[0] = "Subit ";
+            action[1] = " dmg de";
          }
 
          ArrayList<String> log = new ArrayList<>(Arrays.asList(
                  String.valueOf(++turnCount),
                  a.getName() + " [" + a.getHp() + " HP]",
-                 action,
+                 action[0] + combat.getActiveDamageDealed() + action[1],
                  b.getName() + " [" + b.getHp() + " HP]"
          ));
          logs.add(log);
@@ -231,20 +232,21 @@ public class BattlePage extends MainWindowPage {
          gbc.gridy++;
          add(new JLabel("Logs du combat"), gbc);
 
-         gbc.gridy++;
+         if (logs.size() > 0) {
+            gbc.gridy++;
+            Object[][] data = new Object[logs.size()][logs.get(0).size()];
+            int i = 0;
+            for (ArrayList<String> log : logs) {
+               int j = 0;
+               for (String s : log)
+                  data[i][j++] = s;
+               i++;
+            }
 
-         Object[][] data = new Object[logs.size()][logs.get(0).size()];
-         int i = 0;
-         for (ArrayList<String> log : logs) {
-            int j = 0;
-            for (String s : log)
-               data[i][j++] = s;
-            i++;
+            JScrollPane scrollPane = new JScrollPane(new JTable(data, new Object[]{"Tour", "Votre troupe", "Action", "Troupe ennemie"}));
+            scrollPane.setMinimumSize(new Dimension(100, 100));
+            add(scrollPane, gbc);
          }
-
-         JScrollPane scrollPane = new JScrollPane(new JTable(data, new Object[]{"Tour", "Votre troupe", "Action", "Troupe ennemie"}));
-         scrollPane.setMinimumSize(new Dimension(100, 100));
-         add(scrollPane, gbc);
 
          if (playerWinned) {
             JButton restartButton = new JButton("Continuer");
