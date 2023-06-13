@@ -8,6 +8,7 @@ import GUI.MainWindow;
 import Player.Player;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -22,7 +23,7 @@ public class BattlePage extends MainWindowPage {
    private final Player enemy;
 
    private Combat combat;
-   private Army alliedArmy;
+   private final Army alliedArmy;
    private Army enemyArmy;
 
    private final ArmyJList alliedArmyList;
@@ -39,15 +40,11 @@ public class BattlePage extends MainWindowPage {
       super(mw);
 
       quitButton = new JButton("Quitter guerre (Attention: supprime l'armée!)");
-      quitButton.addActionListener(e -> {
-         quitBattlePage();
-      });
+      quitButton.addActionListener(e -> quitBattlePage());
       add(quitButton);
 
       fightButton = new JButton("Combattre");
-      fightButton.addActionListener(e -> {
-         startFight();
-      });
+      fightButton.addActionListener(e -> startFight());
       add(fightButton);
 
       player = mw.getPlayer();
@@ -159,6 +156,7 @@ public class BattlePage extends MainWindowPage {
 
          // Paramètres de la fenêtre
          setTitle("GAME OVER");
+         setSize(300, 200);
          setResizable(false);
          setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
          addWindowListener(new WindowAdapter() {
@@ -172,11 +170,31 @@ public class BattlePage extends MainWindowPage {
          });
          setLocationRelativeTo(null);
 
-         JPanel panel = new JPanel();
+         setLayout(new GridBagLayout());
+         GridBagConstraints gbc = new GridBagConstraints();
+         gbc.gridx = 0;
+         gbc.gridy = 0;
+         gbc.anchor = GridBagConstraints.CENTER;
+         gbc.insets = new Insets(5, 5, 5, 5);
 
-         panel.add(new JLabel("Vous avez " + (playerWinned ? "gagné!" : "perdu!")));
-         panel.add(new JLabel("Nombre de tours: " + turnCount));
-         panel.add(new JLabel("Crédits gagnés: " + moneyWinned));
+         add(new JLabel("Vous avez " + (playerWinned ? "gagné!" : "perdu!")), gbc);
+
+         gbc.gridy++;
+         add(new JLabel("Nombre de tours: " + turnCount), gbc);
+
+         gbc.gridy++;
+         add(new JLabel("Crédits gagnés: " + moneyWinned), gbc);
+
+
+         if (playerWinned) {
+            JButton restartButton = new JButton("Continuer");
+            restartButton.addActionListener(e -> {
+               dispose();
+               battlePage.setupPage();
+            });
+            gbc.gridy++;
+            add(restartButton, gbc);
+         }
 
          JButton quitButton = new JButton("Quitter");
          quitButton.addActionListener(e -> {
@@ -185,19 +203,8 @@ public class BattlePage extends MainWindowPage {
                battlePage.quitBattlePage();
             }
          });
-         panel.add(quitButton);
-
-         if (playerWinned) {
-            JButton restartButton = new JButton("Continuer");
-            restartButton.addActionListener(e -> {
-               dispose();
-               battlePage.setupPage();
-            });
-            panel.add(restartButton);
-         }
-
-         add(panel);
-         pack();
+         gbc.gridy++;
+         add(quitButton, gbc);
       }
 
       /**
