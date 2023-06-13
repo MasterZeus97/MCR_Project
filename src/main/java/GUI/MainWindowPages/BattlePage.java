@@ -60,16 +60,16 @@ public class BattlePage extends MainWindowPage {
       add(new JLabel("Votre armée"), gbc);
       gbc.gridx = 2;
       add(new JLabel("Armée ennemie"), gbc);
+
       gbc.gridy++;
       gbc.gridx = 0;
       add(alliedArmyList, gbc);
       gbc.gridx = 2;
       add(enemyArmyList, gbc);
-      gbc.gridx = 1;
 
       fightButton = new JButton("Combattre");
       fightButton.addActionListener(e -> startFight());
-      gbc.gridy++;
+      gbc.gridx = 1;
       add(fightButton, gbc);
 
       quitButton = new JButton("<html><center>Quitter guerre<p>(Attention: supprime l'armée!)</html>");
