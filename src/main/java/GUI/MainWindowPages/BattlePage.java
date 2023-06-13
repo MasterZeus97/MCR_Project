@@ -68,7 +68,7 @@ public class BattlePage extends MainWindowPage {
       gbc.gridx = 1;
 
       quitButton = new JButton("<html><center>Quitter guerre<p>(Attention: supprime l'armée!)</html>");
-      quitButton.setHorizontalAlignment( SwingConstants.CENTER );
+      quitButton.setHorizontalAlignment(SwingConstants.CENTER);
       quitButton.addActionListener(e -> quitBattlePage());
       gbc.gridy++;
       add(quitButton, gbc);
