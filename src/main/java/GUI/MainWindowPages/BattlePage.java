@@ -95,8 +95,6 @@ public class BattlePage extends MainWindowPage {
       alliedArmyList.update(-1);
       enemyArmyList.update(-1);
 
-      combat = new Combat(alliedArmy, enemyArmy);
-
       setAllEnabled(true);
    }
 
@@ -112,7 +110,7 @@ public class BattlePage extends MainWindowPage {
     * Débute un combat entre les 2 armées définies.
     */
    public void startFight() {
-      if (combat == null) return;
+      combat = new Combat(alliedArmy, enemyArmy);
 
       setAllEnabled(false);
 
