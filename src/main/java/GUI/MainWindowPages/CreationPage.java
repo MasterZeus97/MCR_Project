@@ -55,12 +55,12 @@ public class CreationPage extends MainWindowPage {
       statsList = new JList<>(statsListModel);
       add(statsList);
 
-      // List des escadrilles
+      // List des escadrons
       armyJList = new ArmyJList(mw.getArmy(), true);
       armyJList.addListSelectionListener(e -> {
          if (!e.getValueIsAdjusting()) {
 
-            // Sélectionne une escadrille dans la liste
+            // Sélectionne un escadron dans la liste
             if (armyJList.getSelectedIndex() >= 0) {
                actualSquadronIndex = armyJList.getSelectedIndex();
             }
@@ -86,7 +86,7 @@ public class CreationPage extends MainWindowPage {
          Squadron squadron = mw.getArmy().getSquadron(actualSquadronIndex);
 
          if (!squadron.isFull()) {
-            // Clone la troupe et l'ajoute à l'escadrille choisie
+            // Clone la troupe et l'ajoute à l'escadron choisi
             squadron.add(actualTroup.copy());
             armyJList.update(actualSquadronIndex);
 

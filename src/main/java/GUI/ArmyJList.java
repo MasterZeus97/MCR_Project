@@ -8,7 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Spécialisation de la classe JList pour afficher une armée (liste d'escadrilles).
+ * Spécialisation de la classe JList pour afficher une armée (liste des escadrons).
  */
 public class ArmyJList extends JList {
 
