@@ -1,119 +1,133 @@
 package GUI;
 
-import Army.Army;
 import Army.Squadron;
 import Army.Troups.Troup;
 import Army.Stat;
+import Army.Army;
 
 import javax.swing.*;
-import java.util.ArrayList;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
- * Fenêtre secondaire permettant de visualiser les bataillons et leur contenu.
+ * Fenêtre affichant une escadrille avec la liste de ses troupes.
  */
 public class SquadronViewerWindow extends JFrame {
-   private static SquadronViewerWindow instance = null;
 
-   private final Army army;
-   private ArrayList<SqudronJList> sLists;
+   private final ArmyJList armyJList;
+   private final int id;
+
+   private final DefaultListModel<String> model;
+
+   private final JButton clearButton;
+   private final JButton cloneButton;
 
    /**
-    * Crée une nouvelle fenêtre.
-    * Le constructeur est privé, car cette classe est un Singleton.
-    *
-    * @param army L'armée à afficher.
+    * Construit une fenêtre.
+    * @param armyJList La liste d'escadrilles utilisée pour créer cette fenêtre.
+    * @param id L'id de l'escadrille dans cette liste.
     */
-   private SquadronViewerWindow(Army army) {
+   public SquadronViewerWindow(ArmyJList armyJList, int id) {
       setTitle("Squadron Viewer");
-      setSize(400, 300);
+      setResizable(false);
       setLocationRelativeTo(null);
 
-      this.army = army;
+      this.armyJList = armyJList;
+      this.id = id;
 
-      sLists = new ArrayList<>();
       JPanel panel = new JPanel();
-      for (int i = 0; i < army.getMaxSize(); i++) {
-         panel.add(new JLabel("Squadron " + (i+1)));
 
-         SqudronJList list = new SqudronJList(i);
-         sLists.add(list);
-         sLists.get(i).update();
-         panel.add(list.getList());
+      add(new JLabel("Squadron " + id));
+
+      model = new DefaultListModel<>();
+      panel.add(new JList(model));
+
+      clearButton = new JButton("Vider escadrille");
+      clearButton.addActionListener(e -> {
+         armyJList.getArmy().getSquadron(id).clearSquadron();
+         armyJList.update(-1);
+      });
+
+      cloneButton = new JButton("Cloner escadrille");
+      cloneButton.addActionListener(e -> {
+         int emptySquadronIndex = getEmptySquadron();
+         if (emptySquadronIndex >= 0) {
+            armyJList.getArmy().setSquadron(emptySquadronIndex, getMySquadron().copy());
+            armyJList.update(-1);
+         }
+      });
+
+      if (armyJList.isAlly()) {
+         panel.add(clearButton);
+         panel.add(cloneButton);
       }
+
       add(panel);
+      pack();
+
+      addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowClosing(WindowEvent e) {
+            dispose();
+            armyJList.clearSVW(id);
+         }
+      });
+
+      update();
    }
 
    /**
-    * Met à jour une liste de squadrons.
-    *
-    * @param i L'id de la liste.
+    * Met à jour l'affichage des composants de la fenêtre.
     */
-   public void update(int i) {
-      if (sLists != null) {
-         sLists.get(i).update();
-      }
-   }
+   public void update() {
+      model.clear();
 
-   /**
-    * Modèle singleton.
-    * Retourne une nouvelle fenêtre si aucune n'existe déjà ou l'instance de cette classe si elle a déjà été créée.
-    *
-    * @return L'unique instance de cette classe.
-    */
-   public static SquadronViewerWindow getInstance(Army army) {
-      if (instance == null) {
-         instance = new SquadronViewerWindow(army);
-      }
-      return instance;
-   }
+      Squadron squadron = getMySquadron();
 
-   /**
-    * Classe représentant une liste de squadrons.
-    */
-   class SqudronJList {
+      for (Troup t : squadron.getTroupList()) {
 
-      private final int id;
-      private final JList list;
-
-      public SqudronJList(int id) {
-         this.id = id;
-         list = new JList<>(new DefaultListModel());
-      }
-
-      /**
-       * Met à jour toutes les listes de squadrons.
-       */
-      public void update() {
-
-         Squadron s = army.getSquadron(id);
-
-         DefaultListModel sqListModel = (DefaultListModel) list.getModel();
-         sqListModel.clear();
-
-         for (Troup t : s.getTroupList()) {
-
-            StringBuilder stats = new StringBuilder();
-            for (Stat stat : t.getStatsList()) {
-               stats.append(stat.getName()).append(" = ").append(stat.getValue()).append(" | ");
-            }
-
-            sqListModel.addElement(t.getName() + ": " + stats);
+         StringBuilder stats = new StringBuilder();
+         for (Stat stat : t.getStatsList()) {
+            stats.append(stat.getName()).append(" = ").append(stat.getValue()).append(" | ");
          }
 
-         int emptySize = s.getMaxSize() - s.getTroupNumber();
-         for (int i = 0; i < emptySize; i++) {
-            sqListModel.addElement("- - -");
+         model.addElement(t.getName() + ": " + stats);
+      }
+
+      int emptySize = squadron.getMaxSize() - squadron.getTroupNumber();
+      for (int i = 0; i < emptySize; i++) {
+         model.addElement("[ VIDE ]");
+      }
+
+      clearButton.setEnabled(armyJList.isAlly() && !getMySquadron().isEmpty());
+      cloneButton.setEnabled(clearButton.isEnabled() && getEmptySquadron() >= 0);
+
+      pack();
+   }
+
+   /**
+    * Retourne l'escadrille affichée.
+    * @return L'escadrille affichée.
+    */
+   public Squadron getMySquadron() {
+      return armyJList.getArmy().getSquadron(id);
+   }
+
+   /**
+    * Permet de savoir s'il existe une escadrille vide dans l'armée utilisée.
+    * @return L'index de la première escadrille vide de l'armée, -1 s'il n'en existe pas.
+    */
+   public int getEmptySquadron() {
+      Army army = armyJList.getArmy();
+
+      int i = 0;
+      for (Squadron s : army.getSquadronsList()) {
+         if (s.isEmpty()) {
+            return i;
          }
-
+         i++;
       }
 
-      /**
-       * Retourne la JList avec les squadrons.
-       *
-       * @return La liste de squadrons.
-       */
-      public JList getList() {
-         return list;
-      }
+      return -1;
    }
 }

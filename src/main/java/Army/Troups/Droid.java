@@ -10,7 +10,9 @@ public class Droid extends Troup {
                             minDef = 60,
                             maxDef = 90,
                             minSpd = 25,
-                            maxSpd = 30;
+                            maxSpd = 30,
+                           minReward = 200,
+                           maxReward = 300;
 
    int downGradeStatChances = 70;
 
@@ -18,7 +20,7 @@ public class Droid extends Troup {
     * Constructeur d'un Droid
     */
    public Droid() {
-      super("Droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
+      super("Droid", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minReward, maxReward, percentReduce);
    }
 
    /**
@@ -27,6 +29,7 @@ public class Droid extends Troup {
     */
    public Droid(Droid s) {
       super(s);
+      this.downGradeStatChances = s.downGradeStatChances;
    }
 
    /**

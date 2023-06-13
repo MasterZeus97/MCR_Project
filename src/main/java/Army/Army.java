@@ -23,9 +23,19 @@ public class Army {
      * @return Le squadron à l'index squadronIndex
      */
     public Squadron getSquadron(int squadronIndex){
-        if(squadronIndex >= 0 && squadronIndex < 5)
+        if(squadronIndex >= 0 && squadronIndex < maxSizeArmy)
             return squadronsList.get(squadronIndex);
         return null;
+    }
+
+    /**
+     * Permet de redéfinir un squadron spécifique avec un index
+     * @param squadronIndex Index du squadron qu'on veut remplacer
+     * @param newSquadron Le nouveau squadron
+     */
+    public void setSquadron(int squadronIndex, Squadron newSquadron) {
+        if(squadronIndex >= 0 && squadronIndex < maxSizeArmy)
+            squadronsList.set(squadronIndex, newSquadron);
     }
 
     /**
@@ -49,7 +59,25 @@ public class Army {
      * @return True : L'armée est pleine - False : L'armée n'est pas pleine
      */
     public boolean isFull(){
-        return squadronsList.size() >= 10;
+        for(Squadron s : squadronsList){
+            if(!s.isFull()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Méthode pour savoir si l'armée est vide
+     * @return True : L'armée est complètement vide - False : Il y a au moins une troupe dans un bataillon de l'armée
+     */
+    public boolean isEmpty(){
+        for(Squadron s : squadronsList){
+            if(!s.getTroupList().isEmpty()){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

@@ -7,15 +7,16 @@ import java.util.*;
 
 public abstract class Troup implements Prototypeable {
    private static final ArrayList<String> STATS_NAME_LIST = new ArrayList<>(Arrays.asList(
-                                                                           "HP",
-                                                                           "Attack",
-                                                                           "Defense",
-                                                                           "Speed"));
+           "HP",
+           "Attack",
+           "Defense",
+           "Speed"));
 
    private static final int dropChance = 90;
 
    private final String name;
    private final int hpMax;
+   private final int minReward, maxReward;
 
    //Stat du soldat
    private final Map<String, Stat> statsMap = new HashMap<>();
@@ -28,12 +29,14 @@ public abstract class Troup implements Prototypeable {
     * @param name Le nom de la troupe
     */
    protected Troup(String name, int minHp, int maxHp,
-                                int minAtt, int maxAtt,
-                                int minDef, int maxDef,
-                                int minSpd, int maxSpd,
-                                int percentReduce) {
+                   int minAtt, int maxAtt,
+                   int minDef, int maxDef,
+                   int minSpd, int maxSpd,
+                   int minReward, int maxReward,
+                   int percentReduce) {
       this.name = name;
-
+      this.minReward = minReward;
+      this.maxReward = maxReward;
       statsMap.put(STATS_NAME_LIST.get(0), new Stat(STATS_NAME_LIST.get(0), minHp, maxHp, percentReduce));
       statsMap.put(STATS_NAME_LIST.get(1), new Stat(STATS_NAME_LIST.get(1), minAtt, maxAtt, percentReduce));
       statsMap.put(STATS_NAME_LIST.get(2), new Stat(STATS_NAME_LIST.get(2), minDef, maxDef, percentReduce));
@@ -49,6 +52,8 @@ public abstract class Troup implements Prototypeable {
    protected Troup(Troup troup){
       this.name = troup.name;
       this.hpMax = troup.hpMax;
+      this.minReward = troup.minReward;
+      this.maxReward = troup.maxReward;
       for(String a : troup.statsMap.keySet()){
          statsMap.put(a, troup.statsMap.get(a).copy());
       }
@@ -99,6 +104,14 @@ public abstract class Troup implements Prototypeable {
    }
 
    /**
+    * Méthode pour obtenir les hp actuels de la troupe
+    * @return nombre de hp actuels de la troupe
+    */
+   public int getHp() {
+      return statsMap.get("HP").getValue();
+   }
+
+   /**
     * Méthode pour soigner la troupe
     */
    public void heal(){
@@ -122,7 +135,7 @@ public abstract class Troup implements Prototypeable {
    public int getAttacked(int damageDealed){
       int defense = statsMap.get("Defense").getValue();
       int hpLeft = statsMap.get("HP").getValue();
-      int damageTaken = damageDealed > defense ? damageDealed - defense : 0;
+      int damageTaken = damageDealed > defense ? damageDealed - defense : 1;
       statsMap.get("HP").setValue(hpLeft > damageTaken ? (hpLeft - damageTaken) : 0);
       return damageTaken;
    }
@@ -175,7 +188,21 @@ public abstract class Troup implements Prototypeable {
    }
 
    /**
-    * Permet de randomiser les stats de la troupe
+    * Permet de savoir l'argent que cette troupe donne lorsque vaincue
+    * @return montant gagné par l'adversaire
+    */
+   public int defeatedMoney(){
+      Random random = new Random();
+
+      if(maxReward != minReward) {
+         return random.nextInt(maxReward - minReward) + minReward;
+      }else{
+         return minReward;
+      }
+   }
+
+   /**
+    * Methode pour randomize les valeurs des stats de la troupe
     */
    public void randomizeStats(){
       for(Stat s : statsMap.values())
@@ -202,16 +229,16 @@ public abstract class Troup implements Prototypeable {
          if(stat1.getName().equals(STATS_NAME_LIST.get(0))){
             return true;
          }else if(stat1.getName().equals(STATS_NAME_LIST.get(1)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
-                                                                      stat1.getName().equals(STATS_NAME_LIST.get(1)))){
+                 stat2.getName().equals(STATS_NAME_LIST.get(1)))){
             return true;
          }else if(stat1.getName().equals(STATS_NAME_LIST.get(2)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
-                                                                      stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
-                                                                      stat2.getName().equals(STATS_NAME_LIST.get(2)))){
+                 stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
+                 stat2.getName().equals(STATS_NAME_LIST.get(2)))){
             return true;
          }else if(stat1.getName().equals(STATS_NAME_LIST.get(3)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
-                                                                      stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
-                                                                      stat2.getName().equals(STATS_NAME_LIST.get(2)) ||
-                                                                      stat2.getName().equals(STATS_NAME_LIST.get(3)))){
+                 stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
+                 stat2.getName().equals(STATS_NAME_LIST.get(2)) ||
+                 stat2.getName().equals(STATS_NAME_LIST.get(3)))){
             return true;
          }else{
             return false;

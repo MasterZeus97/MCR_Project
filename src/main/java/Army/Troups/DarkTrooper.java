@@ -10,7 +10,9 @@ public class DarkTrooper extends Troup {
                             minDef = 20,
                             maxDef = 30,
                             minSpd = 30,
-                            maxSpd = 50;
+                            maxSpd = 50,
+                            minReward = 300,
+                            maxReward = 400;
 
    int downGradeStatChances = 70;
 
@@ -18,7 +20,7 @@ public class DarkTrooper extends Troup {
     * Constructeur d'un DarkTrooper
     */
    public DarkTrooper() {
-      super("Dark Trooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
+      super("Dark Trooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minReward, maxReward, percentReduce);
    }
 
    /**
@@ -27,6 +29,7 @@ public class DarkTrooper extends Troup {
     */
    public DarkTrooper(DarkTrooper s) {
       super(s);
+      this.downGradeStatChances = s.downGradeStatChances;
    }
 
    /**

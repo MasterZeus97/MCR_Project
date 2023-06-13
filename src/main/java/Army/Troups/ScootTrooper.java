@@ -4,13 +4,15 @@ public class ScootTrooper extends Troup {
 
    private static final int percentReduce = 20,
                             minHp = 50,
-                            maxHp = 100,
+                            maxHp = 150,
                             minAtt = 25,
                             maxAtt = 30,
                             minDef = 10,
                             maxDef = 20,
                             minSpd = 80,
-                            maxSpd = 100;
+                            maxSpd = 100,
+                            minReward = 100,
+                            maxReward = 150;
 
    int downGradeStatChances = 50;
 
@@ -18,7 +20,7 @@ public class ScootTrooper extends Troup {
     * Constructeur d'un ScootTrooper
     */
    public ScootTrooper() {
-      super("Scoot Trooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
+      super("Scoot Trooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minReward, maxReward, percentReduce);
    }
 
    /**
@@ -27,6 +29,7 @@ public class ScootTrooper extends Troup {
     */
    public ScootTrooper(ScootTrooper s) {
       super(s);
+      this.downGradeStatChances = s.downGradeStatChances;
    }
 
    /**

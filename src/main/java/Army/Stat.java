@@ -18,13 +18,12 @@ public class Stat implements Prototypeable{
      * @param percentReduce pourcent dont la valeur de la stat va diminuer. Ce pourcentage est calculé en fonction de la
      *                      valeur maximum de la stat
      */
-    public Stat(String name, int minValue, int maxValue, double percentReduce) {
+    public Stat(String name, int minValue, int maxValue, int percentReduce) {
         this.minValue = minValue;
         this.maxValue = maxValue;
-        percentReduce = (percentReduce % 101) / 100.0;
-        this.maxValueReduce = (int) Math.ceil(maxValue * percentReduce);
+        this.maxValueReduce = (int) Math.ceil(maxValue * ((percentReduce % 101) / 100.0));
         this.name = name;
-        randomizeValue();
+        this.value = this.maxValue;
     }
 
     /**
@@ -63,6 +62,12 @@ public class Stat implements Prototypeable{
     public String getName() {
         return name;
     }
+
+    /**
+     * Getter pour récupérer la valeur maximal d'une stat
+     * @return valeur max que cette stat peut valoir
+     */
+    public int getMaxValue(){return maxValue;}
 
     /**
      * Méthode pour randomiser la valeur de la stat entre minValue et maxValue

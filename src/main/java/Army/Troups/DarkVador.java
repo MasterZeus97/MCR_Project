@@ -10,7 +10,9 @@ public class DarkVador extends Troup {
                             minDef = 150,
                             maxDef = 150,
                             minSpd = 100,
-                            maxSpd = 100;
+                            maxSpd = 100,
+                            minReward = 1000,
+                            maxReward = 1500;
 
    int downGradeStatChances = 70;
 
@@ -18,7 +20,7 @@ public class DarkVador extends Troup {
     * Constructeur d'un DarkVador
     */
    public DarkVador() {
-      super("Dark Vador", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, percentReduce);
+      super("Dark Vador", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minReward, maxReward, percentReduce);
    }
 
    /**
@@ -27,6 +29,7 @@ public class DarkVador extends Troup {
     */
    public DarkVador(DarkVador s) {
       super(s);
+      this.downGradeStatChances = s.downGradeStatChances;
    }
 
    /**
