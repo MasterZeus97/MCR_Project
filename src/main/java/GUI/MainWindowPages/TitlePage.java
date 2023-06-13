@@ -25,7 +25,23 @@ public class TitlePage extends MainWindowPage {
 
       JPanel buttonPanel = new JPanel();
       buttonPanel.setOpaque(false);
-      JButton button = new JButton("Jouer");
+      JButton button = new JButton("Jouer") {
+         @Override
+         protected void paintComponent(Graphics g) {
+            final Graphics2D g2 = (Graphics2D) g.create();
+            g2.setPaint(new GradientPaint(
+                    new Point(0, 0),
+                    Color.YELLOW.brighter(),
+                    new Point(0, getHeight()),
+                    Color.ORANGE.darker()));
+            g2.fillRect(0, 0, getWidth(), getHeight());
+            g2.dispose();
+
+            super.paintComponent(g);
+         }
+      };
+      button.setContentAreaFilled(false);
+      button.setFont(new Font("Arial", Font.PLAIN, 30));
       button.addActionListener(e -> mw.changeCard(MainWindow.CREATION_PAGE));
       button.setPreferredSize(new Dimension(200, 50));
       buttonPanel.add(button);
