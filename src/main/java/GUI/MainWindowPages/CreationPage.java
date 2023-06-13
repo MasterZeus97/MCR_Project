@@ -199,11 +199,10 @@ public class CreationPage extends MainWindowPage {
       DefaultListModel<String> oldListModel = (DefaultListModel<String>) statsList.getModel();
       oldListModel.clear();
       for (Stat a : actualTroup.getStatsList()) {
-         oldListModel.addElement(a.getName() + ": " + a.getValue());
+         oldListModel.addElement(a.getName() + ": " + a.getValue() + " / " + a.getMaxValue());
       }
    }
 
-   // TODO : Uniformiser les images pour pas devoir les redimensionner
    /**
     * Définit l'image à afficher.
     * @param troupName Le nom de la troupe.
@@ -212,9 +211,6 @@ public class CreationPage extends MainWindowPage {
       ImageIcon originalImageIcon = new ImageIcon("img/" + troupName + ".png");
       Image image = originalImageIcon.getImage();
 
-      int maxWidth = IMAGE_MAX_WIDTH; // Largeur maximale souhaitée
-      int maxHeight = IMAGE_MAX_HEIGHT; // Hauteur maximale souhaitée
-
       int originalWidth = image.getWidth(null);
       int originalHeight = image.getHeight(null);
 
@@ -222,9 +218,9 @@ public class CreationPage extends MainWindowPage {
       int newHeight = originalHeight;
 
       // Vérification si un redimensionnement est nécessaire
-      if (originalWidth > maxWidth || originalHeight > maxHeight) {
-         double widthRatio = (double) maxWidth / originalWidth;
-         double heightRatio = (double) maxHeight / originalHeight;
+      if (originalWidth > IMAGE_MAX_WIDTH || originalHeight > IMAGE_MAX_HEIGHT) {
+         double widthRatio = (double) IMAGE_MAX_WIDTH / originalWidth;
+         double heightRatio = (double) IMAGE_MAX_HEIGHT / originalHeight;
 
          double scaleFactor = Math.min(widthRatio, heightRatio);
 
