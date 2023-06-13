@@ -39,13 +39,12 @@ public class BattlePage extends MainWindowPage {
    public BattlePage(MainWindow mw) {
       super(mw);
 
-      quitButton = new JButton("Quitter guerre (Attention: supprime l'armée!)");
-      quitButton.addActionListener(e -> quitBattlePage());
-      add(quitButton);
-
-      fightButton = new JButton("Combattre");
-      fightButton.addActionListener(e -> startFight());
-      add(fightButton);
+      setLayout(new GridBagLayout());
+      GridBagConstraints gbc = new GridBagConstraints();
+      gbc.gridx = 1;
+      gbc.gridy = 0;
+      gbc.anchor = GridBagConstraints.CENTER;
+      gbc.insets = new Insets(5, 5, 5, 5);
 
       player = mw.getPlayer();
       enemy = new Player();
@@ -56,8 +55,28 @@ public class BattlePage extends MainWindowPage {
       alliedArmyList = new ArmyJList(alliedArmy, true);
       enemyArmyList = new ArmyJList(enemyArmy, false);
 
-      add(alliedArmyList);
-      add(enemyArmyList);
+      gbc.gridy++;
+      gbc.gridx = 0;
+      add(new JLabel("Votre armée"), gbc);
+      gbc.gridx = 2;
+      add(new JLabel("Armée ennemie"), gbc);
+      gbc.gridy++;
+      gbc.gridx = 0;
+      add(alliedArmyList, gbc);
+      gbc.gridx = 2;
+      add(enemyArmyList, gbc);
+      gbc.gridx = 1;
+
+      quitButton = new JButton("<html><center>Quitter guerre<p>(Attention: supprime l'armée!)</html>");
+      quitButton.setHorizontalAlignment( SwingConstants.CENTER );
+      quitButton.addActionListener(e -> quitBattlePage());
+      gbc.gridy++;
+      add(quitButton, gbc);
+
+      fightButton = new JButton("Combattre");
+      fightButton.addActionListener(e -> startFight());
+      gbc.gridy++;
+      add(fightButton, gbc);
 
       combat = null;
    }
