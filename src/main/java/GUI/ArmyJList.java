@@ -58,7 +58,7 @@ public class ArmyJList extends JList {
       model.clear();
       for (int i = 0; i < army.getMaxSize(); i++) {
          Squadron s = army.getSquadron(i);
-         model.addElement("Escadron " + i + ": (" + s.getTroupNumber() + "/" + s.getMaxSize() + ")");
+         model.addElement("Escadron " + (i+1) + ": (" + s.getTroupNumber() + "/" + s.getMaxSize() + ")");
 
          updateSVW(i);
       }
