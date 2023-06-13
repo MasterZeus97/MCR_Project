@@ -172,7 +172,7 @@ public abstract class Troup implements Prototypeable {
     * @return True si la troupe a encore 1HP ou plus - False si elle a moins de 1HP
     */
    public boolean isAlive(){
-      return statsMap.get("HP").getValue() <= 0;
+      return statsMap.get("HP").getValue() > 0;
    }
 
    /**
