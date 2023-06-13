@@ -67,6 +67,8 @@ public class BattlePage extends MainWindowPage {
 
    @Override
    public void setupPage() {
+      enemyArmy = enemy.generateArmy();
+
       alliedArmyList.update(-1);
       enemyArmyList.update(-1);
 
