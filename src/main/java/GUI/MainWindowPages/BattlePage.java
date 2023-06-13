@@ -8,9 +8,15 @@ import GUI.MainWindow;
 import Player.Player;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * Page représentant le menu de combat.
@@ -34,6 +40,7 @@ public class BattlePage extends MainWindowPage {
 
    /**
     * Construit la page.
+    *
     * @param mw La fenêtre principale où la page est assignée.
     */
    public BattlePage(MainWindow mw) {
@@ -107,10 +114,11 @@ public class BattlePage extends MainWindowPage {
    public void startFight() {
       if (combat == null) return;
 
-      boolean playerWinned = true;
-
       setAllEnabled(false);
 
+      LinkedList<ArrayList<String>> logs = new LinkedList<>();
+
+      boolean playerWinned = true;
       int turnCount = 0;
       int moneyWinned = 0;
       while (!combat.isCombatFinished() && turnCount < MAX_TURNS) {
@@ -119,10 +127,23 @@ public class BattlePage extends MainWindowPage {
          Troup attacker = combat.getTroupAttacker();
          Troup attacked = combat.getTroupAttacked();
 
-         // TODO : Afficher une liste avec les logs ?
-         System.out.println(++turnCount + (combat.isPlayerAttacking() ? " (+) " : " (-) ")
-                 + ": " + attacker.getName() + " [" + attacker.getHp() + " HP]"
-                 + " attaque " + attacked.getName() + " [" + attacked.getHp() + " HP]");
+         Troup a = attacker;
+         Troup b = attacked;
+         String action = " attaque ";
+         if (!combat.isPlayerAttacking()) {
+            Troup c = a;
+            a = b;
+            b = c;
+            action = " est attaqué par ";
+         }
+
+         ArrayList<String> log = new ArrayList<>(Arrays.asList(
+                 String.valueOf(++turnCount),
+                 a.getName() + " [" + a.getHp() + " HP]",
+                 action,
+                 b.getName() + " [" + b.getHp() + " HP]"
+         ));
+         logs.add(log);
 
          if (combat.isPlayerAttacking() && !attacked.isAlive()) {
             moneyWinned += attacked.defeatedMoney();
@@ -143,12 +164,13 @@ public class BattlePage extends MainWindowPage {
          enemyArmy = enemy.getArmy();
       }
 
-      JFrame gameOverWindow = new gameOverWindow(this, playerWinned, turnCount, moneyWinned);
+      JFrame gameOverWindow = new gameOverWindow(this, playerWinned, turnCount, moneyWinned, logs);
       gameOverWindow.setVisible(true);
    }
 
    /**
     * Défini si les composants de la page sont actifs ou non.
+    *
     * @param enabled true pour activer les composants, false sinon
     */
    private void setAllEnabled(boolean enabled) {
@@ -165,17 +187,19 @@ public class BattlePage extends MainWindowPage {
 
       /**
        * Crée la fenêtre de Game Over.
-       * @param battlePage La page utilisée pour le combat.
+       *
+       * @param battlePage   La page utilisée pour le combat.
        * @param playerWinned true si le joueur a gagné, false si l'ennemi a gagné.
-       * @param turnCount Le nombre de tours écoulés durant le combat.
-       * @param moneyWinned L'argent gagné par le joueur durant le combat.
+       * @param turnCount    Le nombre de tours écoulés durant le combat.
+       * @param moneyWinned  L'argent gagné par le joueur durant le combat.
+       * @param logs         Liste avec les informations de chaque 1vs1 du combat
        */
       // TODO : Singleton ?
-      public gameOverWindow(BattlePage battlePage, boolean playerWinned, int turnCount, int moneyWinned) {
+      public gameOverWindow(BattlePage battlePage, boolean playerWinned, int turnCount, int moneyWinned, LinkedList<ArrayList<String>> logs) {
 
          // Paramètres de la fenêtre
          setTitle("GAME OVER");
-         setSize(300, 200);
+         setSize(800, 800);
          setResizable(false);
          setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
          addWindowListener(new WindowAdapter() {
@@ -204,6 +228,23 @@ public class BattlePage extends MainWindowPage {
          gbc.gridy++;
          add(new JLabel("Crédits gagnés: " + moneyWinned), gbc);
 
+         gbc.gridy++;
+         add(new JLabel("Logs du combat"), gbc);
+
+         gbc.gridy++;
+
+         Object[][] data = new Object[logs.size()][logs.get(0).size()];
+         int i = 0;
+         for (ArrayList<String> log : logs) {
+            int j = 0;
+            for (String s : log)
+               data[i][j++] = s;
+            i++;
+         }
+
+         JScrollPane scrollPane = new JScrollPane(new JTable(data, new Object[]{"Tour", "Votre troupe", "Action", "Troupe ennemie"}));
+         scrollPane.setMinimumSize(new Dimension(100, 100));
+         add(scrollPane, gbc);
 
          if (playerWinned) {
             JButton restartButton = new JButton("Continuer");
@@ -228,6 +269,7 @@ public class BattlePage extends MainWindowPage {
 
       /**
        * Ouvre un pop-up pour demander la confirmation de fermer la fenêtre.
+       *
        * @return true si l'utilisateur a confirmé la fermeture de la fenêtre, false sinon.
        */
       private boolean askCloseConfirmation() {
