@@ -67,16 +67,16 @@ public class BattlePage extends MainWindowPage {
       add(enemyArmyList, gbc);
       gbc.gridx = 1;
 
+      fightButton = new JButton("Combattre");
+      fightButton.addActionListener(e -> startFight());
+      gbc.gridy++;
+      add(fightButton, gbc);
+
       quitButton = new JButton("<html><center>Quitter guerre<p>(Attention: supprime l'armée!)</html>");
       quitButton.setHorizontalAlignment(SwingConstants.CENTER);
       quitButton.addActionListener(e -> quitBattlePage());
       gbc.gridy++;
       add(quitButton, gbc);
-
-      fightButton = new JButton("Combattre");
-      fightButton.addActionListener(e -> startFight());
-      gbc.gridy++;
-      add(fightButton, gbc);
 
       combat = null;
    }
