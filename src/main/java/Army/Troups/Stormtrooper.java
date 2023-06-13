@@ -38,6 +38,7 @@ public class Stormtrooper extends Troup {
     */
    public Stormtrooper(Stormtrooper s) {
       super(s);
+      this.downGradeStatChances = s.downGradeStatChances;
    }
 
    @Override

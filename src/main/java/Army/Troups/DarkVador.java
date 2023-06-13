@@ -29,6 +29,7 @@ public class DarkVador extends Troup {
     */
    public DarkVador(DarkVador s) {
       super(s);
+      this.downGradeStatChances = s.downGradeStatChances;
    }
 
    /**

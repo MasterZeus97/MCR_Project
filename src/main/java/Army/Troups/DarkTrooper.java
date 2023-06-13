@@ -29,6 +29,7 @@ public class DarkTrooper extends Troup {
     */
    public DarkTrooper(DarkTrooper s) {
       super(s);
+      this.downGradeStatChances = s.downGradeStatChances;
    }
 
    /**

@@ -29,6 +29,7 @@ public class ScootTrooper extends Troup {
     */
    public ScootTrooper(ScootTrooper s) {
       super(s);
+      this.downGradeStatChances = s.downGradeStatChances;
    }
 
    /**

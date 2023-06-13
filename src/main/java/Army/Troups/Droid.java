@@ -29,6 +29,7 @@ public class Droid extends Troup {
     */
    public Droid(Droid s) {
       super(s);
+      this.downGradeStatChances = s.downGradeStatChances;
    }
 
    /**

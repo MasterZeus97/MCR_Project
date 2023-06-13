@@ -23,7 +23,7 @@ public class Stat implements Prototypeable{
         this.maxValue = maxValue;
         this.maxValueReduce = (int) Math.ceil(maxValue * ((percentReduce % 101) / 100.0));
         this.name = name;
-        randomizeValue();
+        this.value = this.maxValue;
     }
 
     /**
@@ -62,6 +62,12 @@ public class Stat implements Prototypeable{
     public String getName() {
         return name;
     }
+
+    /**
+     * Getter pour récupérer la valeur maximal d'une stat
+     * @return valeur max que cette stat peut valoir
+     */
+    public int getMaxValue(){return maxValue;}
 
     /**
      * Méthode pour randomiser la valeur de la stat entre minValue et maxValue

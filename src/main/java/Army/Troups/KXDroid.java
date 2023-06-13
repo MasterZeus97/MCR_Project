@@ -30,6 +30,7 @@ public class KXDroid extends Troup {
     */
    public KXDroid(KXDroid s) {
       super(s);
+      this.downGradeStatChances = s.downGradeStatChances;
    }
 
    /**

@@ -7,10 +7,10 @@ import java.util.*;
 
 public abstract class Troup implements Prototypeable {
    private static final ArrayList<String> STATS_NAME_LIST = new ArrayList<>(Arrays.asList(
-                                                                           "HP",
-                                                                           "Attack",
-                                                                           "Defense",
-                                                                           "Speed"));
+           "HP",
+           "Attack",
+           "Defense",
+           "Speed"));
 
    private static final int dropChance = 90;
 
@@ -201,6 +201,14 @@ public abstract class Troup implements Prototypeable {
       }
    }
 
+   /**
+    * Methode pour randomize les valeurs des stats de la troupe
+    */
+   public void randomizeStats(){
+      for(Stat s : statsMap.values())
+         s.randomizeValue();
+   }
+  
    @Override
    public abstract Troup copy();
 
@@ -224,13 +232,13 @@ public abstract class Troup implements Prototypeable {
                                                                       stat2.getName().equals(STATS_NAME_LIST.get(1)))){
             return true;
          }else if(stat1.getName().equals(STATS_NAME_LIST.get(2)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
-                                                                      stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
-                                                                      stat2.getName().equals(STATS_NAME_LIST.get(2)))){
+                 stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
+                 stat2.getName().equals(STATS_NAME_LIST.get(2)))){
             return true;
          }else if(stat1.getName().equals(STATS_NAME_LIST.get(3)) && !(stat2.getName().equals(STATS_NAME_LIST.get(0)) ||
-                                                                      stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
-                                                                      stat2.getName().equals(STATS_NAME_LIST.get(2)) ||
-                                                                      stat2.getName().equals(STATS_NAME_LIST.get(3)))){
+                 stat2.getName().equals(STATS_NAME_LIST.get(1)) ||
+                 stat2.getName().equals(STATS_NAME_LIST.get(2)) ||
+                 stat2.getName().equals(STATS_NAME_LIST.get(3)))){
             return true;
          }else{
             return false;
