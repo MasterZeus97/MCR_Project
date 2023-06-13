@@ -35,10 +35,9 @@ public class MainWindow extends JFrame {
       this.player = player;
 
       // Paramètres de la fenêtre
-      setTitle("NOM DU JEU");
-      setSize(800, 600);
+      setTitle("");
+      setResizable(false);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      setLocationRelativeTo(null);
 
       // Différentes pages
       cardLayout = new CardLayout();
@@ -54,6 +53,8 @@ public class MainWindow extends JFrame {
       cardPanel.add(battlePage, BATTLE_PAGE);
 
       add(cardPanel);
+
+      changeCard(TITLE_PAGE);
    }
 
    /**
