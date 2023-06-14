@@ -29,7 +29,7 @@ public class Stormtrooper extends Troup {
     */
    public Stormtrooper() {
       super("Stormtrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minReward, maxReward, percentReduce);
-      getStatsMap().put("Précision", new Stat("Précision", minPrec, maxPrec, percentReduce));
+      getStatsMap().put("Precision", new Stat("Precision", minPrec, maxPrec, percentReduce));
    }
 
    /**
@@ -45,7 +45,7 @@ public class Stormtrooper extends Troup {
    public int attack() {
       Random random = new Random();
       int checkChange = random.nextInt(100 - 1) + 1;
-      if(checkChange <= getStatsMap().get("Précision").getValue()){
+      if(checkChange <= getStatsMap().get("Precision").getValue()){
          return super.attack();
       }else{
          return 0;
