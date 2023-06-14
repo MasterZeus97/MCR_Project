@@ -29,7 +29,7 @@ public class Stormtrooper extends Troup {
     */
    public Stormtrooper() {
       super("Stormtrooper", minHp, maxHp, minAtt, maxAtt, minDef, maxDef, minSpd, maxSpd, minReward, maxReward, percentReduce);
-      getStatsMap().put("Precision", new Stat("Precision", minPrec, maxPrec, percentReduce));
+      getStatsMap().put("Précision", new Stat("Précision", minPrec, maxPrec, percentReduce));
    }
 
    /**
