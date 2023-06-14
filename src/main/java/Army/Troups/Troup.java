@@ -8,7 +8,7 @@ import java.util.*;
 public abstract class Troup implements Prototypeable {
    private static final ArrayList<String> STATS_NAME_LIST = new ArrayList<>(Arrays.asList( "PV",
                                                                                            "Attaque",
-                                                                                           "Défense",
+                                                                                           "Defense",
                                                                                            "Vitesse"));
 
    private static final int dropChance = 90;
