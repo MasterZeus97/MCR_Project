@@ -6,11 +6,10 @@ import Army.Prototypeable;
 import java.util.*;
 
 public abstract class Troup implements Prototypeable {
-   private static final ArrayList<String> STATS_NAME_LIST = new ArrayList<>(Arrays.asList(
-           "HP",
-           "Attack",
-           "Defense",
-           "Speed"));
+   private static final ArrayList<String> STATS_NAME_LIST = new ArrayList<>(Arrays.asList( "PV",
+                                                                                           "Attaque",
+                                                                                           "Défense",
+                                                                                           "Vitesse"));
 
    private static final int dropChance = 90;
 
@@ -42,7 +41,7 @@ public abstract class Troup implements Prototypeable {
       statsMap.put(STATS_NAME_LIST.get(2), new Stat(STATS_NAME_LIST.get(2), minDef, maxDef, percentReduce));
       statsMap.put(STATS_NAME_LIST.get(3), new Stat(STATS_NAME_LIST.get(3), minSpd, maxSpd, percentReduce));
 
-      hpMax = statsMap.get("HP").getValue();
+      hpMax = statsMap.get(STATS_NAME_LIST.get(0)).getValue();
    }
 
    /**
@@ -108,14 +107,14 @@ public abstract class Troup implements Prototypeable {
     * @return nombre de hp actuels de la troupe
     */
    public int getHp() {
-      return statsMap.get("HP").getValue();
+      return statsMap.get(STATS_NAME_LIST.get(0)).getValue();
    }
 
    /**
     * Méthode pour soigner la troupe
     */
    public void heal(){
-      statsMap.get("HP").setValue(hpMax);
+      statsMap.get(STATS_NAME_LIST.get(0)).setValue(hpMax);
    }
 
    /**
@@ -123,9 +122,9 @@ public abstract class Troup implements Prototypeable {
     * @return Valeur des dégats de base de l'attaque de cette troupe
     */
    public int attack(){
-      if(statsMap.get("HP").getValue() <= 0)
+      if(statsMap.get(STATS_NAME_LIST.get(0)).getValue() <= 0)
          return 0;
-      return statsMap.get("Attack").getValue();
+      return statsMap.get(STATS_NAME_LIST.get(1)).getValue();
    }
 
    /**
@@ -133,10 +132,10 @@ public abstract class Troup implements Prototypeable {
     * @param damageDealed Dégats subits par la troupe
     */
    public int getAttacked(int damageDealed){
-      int defense = statsMap.get("Defense").getValue();
-      int hpLeft = statsMap.get("HP").getValue();
+      int defense = statsMap.get(STATS_NAME_LIST.get(2)).getValue();
+      int hpLeft = statsMap.get(STATS_NAME_LIST.get(0)).getValue();
       int damageTaken = damageDealed > defense ? damageDealed - defense : 1;
-      statsMap.get("HP").setValue(hpLeft > damageTaken ? (hpLeft - damageTaken) : 0);
+      statsMap.get(STATS_NAME_LIST.get(0)).setValue(hpLeft > damageTaken ? (hpLeft - damageTaken) : 0);
       return damageTaken;
    }
 
@@ -145,7 +144,7 @@ public abstract class Troup implements Prototypeable {
     * @return Vitesse de la troupe
     */
    public int getSpeed(){
-      return statsMap.get("Speed").getValue();
+      return statsMap.get(STATS_NAME_LIST.get(2)).getValue();
    }
 
    /**
@@ -172,7 +171,7 @@ public abstract class Troup implements Prototypeable {
     * @return True si la troupe a encore 1HP ou plus - False si elle a moins de 1HP
     */
    public boolean isAlive(){
-      return statsMap.get("HP").getValue() > 0;
+      return statsMap.get(STATS_NAME_LIST.get(0)).getValue() > 0;
    }
 
    /**
