@@ -144,7 +144,7 @@ public abstract class Troup implements Prototypeable {
     * @return Vitesse de la troupe
     */
    public int getSpeed(){
-      return statsMap.get(STATS_NAME_LIST.get(2)).getValue();
+      return statsMap.get(STATS_NAME_LIST.get(3)).getValue();
    }
 
    /**
