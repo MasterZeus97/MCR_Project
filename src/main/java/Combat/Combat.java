@@ -16,6 +16,11 @@ public class Combat {
 
     List<Troup> timeline;
 
+    /**
+     * Constructeur de la classe
+     * @param army1 Armée du joueur
+     * @param army2 Armée de l'IA
+     */
     public Combat(Army army1, Army army2) {
         this.army1 = army1;
         this.army2 = army2;
@@ -23,18 +28,21 @@ public class Combat {
         round = 0;
 
         for(int i = 0; i < army1.getSquadronsList().size(); i++){
-            if(army1.getSquadronsList().get(i).getTroupNumber() != 0)
+            if(!army1.getSquadronsList().get(i).isEmpty())
                 squadronActive1 = army1.getSquadronsList().get(i);
         }
 
         for(int i = 0; i < army2.getSquadronsList().size(); i++){
-            if(army2.getSquadronsList().get(i).getTroupNumber() != 0)
+            if(!army2.getSquadronsList().get(i).isEmpty())
                 squadronActive2 = army2.getSquadronsList().get(i);
         }
 
         setTimeline();
     }
 
+    /**
+     * Initialise la liste mettant en place la chronolgie d'attaque des troupes
+     */
     private void setTimeline() {
         timeline = new LinkedList<>();
 
@@ -51,6 +59,10 @@ public class Combat {
         }
     }
 
+    /**
+     * Cette méthode implémente le fonctionnement d'un tour d'un combat. Il prend la prochaine troupe devant attaquer
+     * et attaque une troupe adversaire de manière aléatoire. Il vérifie ensuite si la troupe est morte.
+     */
     public void nextTurn(){
         if(timeline.isEmpty() && !isCombatFinished()){
             round++;
@@ -73,7 +85,7 @@ public class Combat {
             activeAttacked = squadronToAttack.getTroupList().get(0);
 
         activeDamageDealed = activeAttacked.getAttacked(activeAttacker.attack());
-        if(activeAttacked.getStatsList().get(0).getValue() <= 0){
+        if(activeAttacked.getHp() <= 0){
             squadronToAttack.getTroupList().remove(activeAttacked);
 
             timeline.remove(activeAttacked);
@@ -84,7 +96,7 @@ public class Combat {
                         squadronActive1 = null;
 
                         for(int i = 0; i < army1.getSquadronsList().size(); i++){
-                            if(army1.getSquadronsList().get(i).getTroupNumber() != 0)
+                            if(!army1.getSquadronsList().get(i).isEmpty())
                                 squadronActive1 = army1.getSquadronsList().get(i);
                         }
                     }
@@ -94,7 +106,7 @@ public class Combat {
                         squadronActive2 = null;
 
                         for(int i = 0; i < army2.getSquadronsList().size(); i++){
-                            if(army2.getSquadronsList().get(i).getTroupNumber() != 0)
+                            if(!army2.getSquadronsList().get(i).isEmpty())
                                 squadronActive2 = army2.getSquadronsList().get(i);
                         }
                     }
@@ -106,31 +118,47 @@ public class Combat {
         }
     }
 
+    /**
+     * Indique si le combat est terminé
+     * @return True si le combat est fini
+     */
     public boolean isCombatFinished(){
         boolean squadronsState1 = true,
                 squadronsState2 = true;
 
         for(int i = 0; i < army2.getSquadronsList().size(); i++){
-            if(army2.getSquadronsList().get(i).getTroupNumber() != 0)
+            if(!army2.getSquadronsList().get(i).isEmpty())
                 squadronsState2 = false;
         }
 
         for(int i = 0; i < army1.getSquadronsList().size(); i++){
-            if(army1.getSquadronsList().get(i).getTroupNumber() != 0)
+            if(!army1.getSquadronsList().get(i).isEmpty())
                 squadronsState1 = false;
         }
 
         return squadronsState1 || squadronsState2;
     }
 
+    /**
+     * Retourne la troupe se faisant attaquer lors de la manche courante
+     * @return troupe attaquée
+     */
     public Troup getTroupAttacked(){
         return activeAttacked;
     }
 
+    /**
+     * Retourne la troupe qui attaque lors de la manche courante
+     * @return troupe attaquant
+     */
     public Troup getTroupAttacker(){
         return activeAttacker;
     }
 
+    /**
+     * Indique si c'est le joueur qui attaque lors de la manche courante
+     * @return true si le joueur attaque
+     */
     public boolean isPlayerAttacking(){
         for(int i = 0; i < army1.getSquadronsList().size(); i++){
             if(army1.getSquadronsList().get(i).getTroupList().contains(activeAttacker))
@@ -139,6 +167,10 @@ public class Combat {
         return false;
     }
 
+    /**
+     * Retourne les dégâts infligés lors de la manche courante
+     * @return dégâts infligés
+     */
     public int getActiveDamageDealed() {
         return activeDamageDealed;
     }
