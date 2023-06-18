@@ -28,7 +28,7 @@
     <association aggregation="NONE" direction="SECOND_TO_FIRST" id="8942" name="">
       <role componentId="6518" name="" visibility="PRIVATE">
         <multiplicity>
-          <min>1</min>
+          <min>4</min>
           <max>2147483647</max>
         </multiplicity>
       </role>
@@ -48,8 +48,8 @@
       </role>
       <role componentId="6516" name="" visibility="PRIVATE">
         <multiplicity>
-          <min>1</min>
-          <max>2147483647</max>
+          <min>5</min>
+          <max>5</max>
         </multiplicity>
       </role>
     </association>
@@ -112,8 +112,8 @@
     <association aggregation="NONE" direction="SECOND_TO_FIRST" id="19098" name="">
       <role componentId="6519" name="" visibility="PRIVATE">
         <multiplicity>
-          <min>1</min>
-          <max>2147483647</max>
+          <min>0</min>
+          <max>10</max>
         </multiplicity>
       </role>
       <role componentId="6516" name="" visibility="PRIVATE">
@@ -124,19 +124,19 @@
       </role>
     </association>
     <entity entityType="CLASS" id="12683" isAbstract="false" name="StormTrooper" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="true" name="PERCENT_REDUCE" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_HP" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_HP" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_ATT" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_ATT" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_DEF" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_DEF" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_SPD" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_SPD" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_REWARD" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_REWARD" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_PREC" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_PREC" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="percentReduce" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minHp" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxHp" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minAtt" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxAtt" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minDef" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxDef" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minSpd" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxSpd" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minReward" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxReward" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minPrec" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxPrec" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="downgradeStatChance" type="int" visibility="PRIVATE"/>
       <method is-constructor="true" isAbstract="false" isStatic="false" name="StormTrooper" returnType="" view="DEFAULT" visibility="PUBLIC"/>
       <method is-constructor="true" isAbstract="false" isStatic="false" name="StormTrooper" returnType="" view="DEFAULT" visibility="PUBLIC"/>
@@ -148,17 +148,17 @@
     </entity>
     <entity entityType="CLASS" id="6522" isAbstract="false" name="..." visibility="PUBLIC"/>
     <entity entityType="CLASS" id="6520" isAbstract="false" name="Droid" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="true" name="PERCENT_REDUCE" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_HP" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_HP" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_ATT" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_ATT" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_DEF" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_DEF" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_SPD" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_SPD" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_REWARD" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_REWARD" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="percentReduce" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minHp" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxHp" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minAtt" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxAtt" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minDef" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxDef" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minSpd" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxSpd" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minReward" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxReward" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="downgradeStatChance" type="int" visibility="PRIVATE"/>
       <method is-constructor="true" isAbstract="false" isStatic="false" name="Droid" returnType="" view="DEFAULT" visibility="PUBLIC"/>
       <method is-constructor="true" isAbstract="false" isStatic="false" name="Droid" returnType="" view="DEFAULT" visibility="PUBLIC">
@@ -167,11 +167,11 @@
       <method isAbstract="false" isStatic="false" name="copy" returnType="Droid" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
     <entity entityType="CLASS" id="6519" isAbstract="false" name="Troup" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="true" name="DROP_CHANCE" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="NAME" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="HP_MAX" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="MIN_REWARD" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="MAX_REWARD" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="dropChance" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="name" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="hpMax" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="minReward" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="maxReward" type="int" visibility="PRIVATE"/>
       <method is-constructor="true" isAbstract="false" isStatic="false" name="Troup" returnType="" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="name" type="String"/>
         <variable const="false" name="minHp" type="int"/>
@@ -219,10 +219,10 @@
       </method>
     </entity>
     <entity entityType="CLASS" id="6518" isAbstract="false" name="Stat" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="false" name="NAME" type="String" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="MIN_VALUE" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="MAX_VALUE" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="false" name="MAX_VALUE_REDUCE" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="name" type="String" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="minValue" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="maxValue" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="maxValueReduce" type="int" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="value" type="int" visibility="PRIVATE"/>
       <method is-constructor="true" isAbstract="false" isStatic="false" name="Stat" returnType="" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="name" type="String"/>
@@ -253,7 +253,7 @@
       <method isAbstract="true" isStatic="false" name="copy" returnType="Prototypeable" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
     <entity entityType="CLASS" id="6516" isAbstract="false" name="Squadron" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_SIZE_SQUADRON" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxSizeSquadron" type="int" visibility="PRIVATE"/>
       <method is-constructor="true" isAbstract="false" isStatic="false" name="Squadron" returnType="" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="add" returnType="boolean" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="troup" type="Troup"/>
@@ -269,7 +269,7 @@
       <method isAbstract="false" isStatic="false" name="toString" returnType="String" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
     <entity entityType="CLASS" id="6515" isAbstract="false" name="Army" visibility="PUBLIC">
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_SIZE_ARMY" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxSizeArmy" type="int" visibility="PRIVATE"/>
       <method is-constructor="true" isAbstract="false" isStatic="false" name="Army" returnType="" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="getSquadron" returnType="Squadron" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="squadronIndex" type="int"/>
@@ -302,9 +302,9 @@
     </entity>
     <entity entityType="CLASS" id="6513" isAbstract="false" name="Player" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="money" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="START_MONEY" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MAX_MONEY" type="int" visibility="PRIVATE"/>
-      <attribute const="false" defaultValue="" isStatic="true" name="MIN_MONEY" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="startMoney" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="maxMoney" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="true" name="minMoney" type="int" visibility="PRIVATE"/>
       <method is-constructor="true" isAbstract="false" isStatic="false" name="Player" returnType="" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="getArmy" returnType="Army" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="getMoney" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
@@ -356,13 +356,13 @@
         <h>16</h>
       </roleAssociation>
       <multipliciteAssociation>
-        <x>926</x>
-        <y>448</y>
-        <w>22</w>
+        <x>918</x>
+        <y>446</y>
+        <w>31</w>
         <h>16</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
-        <x>1169</x>
+        <x>1164</x>
         <y>378</y>
         <w>8</w>
         <h>16</h>
@@ -400,7 +400,7 @@
       <multipliciteAssociation>
         <x>856</x>
         <y>447</y>
-        <w>22</w>
+        <w>21</w>
         <h>16</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
@@ -580,9 +580,9 @@
         <h>16</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
-        <x>1151</x>
-        <y>119</y>
-        <w>22</w>
+        <x>1169</x>
+        <y>116</y>
+        <w>8</w>
         <h>16</h>
       </multipliciteAssociation>
     </relationView>
@@ -617,8 +617,8 @@
       </roleAssociation>
       <multipliciteAssociation>
         <x>1164</x>
-        <y>601</y>
-        <w>22</w>
+        <y>600</y>
+        <w>21</w>
         <h>16</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
@@ -760,7 +760,7 @@
       <geometry>
         <x>1090</x>
         <y>140</y>
-        <w>220</w>
+        <w>190</w>
         <h>235</h>
       </geometry>
     </componentView>
