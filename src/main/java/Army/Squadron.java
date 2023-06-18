@@ -5,6 +5,13 @@ import Army.Troups.Troup;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe permettant de stocker une liste de troupes faisant partie d'un même squadron
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
+ */
 public class Squadron implements Prototypeable {
 
     private final static int maxSizeSquadron = 10;
@@ -65,6 +72,10 @@ public class Squadron implements Prototypeable {
     }
 
 
+    /**
+     * Méthode pour récupérer le nombre de troupes dans le squadron
+     * @return Entier représentant le nombre de troupe dans le squadron
+     */
     public int getTroupNumber(){
         return troupList.size();
     }

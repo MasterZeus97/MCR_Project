@@ -9,6 +9,10 @@ import java.awt.event.MouseEvent;
 
 /**
  * Spécialisation de la classe JList pour afficher une armée (liste des escadrons).
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
  */
 public class ArmyJList extends JList {
 

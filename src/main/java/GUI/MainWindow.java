@@ -11,6 +11,10 @@ import java.awt.*;
 
 /**
  * Fenêtre principale qui gère les différents menus du jeu.
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
  */
 public class MainWindow extends JFrame {
 

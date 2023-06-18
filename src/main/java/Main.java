@@ -1,5 +1,4 @@
 
-import Army.Troups.Troup;
 import GUI.MainWindow;
 import Player.Player;
 

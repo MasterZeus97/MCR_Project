@@ -1,5 +1,12 @@
 package Army.Troups;
 
+/**
+ * Troupe spécialisée : KXDroid
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
+ */
 public class KXDroid extends Troup {
 
 

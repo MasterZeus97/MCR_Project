@@ -1,5 +1,12 @@
 package Army.Troups;
 
+/**
+ * Troupe spécialisée : Scoot Trooper
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
+ */
 public class ScootTrooper extends Troup {
 
    private static final int percentReduce = 20,

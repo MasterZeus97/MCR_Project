@@ -8,9 +8,6 @@ import GUI.MainWindow;
 import Player.Player;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -20,6 +17,10 @@ import java.util.LinkedList;
 
 /**
  * Page représentant le menu de combat.
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
  */
 public class BattlePage extends MainWindowPage {
 

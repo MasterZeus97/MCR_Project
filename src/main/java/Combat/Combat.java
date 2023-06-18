@@ -8,6 +8,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Classe utilitaire permettant de gérer tout ce qui est du combat
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
+ */
 public class Combat {
     Army army1, army2;
     Squadron squadronActive1, squadronActive2;
