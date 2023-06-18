@@ -76,12 +76,22 @@ public class ArmyJList extends JList {
       return ally;
    }
 
+   /**
+    * Met à jour l'affichage d'un des squadronViewerWindows
+    *
+    * @param x L'id du squadronViewerWindows à mettre à jour
+    */
    public void updateSVW(int x) {
       int y = (ally ? 0 : 1);
       if (squadronViewerWindows[x][y] == null) return;
       squadronViewerWindows[x][y].update();
    }
 
+   /**
+    * Vide un des squadronViewerWindows
+    *
+    * @param x L'id du squadronViewerWindows à vider
+    */
    public void clearSVW(int x) {
       int y = (ally ? 0 : 1);
       squadronViewerWindows[x][y] = null;

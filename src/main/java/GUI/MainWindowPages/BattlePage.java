@@ -193,7 +193,6 @@ public class BattlePage extends MainWindowPage {
        * @param moneyWinned  L'argent gagné par le joueur durant le combat.
        * @param logs         Liste avec les informations de chaque 1vs1 du combat
        */
-      // TODO : Singleton ?
       public gameOverWindow(BattlePage battlePage, boolean playerWinned, int turnCount, int moneyWinned, LinkedList<ArrayList<String>> logs) {
 
          // Paramètres de la fenêtre
