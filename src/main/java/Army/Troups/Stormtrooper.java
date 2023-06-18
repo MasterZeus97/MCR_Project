@@ -41,6 +41,10 @@ public class Stormtrooper extends Troup {
       this.downGradeStatChances = s.downGradeStatChances;
    }
 
+   /**
+    * Méthode donnant les dégats infligés par un stormtrooper, sachant que ce dernier peut rater
+    * @return Valeur des dégats du stormtrooper
+    */
    @Override
    public int attack() {
       Random random = new Random();

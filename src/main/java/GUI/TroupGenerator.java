@@ -9,6 +9,10 @@ import java.util.List;
 
 /**
  * Classe utilitaire permettant d'obtenir une troupe aléatoirement.
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
  */
 abstract public class TroupGenerator {
 

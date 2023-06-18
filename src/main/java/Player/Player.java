@@ -3,8 +3,13 @@ package Player;
 import Army.*;
 import GUI.TroupGenerator;
 
-import javax.naming.SizeLimitExceededException;
-
+/**
+ * Classe permettant de stocker les information d'un joueur, telles que les crédits ou l'armée actuelle
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
+ */
 public class Player {
     private final Army army;
     private int money;

@@ -6,6 +6,10 @@ import javax.swing.*;
 
 /**
  * Classe abstraite implémentée par les différentes pages de la fenêtre principale
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
  */
 public abstract class MainWindowPage extends JPanel {
    protected final MainWindow mw;

@@ -1,13 +1,16 @@
 package GUI.MainWindowPages;
 
 import GUI.MainWindow;
-import com.sun.tools.javac.Main;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * Page représentant l'écran titre du jeu.
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
  */
 public class TitlePage extends MainWindowPage {
 

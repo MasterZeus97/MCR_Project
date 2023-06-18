@@ -1,5 +1,12 @@
 package Army.Troups;
 
+/**
+ * Troupe spécialisée : C3PO
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
+ */
 public class C3PO extends Troup {
 
    private static final int percentReduce = 0,

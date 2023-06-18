@@ -5,6 +5,14 @@ import Army.Prototypeable;
 
 import java.util.*;
 
+/**
+ * Classe abstraite représentant une troupe pouvant être stockée dans un squadron. Toutes les troupes héritant
+ * de cette classe seront spécialisée et possèderont leurs stats spécifiques
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
+ */
 public abstract class Troup implements Prototypeable {
    private static final ArrayList<String> STATS_NAME_LIST = new ArrayList<>(Arrays.asList( "PV",
                                                                                            "Attaque",
@@ -156,6 +164,14 @@ public abstract class Troup implements Prototypeable {
    }
 
    /**
+    * Permet de savoir si la troupe est en vie
+    * @return True si la troupe a encore 1HP ou plus - False si elle a moins de 1HP
+    */
+   public boolean isAlive(){
+      return statsMap.get(STATS_NAME_LIST.get(0)).getValue() > 0;
+   }
+
+   /**
     * Méthode pour downgrade les Statss d'une troupe
     * @param chanceToDowngrade Entier représentant le poucentage de chance que la stat se dégrade. La valeur est réduite
     *                          à une valeur entre 0 et 100.
@@ -167,20 +183,15 @@ public abstract class Troup implements Prototypeable {
    }
 
    /**
-    * Permet de savoir si la troupe est en vie
-    * @return True si la troupe a encore 1HP ou plus - False si elle a moins de 1HP
-    */
-   public boolean isAlive(){
-      return statsMap.get(STATS_NAME_LIST.get(0)).getValue() > 0;
-   }
-
-   /**
     * Méthode pour diminuer les stats de cette troupe
     */
    public void drop(){
       downGradeStat(dropChance);
    }
 
+   /**
+    * Méthode permettant de maximiser les statistiques d'une troupe
+    */
    public void maximizeStats(){
       for(Stat s : statsMap.values())
          s.maximizeVal();

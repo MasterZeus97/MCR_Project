@@ -2,6 +2,13 @@ package Army;
 
 import java.util.Random;
 
+/**
+ * Classe permettant de stocker les informations d'une statistique
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
+ */
 public class Stat implements Prototypeable{
     private final String name;
     private int value;

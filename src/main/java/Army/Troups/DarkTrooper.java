@@ -1,5 +1,12 @@
 package Army.Troups;
 
+/**
+ * Troupe spécialisée : Dark Trooper
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
+ */
 public class DarkTrooper extends Troup {
 
    private static final int percentReduce = 10,

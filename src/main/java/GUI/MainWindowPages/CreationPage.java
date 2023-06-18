@@ -12,6 +12,10 @@ import java.awt.*;
 
 /**
  * Page représentant le menu de création d'unités.
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
  */
 public class CreationPage extends MainWindowPage {
 

@@ -12,6 +12,10 @@ import java.awt.event.WindowEvent;
 
 /**
  * Fenêtre affichant un escadron avec la liste de ses troupes.
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
  */
 public class SquadronViewerWindow extends JFrame {
 

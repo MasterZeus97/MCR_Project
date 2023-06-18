@@ -3,6 +3,13 @@ package Army;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe permettant de stocker les squadron nécessaire à la formation d'une armée
+ *
+ * @author Marzullo Loris
+ * @author Seem Thibault
+ * @author Dos Santos Joel
+ */
 public class Army {
     private final static int maxSizeArmy = 5;
 
